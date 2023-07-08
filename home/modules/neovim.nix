@@ -10,10 +10,8 @@
     ];
   };
 
-  xdg.configFile = {
-    "nvim" = {
-      source = "${dots}/nvim";
-      recursive = true;
-    };
+  home.file.".config/nvim" = {
+    source = "${dots}/nvim";
+    recursive = true;
   };
 }
