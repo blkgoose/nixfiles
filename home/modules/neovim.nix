@@ -1,5 +1,10 @@
 { pkgs, lib, dots, config, ... }:
 {
+  home.file.".config/nvim" = {
+    source = "${dots}/nvim";
+    recursive = true;
+  };
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -8,10 +13,5 @@
       gcc
       gnumake
     ];
-  };
-
-  home.file.".config/nvim" = {
-    source = "${dots}/nvim";
-    recursive = true;
   };
 }
