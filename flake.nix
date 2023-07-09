@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dots = {
-      url = "github:blkgoose/dotfiles";
+      url = "git+file:./dotfiles?shallow=1";
       flake = false;
     };
   };
