@@ -3,17 +3,18 @@
     "dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1688859822,
-        "narHash": "sha256-kMek9IYSrLG6KXq9PaXXg+3GpIqlkP0aBmxRmO65GX0=",
-        "owner": "blkgoose",
-        "repo": "dotfiles",
-        "rev": "2869df94d85024a323db439d0159740ff03fa5bf",
-        "type": "github"
+        "lastModified": 1688898850,
+        "narHash": "sha256-oRQJDPAx1M1PGWE8wvAFNQA8kK9Pmd3bq7jpdD/ZWVo=",
+        "ref": "refs/heads/master",
+        "rev": "9e204670a77ad157bb62307b00129e911bf10c36",
+        "shallow": true,
+        "type": "git",
+        "url": "file:./dotfiles"
       },
       "original": {
-        "owner": "blkgoose",
-        "repo": "dotfiles",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "file:./dotfiles"
       }
     },
     "home-manager": {
