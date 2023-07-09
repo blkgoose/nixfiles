@@ -1,10 +1,5 @@
-{ pkgs, dots, ... }:
-{
-  home.packages = with pkgs; [
-    dunst
-    feh
-    picom
-  ];
+{ pkgs, dots, ... }: {
+  home.packages = with pkgs; [ dunst feh picom ];
 
   xdg.configFile = {
     "dunst/dunstrc".source = "${dots}/dunst/dunstrc";

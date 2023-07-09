@@ -1,5 +1,4 @@
-{ pkgs, dots, ... }:
-{
+{ pkgs, dots, ... }: {
   imports = [
     ../modules/alacritty.nix
     ../modules/core.nix

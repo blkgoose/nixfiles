@@ -1,8 +1,5 @@
-{ pkgs, dots, ... }:
-{
-  programs.git = {
-    enable = true;
-  };
+{ pkgs, dots, ... }: {
+  programs.git = { enable = true; };
 
   xdg.configFile = {
     "git/config".source = "${dots}/git/config";

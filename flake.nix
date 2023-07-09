@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, dots, ... } @attrs:
+  outputs = { self, nixpkgs, home-manager, dots, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -21,17 +21,16 @@
         config.allowUnfree = true;
       };
       lib = nixpkgs.lib;
-      homeManager = { home-manager.extraSpecialArgs = attrs // { inherit system; }; };
+      homeManager = {
+        home-manager.extraSpecialArgs = attrs // { inherit system; };
+      };
     in {
       nixosConfigurations = {
         vm = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = attrs;
-          modules = [
-            ./systems/vm
-            homeManager
-          ];
+          modules = [ ./systems/vm homeManager ];
         };
       };
     };
