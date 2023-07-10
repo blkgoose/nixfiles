@@ -5,7 +5,6 @@
     ../modules/desktop.nix
     ../modules/dev.nix
     ../modules/git.nix
-    ../modules/dwm.nix
     ../modules/neovim.nix
     ../modules/fish.nix
     ../modules/chromeapps.nix

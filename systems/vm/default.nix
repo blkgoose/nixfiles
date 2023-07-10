@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
 
     ../../modules/base.nix
-    ../../modules/dwm.nix
+    ../../modules/xmonad.nix
     ../../modules/network.nix
     ../../modules/sound.nix
     ../../modules/users
