@@ -7,7 +7,6 @@
     ../modules/git.nix
     ../modules/neovim.nix
     ../modules/fish.nix
-    ../modules/chromeapps.nix
   ];
 
   programs.home-manager.enable = true;

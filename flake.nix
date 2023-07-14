@@ -7,13 +7,17 @@
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    secret_dots = {
+      url = "git+file:./secret_dotfiles?shallow=1";
+      flake = false;
+    };
     dots = {
       url = "git+file:./dotfiles?shallow=1";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, dots, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, dots, secret_dots, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {

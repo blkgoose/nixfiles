@@ -6,7 +6,7 @@
 
     ../../modules/base.nix
     ../../modules/xmonad.nix
-    ../../modules/network.nix
+    ../../modules/network
     ../../modules/sound.nix
     ../../modules/users
     ../../modules/users/alessio.nix
