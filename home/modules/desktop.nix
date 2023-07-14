@@ -12,6 +12,10 @@
   ];
 
   xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
+  home.file.".config/xmonad" = {
+    source = "${dots}/xmonad";
+    recursive = true;
+  };
 
   services.dunst.enable = true;
   services.picom = {
