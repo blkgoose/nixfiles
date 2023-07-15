@@ -5,7 +5,7 @@
       "locked": {
         "lastModified": 1689370726,
         "narHash": "sha256-Tud0EEb8d++rp3sQPAeInXgC8QOnqJTerybyx2dl+Cw=",
-        "ref": "refs/heads/master",
+        "ref": "f18340bac2cc7495f9bfa7ead716c4b9dd2ebc3b",
         "rev": "f18340bac2cc7495f9bfa7ead716c4b9dd2ebc3b",
         "shallow": true,
         "type": "git",
@@ -67,7 +67,7 @@
       "locked": {
         "lastModified": 1689371272,
         "narHash": "sha256-5LxMW9+kb86Fd4zwYdmn/YuV1SPp9cZdgrt86/aMzxY=",
-        "ref": "refs/heads/master",
+        "ref": "fcb60eaa2731eb976353a4b2ffc951c079f661e4",
         "rev": "fcb60eaa2731eb976353a4b2ffc951c079f661e4",
         "shallow": true,
         "type": "git",
