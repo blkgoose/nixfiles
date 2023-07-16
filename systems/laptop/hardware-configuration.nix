@@ -7,7 +7,6 @@
     [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelParams = [ "i915.force_probe=9a49" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
