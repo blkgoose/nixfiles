@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.xserver = {
     enable = true;
     displayManager = {
@@ -13,10 +13,16 @@
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
-      extraPackages = hpkgs: [ hpkgs.xmobar ];
     };
     libinput.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    haskellPackages.xmobar
+    haskellPackages.xmonad
+    haskellPackages.xmonad-contrib
+    haskellPackages.xmonad-extras
+  ];
 
   services.dbus.enable = true;
 }
