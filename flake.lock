@@ -3,10 +3,10 @@
     "dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1689505223,
-        "narHash": "sha256-n3bdiBxzg+szLy8oXswWgzzF98EoTc4QMf+2XQs6kBE=",
+        "lastModified": 1689520442,
+        "narHash": "sha256-0GGQEX8Q0gVObwSGRLFWjopUeM8eHo92ygU9KGP2Tp8=",
         "ref": "refs/heads/master",
-        "rev": "7e930a256d6d3579d201ffafc8741a7de169061a",
+        "rev": "66ec1e1866aade15394965f9b6584226e91fd32d",
         "shallow": true,
         "type": "git",
         "url": "file:./dotfiles"
@@ -40,11 +40,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1689326639,
-        "narHash": "sha256-79zi0t83Dcc2dE0NuYZ+2hqtKXZN1yWVq5mtx8D2d7Y=",
+        "lastModified": 1689431009,
+        "narHash": "sha256-hPgQCRWP5q/Xc4qOIP3c2krR9nQua78+t9EDiuey5nc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9fdfaeb7b96f05e869f838c73cde8d98c640c649",
+        "rev": "af8279f65fe71ce5a448408034a8c06e2b4b2c66",
         "type": "github"
       },
       "original": {
