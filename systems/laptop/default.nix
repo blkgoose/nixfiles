@@ -14,6 +14,19 @@
 
   environment.systemPackages = with pkgs; [ git vim wget dmenu ];
 
+  networking.hostName = "bjorn";
+
+  hardware.opengl = {
+    extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+  };
+
+  services.hardware.bolt.enable = true;
+
   services.xserver.videoDrivers = [ "intel" ];
   services.logind.lidSwitch = "ignore";
 
