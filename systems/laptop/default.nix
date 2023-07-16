@@ -6,13 +6,14 @@
 
     ../../modules/base.nix
     ../../modules/xmonad.nix
+    ../../modules/hyperland.nix
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/users
     ../../modules/users/alessio.nix
   ];
 
-  environment.systemPackages = with pkgs; [ git vim wget dmenu ];
+  environment.systemPackages = with pkgs; [ git vim wget dmenu kitty ];
 
   networking.hostName = "bjorn";
 
