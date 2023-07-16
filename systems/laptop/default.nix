@@ -12,16 +12,12 @@
     ../../modules/users/alessio.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    wget
+  environment.systemPackages = with pkgs; [ git vim wget dmenu ];
 
-    dmenu
-  ];
+  services.xserver.videoDrivers = [ "intel" ];
+  services.logind.lidSwitch = "ignore";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "23.05";
 }
-
