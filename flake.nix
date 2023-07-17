@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +18,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, dots, secret_dots, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, dots, secret_dots
+    , ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {

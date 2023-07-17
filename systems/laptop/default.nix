@@ -1,8 +1,9 @@
-{ config, pkgs, home-manager, ... }:
+{ config, pkgs, nixos-hardware, home-manager, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    nixos-hardware.nixosModules.common-gpu-intel
 
     ../../modules/base.nix
     ../../modules/xmonad.nix
