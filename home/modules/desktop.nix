@@ -11,6 +11,7 @@
     feh
     picom
     gimp
+    mesa-demos
   ];
 
   xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
