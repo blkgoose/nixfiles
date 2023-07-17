@@ -7,6 +7,7 @@
     ../modules/git.nix
     ../modules/neovim.nix
     ../modules/fish.nix
+    ../modules/saint-peter.nix
   ];
 
   programs.home-manager.enable = true;
