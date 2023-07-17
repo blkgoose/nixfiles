@@ -10,6 +10,7 @@
     dunst
     feh
     picom
+    gimp
   ];
 
   xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
