@@ -12,6 +12,7 @@
     picom
     gimp
     mesa-demos
+    autorandr
   ];
 
   xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
@@ -20,6 +21,7 @@
     recursive = true;
   };
 
+  services.autorandr.enable = true;
   services.dunst.enable = true;
   services.picom = {
     enable = true;
