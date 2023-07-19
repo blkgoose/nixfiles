@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   users.users.alessio = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
     shell = pkgs.fish;
   };
 
