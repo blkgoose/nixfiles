@@ -10,6 +10,8 @@
     ../../modules/hyperland.nix
     ../../modules/network
     ../../modules/sound.nix
+    ../../modules/virtualization.nix
+
     ../../modules/users
     ../../modules/users/alessio.nix
   ];
