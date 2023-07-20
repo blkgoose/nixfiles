@@ -20,6 +20,15 @@
     recursive = true;
   };
 
+  home.file.".local/bin/user/chrome" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      google-chrome-stable $@
+    '';
+    executable = true;
+  };
+
   services.autorandr.enable = true;
   services.dunst.enable = true;
   services.picom = {
