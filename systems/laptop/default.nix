@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-gpu-intel
+    nixos-hardware.nixosModules.common-pc-laptop
 
     ../../modules/base.nix
     ../../modules/xmonad.nix
@@ -21,17 +22,13 @@
   networking.hostName = "bjorn";
 
   hardware.opengl = {
-    extraPackages = with pkgs; [
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-      intel-media-driver
-    ];
+    driSupport.enable = true;
+    extraPackages = with pkgs; [ vaapiIntel vaapiVdpau intel-compute-runtime ];
   };
 
   services.hardware.bolt.enable = true;
 
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "modesetting" ];
   services.logind.lidSwitch = "ignore";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
