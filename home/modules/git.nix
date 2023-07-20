@@ -1,4 +1,4 @@
-{ pkgs, dots, ... }: {
+{ dots, ... }: {
   programs.git = { enable = true; };
 
   xdg.configFile = {

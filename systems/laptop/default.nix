@@ -8,7 +8,6 @@
 
     ../../modules/base.nix
     ../../modules/xmonad.nix
-    ../../modules/hyperland.nix
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/virtualization.nix
