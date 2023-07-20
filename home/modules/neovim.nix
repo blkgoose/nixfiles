@@ -7,5 +7,6 @@
     viAlias = true;
     vimAlias = true;
     extraPackages = with pkgs; [ gcc gnumake ];
+    defaultEditor = true;
   };
 }
