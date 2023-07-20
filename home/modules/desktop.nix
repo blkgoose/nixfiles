@@ -1,6 +1,5 @@
 { pkgs, dots, ... }: {
   home.packages = with pkgs; [
-    betterdiscordctl
     discord
     google-chrome
     slack
