@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   services.xserver = {
     enable = true;
     displayManager = {
@@ -15,6 +15,8 @@
       enableContribAndExtras = true;
     };
     libinput.enable = true;
+    xkbOptions =
+      lib.strings.concatStringsSep "," [ "compose:ralt" "caps:none" ];
   };
 
   environment.systemPackages = with pkgs; [
