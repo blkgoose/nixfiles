@@ -10,6 +10,7 @@
     ../../modules/xmonad.nix
     ../../modules/network
     ../../modules/sound.nix
+    ../../modules/keybinds.nix
     ../../modules/virtualization.nix
 
     ../../modules/users
