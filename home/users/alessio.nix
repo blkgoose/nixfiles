@@ -8,6 +8,7 @@
     ../modules/neovim.nix
     ../modules/fish.nix
     ../modules/saint-peter.nix
+    ../modules/chromeapps.nix
   ];
 
   programs.home-manager.enable = true;
