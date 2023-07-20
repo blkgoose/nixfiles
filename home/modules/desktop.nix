@@ -12,6 +12,7 @@
     gimp
     mesa-demos
     autorandr
+    playerctl
   ];
 
   xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
