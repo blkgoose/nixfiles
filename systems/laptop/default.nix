@@ -1,6 +1,4 @@
-{ config, pkgs, nixos-hardware, home-manager, ... }:
-
-{
+{ config, pkgs, nixos-hardware, home-manager, ... }: {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-gpu-intel
