@@ -15,6 +15,8 @@
     ../../modules/users/alessio.nix
   ];
 
+  programs.command-not-found.enable = false;
+
   environment.systemPackages = with pkgs; [ git vim wget dmenu kitty ];
 
   networking.hostName = "bjorn";
