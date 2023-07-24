@@ -27,4 +27,5 @@
   ];
 
   services.dbus.enable = true;
+  programs.kdeconnect.enable = true;
 }
