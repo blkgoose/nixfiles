@@ -30,6 +30,20 @@
     executable = true;
   };
 
+  services.redshift = {
+    enable = true;
+    provider = "geoclue2";
+    settings = {
+      redshift = {
+        brightness-day = 1;
+        brightness-night = 0.6;
+      };
+    };
+    temperature = {
+      day = 5500;
+      night = 3700;
+    };
+  };
   services.autorandr.enable = true;
   services.dunst.enable = true;
   services.picom = {
