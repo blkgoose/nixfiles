@@ -1,4 +1,20 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+let
+  ignored_apps = [ "google-chrome-stable" ];
+
+  ignored = lib.strings.concatStringsSep "|" ignored_apps;
+
+  dmenu_smart = pkgs.dmenu.overrideAttrs (old: {
+    postPatch = ''
+      cat <<EOF > dmenu_path
+          #!$out/bin/sh
+
+          IFS=:
+          $out/bin/stest -flx \$PATH | sort -u | grep -v ${ignored}
+      EOF
+    '';
+  });
+in {
   services.xserver = {
     enable = true;
     displayManager = {
@@ -24,6 +40,7 @@
     haskellPackages.xmonad
     haskellPackages.xmonad-contrib
     haskellPackages.xmonad-extras
+    dmenu_smart
   ];
 
   services.dbus.enable = true;

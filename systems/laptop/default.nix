@@ -17,7 +17,7 @@
 
   programs.command-not-found.enable = false;
 
-  environment.systemPackages = with pkgs; [ git vim wget dmenu kitty ];
+  environment.systemPackages = with pkgs; [ git vim wget ];
 
   networking.hostName = "bjorn";
 
