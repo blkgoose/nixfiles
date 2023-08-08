@@ -4,8 +4,6 @@
     google-chrome
     slack
     spotify
-    telegram-desktop
-    whatsapp-for-linux
     dunst
     feh
     picom
