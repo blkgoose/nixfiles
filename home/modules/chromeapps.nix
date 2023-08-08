@@ -164,8 +164,9 @@ let
     { url, opts ? [ ] }:
     let
       spacedOpts = lib.strings.concatStringsSep " " opts;
+      chrome = "google-chrome-stable";
       chromeCall = ''
-        google-chrome-stable --app='${url}' --new-window ${spacedOpts}
+        ${chrome} --app='${url}' --new-window ${spacedOpts}
       '';
     in {
       name = ".local/bin/user/${name}";

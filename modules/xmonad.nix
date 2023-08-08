@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let
-  ignored_apps = [ "google-chrome-stable" ];
+  ignored_apps = [ "google-chrome.*" ];
 
   ignored = lib.strings.concatStringsSep "|" ignored_apps;
 
@@ -10,7 +10,7 @@ let
           #!$out/bin/sh
 
           IFS=:
-          $out/bin/stest -flx \$PATH | sort -u | grep -v ${ignored}
+          $out/bin/stest -flx \$PATH | sort -u | grep -v "${ignored}"
       EOF
     '';
   });
