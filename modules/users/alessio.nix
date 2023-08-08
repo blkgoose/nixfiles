@@ -6,6 +6,6 @@
   };
 
   programs.fish.enable = true;
-
+  environment.localBinInPath = true;
   home-manager.users.alessio.imports = [ ../../home/users/alessio.nix ];
 }
