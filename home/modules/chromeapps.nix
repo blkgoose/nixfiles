@@ -1,6 +1,9 @@
 { lib, ... }:
 let
   apps = {
+    # this is just an alias for the default chrome app
+    "chrome".url = "";
+
     "amazon" = {
       url = "https://amazon.it";
       opts = [ "--profile-directory='Default'" ];
