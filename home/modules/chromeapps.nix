@@ -164,7 +164,7 @@ let
         ${chrome} --app='${url}' --new-window ${spacedOpts}
       '';
     in {
-      name = ".local/bin/user/${name}";
+      name = ".local/bin/${name}";
       value = {
         text = ''
           #!/usr/bin/env bash
