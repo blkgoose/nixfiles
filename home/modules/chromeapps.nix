@@ -9,14 +9,12 @@ let
       url = "https://play.google.com/books";
       opts = [ "--profile-directory='Default'" ];
     };
-    "calendar" = { url = "https://calendar.google.com/calendar"; };
-    "chess" = { url = "https://www.chess.com"; };
-    "codescene" = {
-      url =
-        "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
-    };
-    "coggle" = { url = "https://coggle.it"; };
-    "coronavisual" = { url = "https://blkgoose.github.io/coronavisual"; };
+    "calendar".url = "https://calendar.google.com/calendar";
+    "chess".url = "https://www.chess.com";
+    "codescene".url =
+      "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
+    "coggle".url = "https://coggle.it";
+    "coronavisual".url = "https://blkgoose.github.io/coronavisual";
     "crunchyroll" = {
       url = "https://www.crunchyroll.com/it";
       opts = [
@@ -25,12 +23,12 @@ let
         "--profile-directory='Default'"
       ];
     };
-    "datadog" = { url = "https://app.datadoghq.eu/"; };
+    "datadog".url = "https://app.datadoghq.eu/";
     "disney" = {
       url = "https://disneyplus.com";
       opts = [ "--profile-directory='Default'" ];
     };
-    "drone_ci" = { url = "https://drone-1.prima.it"; };
+    "drone_ci".url = "https://drone-1.prima.it";
     "elm-search" = {
       url = "https://klaftertief.github.io/elm-search/";
       opts = [
@@ -43,8 +41,8 @@ let
       url = "https://www.facebook.com";
       opts = [ "--profile-directory='Default'" ];
     };
-    "github" = { url = "https://github.com"; };
-    "gmail" = { url = "https://mail.google.com"; };
+    "github".url = "https://github.com";
+    "gmail".url = "https://mail.google.com";
     "instagram" = {
       url = "https://instagram.com";
       opts = [ "--profile-directory='Default'" ];
@@ -53,7 +51,7 @@ let
       url = "https://keep.google.com";
       opts = [ "--profile-directory='Default'" ];
     };
-    "kibana" = { url = "https://kibana-k8s.prima.it/app/discover#"; };
+    "kibana".url = "https://kibana-k8s.prima.it/app/discover#";
     "maps" = {
       url = "https://www.google.it/maps/preview";
       opts = [
@@ -62,7 +60,7 @@ let
         "--profile-directory='Default'"
       ];
     };
-    "meet" = { url = "https://meet.google.com"; };
+    "meet".url = "https://meet.google.com";
     "messages" = {
       url = "https://messages.google.com/web/conversations";
       opts = [
@@ -71,8 +69,8 @@ let
         "--profile-directory='Default'"
       ];
     };
-    "miro" = { url = "https://miro.com/app/dashboard"; };
-    "n2f" = { url = "https://www.n2f.com/app/#"; };
+    "miro".url = "https://miro.com/app/dashboard";
+    "n2f".url = "https://www.n2f.com/app/#";
     "netflix" = {
       url = "https://www.netflix.com";
       opts = [ "--profile-directory='Default'" ];
@@ -81,8 +79,8 @@ let
       url = "https://news.google.it";
       opts = [ "--profile-directory='Default'" ];
     };
-    "nibol" = { url = "https://app.nibol.co"; };
-    "notion" = { url = "https://www.notion.so"; };
+    "nibol".url = "https://app.nibol.co";
+    "notion".url = "https://www.notion.so";
     "onshape" = {
       url = "https://cad.onshape.com";
       opts = [
@@ -95,7 +93,7 @@ let
       url = "https://jspaint.app/";
       opts = [ "" ];
     };
-    "personio" = { url = "https://prima-assicurazioni.personio.de"; };
+    "personio".url = "https://prima-assicurazioni.personio.de";
     "photos" = {
       url = "https://photos.google.com";
       opts = [ "--profile-directory='Default'" ];
@@ -108,13 +106,13 @@ let
       url = "https://www.printables.com";
       opts = [ "--profile-directory='Default'" ];
     };
-    "pyxis-doc" = { url = "http://elm.prima.design"; };
+    "pyxis-doc".url = "http://elm.prima.design";
     "reddit" = {
       url = "https://reddit.com";
       opts = [ "--profile-directory='Default'" ];
     };
-    "sheets" = { url = "https://docs.google.com/spreadsheets"; };
-    "slack" = { url = "https://prima.slack.com"; };
+    "sheets".url = "https://docs.google.com/spreadsheets";
+    "slack".url = "https://prima.slack.com";
     "stadia" = {
       url = "https://stadia.google.com";
       opts = [ "--disable-extensions" "--disable-plugins" ];
@@ -147,13 +145,10 @@ let
         "--profile-directory='Default'"
       ];
     };
-    "youtrack-backlog" = {
-      url =
-        "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(CMAEN)%20Backlog-967";
-    };
-    "youtrack" = {
-      url = "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
-    };
+    "youtrack-backlog".url =
+      "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(CMAEN)%20Backlog-967";
+    "youtrack".url =
+      "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
     "youtube" = {
       url = "https://youtube.com";
       opts = [ "--profile-directory='Default'" ];
