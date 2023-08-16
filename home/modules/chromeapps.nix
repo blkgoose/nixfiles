@@ -119,6 +119,10 @@ let
       url = "https://web.budgetbakers.com/dashboard";
       opts = personal ++ no_plugins;
     };
+    "whatsapp" = {
+      url = "https://web.whatsapp.com/";
+      opts = personal ++ no_plugins;
+    };
     "xbox" = {
       url = "https://xbox.com/play";
       opts = personal ++ no_plugins;
