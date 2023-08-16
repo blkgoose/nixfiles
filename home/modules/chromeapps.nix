@@ -1,16 +1,19 @@
 { lib, ... }:
 let
+  personal = [ "--profile-directory='Default'" ];
+  no_plugins = [ "--disable-extensions" "--disable-plugins" ];
+
   apps = {
     # this is just an alias for the default chrome app
     "chrome".url = "";
 
     "amazon" = {
       url = "https://amazon.it";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "books" = {
       url = "https://play.google.com/books";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "calendar".url = "https://calendar.google.com/calendar";
     "chess".url = "https://www.chess.com";
@@ -20,77 +23,57 @@ let
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
     "crunchyroll" = {
       url = "https://www.crunchyroll.com/it";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "datadog".url = "https://app.datadoghq.eu/";
     "disney" = {
       url = "https://disneyplus.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "drone_ci".url = "https://drone-1.prima.it";
     "elm-search" = {
       url = "https://klaftertief.github.io/elm-search/";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "facebook" = {
       url = "https://www.facebook.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "github".url = "https://github.com";
     "gmail".url = "https://mail.google.com";
     "instagram" = {
       url = "https://instagram.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "keep" = {
       url = "https://keep.google.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "kibana".url = "https://kibana-k8s.prima.it/app/discover#";
     "maps" = {
       url = "https://www.google.it/maps/preview";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "meet".url = "https://meet.google.com";
     "messages" = {
       url = "https://messages.google.com/web/conversations";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "miro".url = "https://miro.com/app/dashboard";
     "n2f".url = "https://www.n2f.com/app/#";
     "netflix" = {
       url = "https://www.netflix.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "news" = {
       url = "https://news.google.it";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "nibol".url = "https://app.nibol.co";
     "notion".url = "https://www.notion.so";
     "onshape" = {
       url = "https://cad.onshape.com";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "paint" = {
       url = "https://jspaint.app/";
@@ -99,20 +82,20 @@ let
     "personio".url = "https://prima-assicurazioni.personio.de";
     "photos" = {
       url = "https://photos.google.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "primevideo" = {
       url = "https://www.primevideo.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "printables" = {
       url = "https://www.printables.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "pyxis-doc".url = "http://elm.prima.design";
     "reddit" = {
       url = "https://reddit.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "sheets".url = "https://docs.google.com/spreadsheets";
     "slack".url = "https://prima.slack.com";
@@ -126,27 +109,19 @@ let
     };
     "trello" = {
       url = "https://www.trello.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "tvshowtime" = {
       url = "https://www.tvtime.com/en/to-watch";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
     "wallet" = {
       url = "https://web.budgetbakers.com/dashboard";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "xbox" = {
       url = "https://xbox.com/play";
-      opts = [
-        "--disable-extensions"
-        "--disable-plugins"
-        "--profile-directory='Default'"
-      ];
+      opts = personal ++ no_plugins;
     };
     "youtrack-backlog".url =
       "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(CMAEN)%20Backlog-967";
@@ -154,7 +129,7 @@ let
       "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
     "youtube" = {
       url = "https://youtube.com";
-      opts = [ "--profile-directory='Default'" ];
+      opts = personal;
     };
   };
 
