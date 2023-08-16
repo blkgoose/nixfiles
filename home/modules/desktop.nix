@@ -18,6 +18,7 @@
     source = "${dots}/xmonad";
     recursive = true;
   };
+  home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   services.redshift = {
     enable = true;
