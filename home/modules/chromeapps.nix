@@ -99,10 +99,6 @@ let
     };
     "sheets".url = "https://docs.google.com/spreadsheets";
     "slack".url = "https://prima.slack.com";
-    "stadia" = {
-      url = "https://stadia.google.com";
-      opts = [ "--disable-extensions" "--disable-plugins" ];
-    };
     "swarmia" = {
       url = "https://app.swarmia.com/insights";
       opts = [ "" ];
