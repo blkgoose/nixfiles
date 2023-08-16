@@ -30,7 +30,6 @@
       night = 3700;
     };
   };
-  services.autorandr.enable = true;
   services.dunst.enable = true;
   services.picom = {
     enable = true;

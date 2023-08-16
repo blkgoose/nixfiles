@@ -10,6 +10,7 @@
     ../modules/saint-peter.nix
     ../modules/xmonad.nix
     ../modules/chromeapps.nix
+    ../modules/autorandr
   ];
 
   home.file.".background-image".source = ./wallpaper;
