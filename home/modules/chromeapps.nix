@@ -103,6 +103,10 @@ let
       url = "https://app.swarmia.com/insights";
       opts = [ "" ];
     };
+    "telegram" = {
+      url = "https://web.telegram.org/k/";
+      opts = personal ++ no_plugins;
+    };
     "trello" = {
       url = "https://www.trello.com";
       opts = personal;
