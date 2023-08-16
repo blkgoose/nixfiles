@@ -3,7 +3,7 @@
 - [ ] battery indicator
 - [ ] battery low alert
 - [ ] whatsapp chromeapp
-- [ ] telegram chromeapp
+- [x] telegram chromeapp
 - [ ] volume control and notification
 - [ ] notification control
 - [ ] player control
