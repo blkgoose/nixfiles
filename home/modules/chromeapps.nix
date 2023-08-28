@@ -128,7 +128,7 @@ let
       opts = personal ++ no_plugins;
     };
     "youtrack-backlog".url =
-      "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(CMAEN)%20Backlog-967";
+      "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(INTEXN)%20Backlog-967";
     "youtrack".url =
       "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
     "youtube" = {
