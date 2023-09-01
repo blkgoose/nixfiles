@@ -8,6 +8,7 @@
     feh
     picom
     gimp
+    escrotum
     mesa-demos
     autorandr
     playerctl
