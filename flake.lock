@@ -3,10 +3,10 @@
     "dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1694074245,
-        "narHash": "sha256-0yaSVIvsktfeTyhLm19+CotGy5l1K8tZ+OvPNsDZBtM=",
+        "lastModified": 1694530802,
+        "narHash": "sha256-V6zgPa9rJ9/Z/xxFF5RopHMgNIbjyYyW1Rq4PcX82cw=",
         "ref": "refs/heads/master",
-        "rev": "cad2a36c50a455f696ffe918fad8e5f051b1743a",
+        "rev": "7994e16f5ca80bc71f529ca567a1537c436ff93c",
         "shallow": true,
         "type": "git",
         "url": "file:./dotfiles"
