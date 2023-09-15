@@ -8,7 +8,7 @@
     ../modules/neovim.nix
     ../modules/fish.nix
     ../modules/saint-peter.nix
-    ../modules/xmonad.nix
+    ../modules/xmonad
     ../modules/chromeapps.nix
     ../modules/autorandr
   ];
