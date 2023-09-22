@@ -7,5 +7,5 @@
   };
 
   hardware.bluetooth.enable = true;
-  environment.systemPackages = with pkgs; [ pavucontrol ];
+  environment.systemPackages = with pkgs; [ pavucontrol pulseaudio ];
 }

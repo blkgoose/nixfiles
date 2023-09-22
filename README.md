@@ -4,8 +4,9 @@
 - [ ] battery low alert
 - [x] whatsapp chromeapp
 - [x] telegram chromeapp
-- [ ] volume control and notification
+- [x] volume control
 - [ ] notification control
-- [ ] player control
+- [x] player control
 - [ ] dmenu submenus
 - [ ] xmonad fancy design
+- [ ] volume control script
