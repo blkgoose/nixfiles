@@ -10,6 +10,7 @@
     ../modules/saint-peter.nix
     ../modules/xmonad
     ../modules/chromeapps.nix
+    ../modules/aliases.nix
     ../modules/autorandr
   ];
 
