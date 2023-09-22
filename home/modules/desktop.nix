@@ -12,6 +12,7 @@
     mesa-demos
     autorandr
     playerctl
+    xclip
   ];
 
   home.file.".local/bin/chrome_notification_mapper.sh".source =
