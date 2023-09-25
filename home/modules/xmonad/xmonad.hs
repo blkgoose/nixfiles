@@ -36,8 +36,10 @@ myConf = def { terminal = "alacritty"
             , ((0, xF86XK_AudioNext), spawn "playerctl next")
             , ((0, xF86XK_AudioPrev), spawn "playerctl previous")
 
-            , ((0, xF86XK_MonBrightnessUp), spawn "light -A 10")
-            , ((0, xF86XK_MonBrightnessUp), spawn "light -U 10")
+            , ((0, xF86XK_MonBrightnessUp), spawn "light -A 10; brightness_notification")
+            , ((0, xF86XK_MonBrightnessUp), spawn "light -U 10; brightness_notification")
+
+            , ((0, xF86XK_Sleep), spawn "systemctl suspend")
             ]
 
 main = do
