@@ -1,6 +1,7 @@
 { lib, ... }:
 let
   personal = [ "--profile-directory='Default'" ];
+  work = [ "--profile-directory='Profile 1'" ];
   no_plugins = [ "--disable-extensions" "--disable-plugins" ];
 
   apps = {
@@ -14,20 +15,29 @@ let
     };
     "calendar".url = "https://calendar.google.com/calendar";
     "chess".url = "https://www.chess.com";
-    "codescene".url =
-      "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
+    "codescene" = {
+      url =
+        "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
+      opts = work;
+    };
     "coggle".url = "https://coggle.it";
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
     "crunchyroll" = {
       url = "https://www.crunchyroll.com/it";
       opts = personal ++ no_plugins;
     };
-    "datadog".url = "https://app.datadoghq.eu/";
+    "datadog" = {
+      url = "https://app.datadoghq.eu/";
+      opts = work;
+    };
     "disney" = {
       url = "https://disneyplus.com";
       opts = personal;
     };
-    "drone_ci".url = "https://drone-1.prima.it";
+    "drone_ci" = {
+      url = "https://drone-1.prima.it";
+      opts = work;
+    };
     "elm-search" = {
       url = "https://klaftertief.github.io/elm-search/";
       opts = personal ++ no_plugins;
@@ -46,18 +56,26 @@ let
       url = "https://keep.google.com";
       opts = personal;
     };
-    "kibana".url = "https://kibana-k8s.prima.it/app/discover#";
     "maps" = {
       url = "https://www.google.it/maps/preview";
       opts = personal ++ no_plugins;
     };
-    "meet".url = "https://meet.google.com";
+    "meet" = {
+      url = "https://meet.google.com";
+      opts = work;
+    };
     "messages" = {
       url = "https://messages.google.com/web/conversations";
       opts = personal ++ no_plugins;
     };
-    "miro".url = "https://miro.com/app/dashboard";
-    "n2f".url = "https://www.n2f.com/app/#";
+    "miro" = {
+      url = "https://miro.com/app/dashboard";
+      opts = work;
+    };
+    "n2f" = {
+      url = "https://www.n2f.com/app/#";
+      opts = work;
+    };
     "netflix" = {
       url = "https://www.netflix.com";
       opts = personal;
@@ -66,8 +84,14 @@ let
       url = "https://news.google.it";
       opts = personal;
     };
-    "nibol".url = "https://app.nibol.co";
-    "notion".url = "https://www.notion.so";
+    "nibol" = {
+      url = "https://app.nibol.co";
+      opts = work;
+    };
+    "notion" = {
+      url = "https://www.notion.so";
+      opts = work;
+    };
     "onshape" = {
       url = "https://cad.onshape.com";
       opts = personal ++ no_plugins;
@@ -76,7 +100,10 @@ let
       url = "https://jspaint.app/";
       opts = [ "" ];
     };
-    "personio".url = "https://prima-assicurazioni.personio.de";
+    "personio" = {
+      url = "https://prima-assicurazioni.personio.de";
+      opts = work;
+    };
     "photos" = {
       url = "https://photos.google.com";
       opts = personal;
@@ -89,16 +116,22 @@ let
       url = "https://www.printables.com";
       opts = personal;
     };
-    "pyxis-doc".url = "http://elm.prima.design";
+    "pyxis-doc" = {
+      url = "http://elm.prima.design";
+      opts = work;
+    };
     "reddit" = {
       url = "https://reddit.com";
       opts = personal;
     };
     "sheets".url = "https://docs.google.com/spreadsheets";
-    "slack".url = "https://prima.slack.com";
+    "slack" = {
+      url = "https://prima.slack.com";
+      opts = work;
+    };
     "swarmia" = {
       url = "https://app.swarmia.com/insights";
-      opts = [ "" ];
+      opts = work;
     };
     "telegram" = {
       url = "https://web.telegram.org/k/";
@@ -124,10 +157,15 @@ let
       url = "https://xbox.com/play";
       opts = personal ++ no_plugins;
     };
-    "youtrack-backlog".url =
-      "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(INTEXN)%20Backlog-967";
-    "youtrack".url =
-      "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
+    "youtrack-backlog" = {
+      url =
+        "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(INTEXN)%20Backlog-967";
+      opts = work;
+    };
+    "youtrack" = {
+      url = "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
+      opts = work;
+    };
     "youtube" = {
       url = "https://youtube.com";
       opts = personal;
