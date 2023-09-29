@@ -5,7 +5,7 @@
     ../modules/desktop.nix
     ../modules/dev.nix
     ../modules/git.nix
-    ../modules/neovim.nix
+    ../modules/neovim
     ../modules/fish.nix
     ../modules/saint-peter.nix
     ../modules/xmonad
