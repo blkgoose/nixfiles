@@ -68,6 +68,9 @@ require("lazy").setup({
           enable = true,
         },
       })
+
+      opt.foldmethod = "expr"
+      opt.foldexpr = "nvim_treesitter#foldexpr()"
     end,
   },
 
