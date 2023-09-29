@@ -13,6 +13,7 @@
     autorandr
     playerctl
     xclip
+    zoom-us
   ];
 
   home.file.".local/bin/chrome_notification_mapper.sh".source =
