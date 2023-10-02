@@ -9,6 +9,8 @@
 
   environment.systemPackages = with pkgs; [ htop ];
 
+  programs.steam.enable = true;
+
   fonts.fonts = with pkgs; [
     font-awesome
     (nerdfonts.override { fonts = [ "Hasklig" ]; })
