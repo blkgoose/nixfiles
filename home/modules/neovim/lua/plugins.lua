@@ -29,6 +29,39 @@ require("lazy").setup({
   },
 
   {
+    "kevinhwang91/nvim-ufo",
+    dependencies = { "kevinhwang91/promise-async" },
+    event = "VeryLazy",
+    config = function()
+      local ufo = require("ufo")
+
+      ufo.setup({
+        open_fold_hl_timeout = 150,
+        close_fold_kinds = { "imports", "comment" },
+        provider_selector = function(bufnr, filetype, buftype)
+          return { "treesitter", "indent" }
+        end,
+      })
+    end,
+  },
+
+ {
+    "luukvbaal/statuscol.nvim",
+    lazy = false,
+    config = function()
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = true,
+        segments = {
+          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+          { text = { " %s" }, click = "v:lua.ScSa" },
+          { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+        },
+      })
+    end,
+  },
+
+  {
     "ThemerCorp/themer.lua",
     opts = {
       colorscheme = palette.colorscheme,
@@ -69,8 +102,8 @@ require("lazy").setup({
         },
       })
 
-      opt.foldmethod = "expr"
-      opt.foldexpr = "nvim_treesitter#foldexpr()"
+      -- opt.foldmethod = "expr"
+      -- opt.foldexpr = "nvim_treesitter#foldexpr()"
     end,
   },
 

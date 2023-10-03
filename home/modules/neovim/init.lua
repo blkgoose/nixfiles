@@ -23,6 +23,12 @@ opt.guicursor = "i:block"
 opt.termguicolors = true
 opt.pumheight = 12
 
+opt.foldcolumn = "1"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
 opt.mouse = ""
 
 cmd([[
