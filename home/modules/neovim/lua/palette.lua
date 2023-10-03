@@ -121,6 +121,8 @@ local colorscheme = {
       DiffChange = { fg = colors.black, bg = colors.dark_yellow },
       DiffDelete = { fg = colors.black, bg = colors.dark_red },
       DiffText = { bg = colors.grey1 },
+      FoldColumn = { fg = colors.grey4, bg = colors.black },
+      Folded = { bg = colors.light_black },
       ["@lsp.type.class"] = { fg = syntax.type },
       ["@lsp.type.decorator"] = { fg = syntax["function"] },
       ["@lsp.type.enum"] = { fg = syntax.type },
