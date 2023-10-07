@@ -39,7 +39,7 @@ myConf = def { terminal = "alacritty"
             , ((0, xF86XK_MonBrightnessUp), spawn "light -A 10; brightness_notification")
             , ((0, xF86XK_MonBrightnessUp), spawn "light -U 10; brightness_notification")
 
-            , ((0, xF86XK_Sleep), spawn "systemctl suspend")
+            , ((mod4Mask, xK_i), spawn "systemctl suspend")
             ]
 
 main = do
