@@ -148,14 +148,7 @@
     appname = "KDE Connect"
     format = "<b>%s</b>\n\n%b\n"
 
-[whatsapp_web]
-    body = "web.whatsapp.com*"
-    format = "<b>%s<\b>\n\n%b\n"
-
-# [google_notifications]
-#     appname = "Google Chrome"
-#     script = "~/.local/bin/chrome_notification_mapper.sh"
-#     format = ""
-
-# [private_mode]
-#     format = "<b>%s"
+[google_notifications]
+    appname = "Google Chrome"
+    script = "~/.local/bin/chrome_notification_mapper"
+    format = ""

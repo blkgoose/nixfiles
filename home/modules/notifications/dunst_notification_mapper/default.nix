@@ -1,3 +1,3 @@
 { ... }: {
-  home.file.".local/bin/chrome_notification_mapper.sh".source = ./mapper.sh;
+  home.file.".local/bin/chrome_notification_mapper".source = ./mapper.sh;
 }

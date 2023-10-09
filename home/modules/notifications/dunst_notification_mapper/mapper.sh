@@ -6,8 +6,6 @@ body="$3"
 icon="$4"
 urgency="$5"
 
-echo "$appname" "$summary" "$body" "$icon" "$urgency" >~/notification
-
 declare -A icon_mapping
 icon_mapping["reddit"]="web-reddit"
 
