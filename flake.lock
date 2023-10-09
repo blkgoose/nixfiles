@@ -40,6 +40,24 @@
         "systems": "systems_2"
       },
       "locked": {
+        "lastModified": 1692799911,
+        "narHash": "sha256-3eihraek4qL744EvQXsK1Ha6C3CR7nnT8X2qWap4RNk=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "f9e7cf818399d17d347f847525c5a5a8032e4e44",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_3": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
         "lastModified": 1689068808,
         "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
         "owner": "numtide",
@@ -114,20 +132,35 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1694585345,
-        "narHash": "sha256-WGNYm2AzY/lB0YbUP1Jmiqaq6MS9fpanA8RwyzS6qqo=",
+        "lastModified": 1696815342,
+        "narHash": "sha256-MHA0Ye0PaFF6pay6tP9yMgwWvuqRraa9bH45U88RwC4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5d2b2523a0442fd19294359b31b8535696c32984",
+        "rev": "8be69c1764f58e07099e4a24b926f49bbada8c7f",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
+        "ref": "release-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1693060755,
+        "narHash": "sha256-KNsbfqewEziFJEpPR0qvVz4rx0x6QXxw1CcunRhlFdk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c66ccfa00c643751da2fd9290e096ceaa30493fc",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1693663421,
         "narHash": "sha256-ImMIlWE/idjcZAfxKK8sQA7A1Gi/O58u5/CJA+mxvl8=",
@@ -143,7 +176,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1689192006,
         "narHash": "sha256-QM0f0d8oPphOTYJebsHioR9+FzJcy1QNIzREyubB91U=",
@@ -159,11 +192,30 @@
         "type": "github"
       }
     },
+    "orcaSlicer": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1693147294,
+        "narHash": "sha256-4+09HY6FhZTZBHnQaKMANq8nAz//lIZ95X78ylCKjr4=",
+        "owner": "ovlach",
+        "repo": "nix-orca-slicer",
+        "rev": "1e71e6e01ef3b49d0731ca611b6bfce32dbe26d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ovlach",
+        "repo": "nix-orca-slicer",
+        "type": "github"
+      }
+    },
     "poetry2nix": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils_3",
         "nix-github-actions": "nix-github-actions",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1693659252,
@@ -185,6 +237,7 @@
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "orcaSlicer": "orcaSlicer",
         "secret_dots": "secret_dots",
         "suite_py": "suite_py"
       }
@@ -208,8 +261,8 @@
     },
     "suite_py": {
       "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_2",
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_3",
         "poetry2nix": "poetry2nix"
       },
       "locked": {
@@ -242,6 +295,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

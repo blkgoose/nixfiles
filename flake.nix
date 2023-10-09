@@ -2,7 +2,7 @@
   description = "My NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/release-23.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager = {
@@ -11,6 +11,7 @@
     };
 
     suite_py.url = "suite_py";
+    orcaSlicer.url = "github:ovlach/nix-orca-slicer";
 
     secret_dots = {
       url = "git+file:./secret_dotfiles?shallow=1";
@@ -22,8 +23,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, suite_py, dots
-    , secret_dots, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, suite_py, orcaSlicer
+    , dots, secret_dots, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
