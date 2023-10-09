@@ -12,6 +12,7 @@
     ../modules/chromeapps.nix
     ../modules/aliases.nix
     ../modules/autorandr
+    ../modules/notifications
   ];
 
   home.file.".background-image".source = ./wallpaper;

@@ -16,9 +16,6 @@
     zoom-us
   ];
 
-  home.file.".local/bin/chrome_notification_mapper.sh".source =
-    "${dots}/apps/chrome_notification_mapper.sh";
-
   xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
