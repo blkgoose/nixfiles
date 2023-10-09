@@ -16,7 +16,6 @@
     zoom-us
   ];
 
-  xdg.configFile."dunst/dunstrc".source = "${dots}/dunst/dunstrc";
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   services.redshift = {
