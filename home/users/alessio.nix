@@ -13,6 +13,7 @@
     ../modules/chromeapps.nix
     ../modules/aliases.nix
     ../modules/autorandr
+    ../modules/battery_low_alert.nix
   ];
 
   home.file.".background-image".source = ./wallpaper;
