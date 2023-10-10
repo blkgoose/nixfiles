@@ -41,7 +41,6 @@ in {
     haskellPackages.xmonad-contrib
     haskellPackages.xmonad-extras
     dmenu_smart
-    libnotify
   ];
 
   services.dbus.enable = true;
