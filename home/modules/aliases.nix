@@ -1,12 +1,13 @@
 { lib, pkgs, ... }:
 let
   apps = {
-    "screenshot" = "escrotum --select --clipboard";
+    "screenshot" = "${pkgs.escrotum}/bin/escrotum --select --clipboard";
     "chrome" = "${pkgs.google-chrome}/bin/google-chrome-stable";
     "beekeeper" = pkgs.writers.writeBash "beekeeper" ''
       ${pkgs.sqlite}/bin/sqlite3 ~/.config/beekeeper-studio/app.db "UPDATE saved_connection SET host = 'postgres-$QA_HASH.prima.qa' WHERE name = 'QA'"
       ${pkgs.beekeeper-studio}/bin/beekeeper-studio
     '';
+    "zoom" = "${pkgs.zoom-us}/bin/zoom";
   };
 
   mkAlias = name: command: {
