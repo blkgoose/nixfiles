@@ -7,12 +7,12 @@
     ../modules/git.nix
     ../modules/neovim
     ../modules/fish.nix
+    ../modules/dunst.nix
     ../modules/saint-peter.nix
     ../modules/xmonad
     ../modules/chromeapps.nix
     ../modules/aliases.nix
     ../modules/autorandr
-    ../modules/notifications
   ];
 
   home.file.".background-image".source = ./wallpaper;
