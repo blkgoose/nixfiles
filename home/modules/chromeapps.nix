@@ -88,6 +88,10 @@ let
       url = "https://app.nibol.co";
       opts = work;
     };
+    "nix-search" = {
+      url = "https://search.nixos.org/packages";
+      opts = personal;
+    };
     "notion" = {
       url = "https://www.notion.so";
       opts = work;
