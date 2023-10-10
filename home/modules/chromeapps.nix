@@ -180,7 +180,7 @@ let
     { url, opts ? [ ] }:
     let
       spacedOpts = lib.strings.concatStringsSep " " opts;
-      chrome = "google-chrome-stable";
+      chrome = "chrome";
       chromeCall = ''
         ${chrome} --app='${url}' --new-window ${spacedOpts}
       '';

@@ -1,7 +1,6 @@
 { pkgs, dots, ... }: {
   home.packages = with pkgs; [
     discord
-    google-chrome
     slack
     spotify
     dunst
