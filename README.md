@@ -1,7 +1,7 @@
 # TODO
 
 - [ ] battery indicator
-- [ ] battery low alert
+- [x] battery low alert
 - [x] whatsapp chromeapp
 - [x] telegram chromeapp
 - [x] volume control
@@ -11,3 +11,4 @@
 - [ ] xmonad fancy design
 - [x] volume control script
 - [ ] use compiled xmonad to remove compiled dependencies
+- [ ] battery alert only once
