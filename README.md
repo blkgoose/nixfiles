@@ -9,5 +9,5 @@
 - [x] player control
 - [ ] dmenu submenus
 - [ ] xmonad fancy design
-- [ ] volume control script
+- [x] volume control script
 - [ ] use compiled xmonad to remove compiled dependencies

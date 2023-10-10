@@ -111,7 +111,7 @@ in {
         show_indicators = "yes";
         icon_position = "left";
         enable_recursive_icon_lookup = true;
-        icon_theme = "Papirus";
+        icon_theme = "Papirus, hicolor";
         min_icon_size = 48;
         max_icon_size = 60;
         sticky_history = "yes";
@@ -159,7 +159,7 @@ in {
 
       spotify_volume = {
         appname = "volume:spotify";
-        highlight = "#1fd660";
+        highlight = "#ff7ca4";
         format = "<b>%s</b>\\n";
         history_ignore = "yes";
       };
@@ -174,14 +174,6 @@ in {
       volume = {
         appname = "volume";
         highlight = "#ff7ca4";
-        format = ''
-          <b>%s</b>n
-        '';
-        history_ignore = "yes";
-      };
-
-      volume-mute = {
-        appname = "volume";
         format = "<b>%s</b>\\n";
         history_ignore = "yes";
       };
@@ -202,7 +194,7 @@ in {
         script = lib.meta.getExe chrome_notification_mapper;
         format = "";
         skip_display = true;
-        skip_history = true;
+        history_ignore = "yes";
       };
     };
   };

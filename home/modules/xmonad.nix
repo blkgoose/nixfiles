@@ -1,16 +1,99 @@
 { dots, pkgs, lib, ... }:
 let
-  spotify_volume_control = pkgs.writers.writeBashBin "spotify_volume_control" ''
-    ${pkgs.dunst}/bin/dunstify -a "spotify_volume_control" "$@"
+  spotify_volume_control = pkgs.writers.writeBash "spotify_volume_control" ''
+    inc="$1"
+
+    spotify_id=$(\
+        ${pkgs.wireplumber}/bin/wpctl status \
+        | ${pkgs.gnused}/bin/sed -n -e '/Streams:/,$p' \
+        | ${pkgs.gnused}/bin/sed '/^Video/q' \
+        | ${pkgs.gnugrep}/bin/grep "\. spotify" \
+        | ${pkgs.coreutils}/bin/cut -d. -f1 \
+        | ${pkgs.gawk}/bin/gawk '{printf "%s\n", $1}'
+    )
+
+    function notify() {
+        ${pkgs.dunst}/bin/dunstify \
+            -a "volume:spotify" \
+            -u low \
+            -h string:x-dunst-stack-tag:spotify_volume \
+            -i spotify \
+            "$@"
+    }
+
+    # if spotify is not running, stop
+    [[ -z "$spotify_id" ]] && {
+        notify "not running"
+        exit
+    }
+
+    # first client sets volume for all
+    first_id=$(echo "$spotify_id" | ${pkgs.coreutils}/bin/head -1)
+    ${pkgs.wireplumber}/bin/wpctl set-volume "$first_id" "$inc"
+    volume_raw="$(${pkgs.wireplumber}/bin/wpctl get-volume "$first_id" \
+        | ${pkgs.coreutils}/bin/cut -d: -f2 \
+        | ${pkgs.findutils}/bin/xargs \
+    )"
+    volume="$(echo "$volume_raw" | ${pkgs.gawk}/bin/awk '{printf "%0.0f", $1*100}')"
+
+    for sid in $spotify_id
+    do
+        ${pkgs.wireplumber}/bin/wpctl set-volume "$sid" "$volume_raw"
+    done
+
+    notify \
+        -h int:value:"$volume" \
+        "spotify: $volume%"
   '';
 
-  brightness_notification =
-    pkgs.writers.writeBashBin "brightness_notification" ''
-      ${pkgs.dunst}/bin/dunstify -a "brightness_notification" "$@"
-    '';
+  brightness_notification = pkgs.writers.writeBash "brightness_notification" ''
+    brightness=$(${pkgs.light}/bin/light -G | awk '{printf "%0.0f\n", $1}')
 
-  volume_notification = pkgs.writers.writeBashBin "volume_notification" ''
-    ${pkgs.dunst}/bin/dunstify -a "volume_notification" "$@"
+    ${pkgs.dunst}/bin/dunstify \
+        -a "brightness" \
+        -u low \
+        -i display-brightness-symbolic \
+        -h int:value:"$brightness" \
+        -h string:x-dunst-stack-tag:brightness \
+        "brightness: $brightness"
+  '';
+
+  volume_controller = pkgs.writers.writeBash "volume_controller" ''
+    inc="$1"
+
+    if [[ $inc == "0" ]]; then
+        ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+    else
+        ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ "$inc"
+    fi
+
+    volume="$(${pkgs.pulseaudio}/bin/pactl get-sink-volume @DEFAULT_SINK@ \
+        | ${pkgs.gnugrep}/bin/grep -oP "(\d*)%" \
+        | ${pkgs.coreutils}/bin/head -1 \
+    )"
+    mute="$(${pkgs.pulseaudio}/bin/pactl get-sink-mute @DEFAULT_SINK@ \
+        | ${pkgs.gnugrep}/bin/grep -q "no" && echo "on" || echo "off"\
+    )"
+
+    function notify() {
+        ${pkgs.dunst}/bin/dunstify \
+            -a "volume" \
+            -u low \
+            -h string:x-dunst-stack-tag:volume \
+            "$@"
+    }
+
+    if [[ "$volume" == 0 || "$mute" == "off" ]]; then
+        notify \
+            -i audio-volume-muted \
+            -h int:value:"$volume" \
+            "volume: muted"
+    else
+        notify \
+            -i audio-volume-high \
+            -h int:value:"$volume" \
+            "volume: $volume"
+    fi
   '';
 
   conf = pkgs.writeText "xmonad" ''
@@ -41,9 +124,9 @@ let
                 , ((mod4Mask, xK_r), spawn "${pkgs.dunst}/bin/dunstctl context")
                 , ((0, xK_Caps_Lock), spawn "${pkgs.dunst}/bin/dunstctl set-paused toggle")
 
-                , ((0, xF86XK_AudioLowerVolume), spawn "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%; ${volume_notification}")
-                , ((0, xF86XK_AudioRaiseVolume), spawn "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%; ${volume_notification}")
-                , ((0, xF86XK_AudioMute), spawn "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; ${volume_notification}")
+                , ((0, xF86XK_AudioLowerVolume), spawn "${volume_controller} -5%")
+                , ((0, xF86XK_AudioRaiseVolume), spawn "${volume_controller} +5%")
+                , ((0, xF86XK_AudioMute), spawn "${volume_controller} 0")
 
                 , ((shiftMask, xF86XK_AudioLowerVolume), spawn "${spotify_volume_control} 5%-")
                 , ((shiftMask, xF86XK_AudioRaiseVolume), spawn "${spotify_volume_control} 5%+")
