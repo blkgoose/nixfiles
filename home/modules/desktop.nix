@@ -32,7 +32,6 @@
       night = 3700;
     };
   };
-  services.dunst.enable = true;
   services.picom = {
     enable = true;
     # backend = "glx";
