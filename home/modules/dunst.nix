@@ -37,6 +37,10 @@ let
         exit 0
       fi
 
+      if [[ "$appname" == "whatsapp" ]] && [[ "$body" == "Sincronizzazione dei messaggi in background in corso..." ]]; then
+        exit 0        
+      fi
+
       # slack
       if [[ "$appname" == "slack" ]]; then
         if [[ "$summary" =~ "New message from".* ]]; then
