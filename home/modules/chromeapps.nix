@@ -189,7 +189,9 @@ let
       value = {
         text = ''
           #!/usr/bin/env bash
-        '' + chromeCall;
+
+          ${chromeCall}
+        '';
         executable = true;
       };
     };
