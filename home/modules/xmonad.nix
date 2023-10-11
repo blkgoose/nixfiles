@@ -146,8 +146,8 @@ let
                 , ((mod1Mask, xK_j), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- 0 +${mouse_move}")
                 , ((mod1Mask, xK_k), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- 0 -${mouse_move}")
                 , ((mod1Mask, xK_l), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- +${mouse_move} 0")
-                , ((mod1Mask .|. shiftMask, xK_h), spawn "${pkgs.xdotool}/bin/xdotool click 1")
-                , ((mod1Mask .|. shiftMask, xK_l), spawn "${pkgs.xdotool}/bin/xdotool click 3")
+                , ((mod1Mask .|. mod4Mask, xK_h), spawn "${pkgs.xdotool}/bin/xdotool click 1")
+                , ((mod1Mask .|. mod4Mask, xK_l), spawn "${pkgs.xdotool}/bin/xdotool click 3")
                 ]
 
     main = do
