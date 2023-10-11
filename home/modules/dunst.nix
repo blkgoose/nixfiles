@@ -85,8 +85,8 @@ in {
         markup = "full";
         format = "<b>%a</b>\\n%s\\n\\n%b";
 
-        width = 400;
-        origin = "top-right";
+        width = 800;
+        origin = "top-center";
         offset = "0x0";
         font = "Hack Nerd Font 11";
         transparency = 1;
@@ -106,6 +106,7 @@ in {
         progress_bar_min_width = 150;
         progress_bar_max_width = 350;
 
+        notification_limit = 1;
         alignment = "left";
         vertical_alignment = "center";
         show_age_threshold = 30;
