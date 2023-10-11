@@ -1,5 +1,7 @@
 { dots, pkgs, lib, ... }:
 let
+  mouse_move = "10";
+
   spotify_volume_control = pkgs.writers.writeBash "spotify_volume_control" ''
     inc="$1"
 
@@ -139,6 +141,11 @@ let
                 , ((0, xF86XK_MonBrightnessUp), spawn "${pkgs.light}/bin/light -U 10; ${brightness_notification}")
 
                 , ((mod4Mask, xK_i), spawn "systemctl suspend")
+
+                , ((mod1Mask, xK_h), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- -${mouse_move} 0")
+                , ((mod1Mask, xK_j), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- 0 +${mouse_move}")
+                , ((mod1Mask, xK_k), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- 0 -${mouse_move}")
+                , ((mod1Mask, xK_l), spawn "${pkgs.xdotool}/bin/xdotool mousemove_relative -- +${mouse_move} 0")
                 ]
 
     main = do
