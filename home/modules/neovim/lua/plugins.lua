@@ -195,6 +195,7 @@ require("lazy").setup({
 
         --         if client.name == "rust-analyzer" then
         client.server_capabilities.semanticTokensProvider = nil
+        client.resolved_capabilities.document_formatting = false
         --         end
       end
 
