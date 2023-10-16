@@ -5,7 +5,9 @@
 
   services.redshift = {
     enable = true;
-    provider = "geoclue2";
+    provider = "manual";
+    latitude = "45.4643";
+    longitude = "9.1895";
     settings = {
       redshift = {
         brightness-day = 1;
