@@ -1,6 +1,6 @@
 { pkgs, dots, ... }: {
   home.file.".config/fish" = {
-    source = "${dots}/fish";
+    source = ./conf;
     recursive = true;
   };
 
