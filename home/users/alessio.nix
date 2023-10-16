@@ -6,7 +6,7 @@
     ../modules/dev.nix
     ../modules/git.nix
     ../modules/neovim
-    ../modules/fish.nix
+    ../modules/fish
     ../modules/dunst.nix
     ../modules/saint-peter.nix
     ../modules/xmonad.nix
