@@ -1,6 +1,30 @@
 { lib, pkgs, ... }:
 let
-  ignored_apps = [ "google-chrome.*" ];
+  ignored_apps = [
+    "^whatis$"
+    "^slabtop$"
+    "^netcap$"
+    "^parec.*$"
+    "^parse_.*$"
+    "^parse..*$"
+    "^parted$"
+    "^djvuxmlparser$"
+    "^gpgparsemail$"
+    "^link-parser$"
+    "^p3dcparse$"
+    "^tr$"
+    "^tracegen.*$"
+    "^tracepath$"
+    "^traceroute$"
+    "^tabs$"
+    "^tac$"
+    "^tracker3$"
+    "^photorec$"
+    "^nix$"
+    "^nixfmt$"
+    "^nixos"
+    "^nix-(?!search).*$"
+  ];
 
   ignored = lib.strings.concatStringsSep "|" ignored_apps;
 
@@ -10,7 +34,7 @@ let
           #!$out/bin/sh
 
           IFS=:
-          $out/bin/stest -flx \$PATH | sort -u | grep -v "${ignored}"
+          $out/bin/stest -flx \$PATH | sort -u | grep -vP "${ignored}"
       EOF
     '';
   });
