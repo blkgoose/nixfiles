@@ -57,7 +57,7 @@ let
 
             body=$(echo "$body" \
                 | ${pkgs.coreutils}/bin/cut -d: -f2- \
-                | ${pkgs.findutils}/bin/xargs \
+                | ${pkgs.gnused}/bin/sed "s/^ *//" \
             )
 
             group=$(echo "$summary" \
