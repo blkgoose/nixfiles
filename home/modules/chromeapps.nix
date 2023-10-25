@@ -48,6 +48,10 @@ let
     };
     "github".url = "https://github.com";
     "gmail".url = "https://mail.google.com";
+    "hackernews" = {
+      url = "https://hckrnews.com/";
+      opts = personal;
+    };
     "instagram" = {
       url = "https://instagram.com";
       opts = personal;
