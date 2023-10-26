@@ -11,6 +11,7 @@
     };
 
     suite_py.url = "suite_py";
+    prima-nix.url = "prima-nix";
     orcaSlicer.url = "github:ovlach/nix-orca-slicer";
 
     secret_dots = {
@@ -23,15 +24,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, suite_py, orcaSlicer
-    , dots, secret_dots, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, suite_py, prima-nix
+    , orcaSlicer, dots, secret_dots, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
 
-        overlays = [ suite_py.overlays.default ];
+        overlays = [ suite_py.overlays.default prima-nix.overlays.default ];
       };
       lib = nixpkgs.lib;
       homeManager = {
