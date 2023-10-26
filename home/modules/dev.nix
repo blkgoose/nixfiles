@@ -7,7 +7,6 @@
     yarn
     insomnia
     kubectl
-    suite_py
   ];
 
   programs.vscode = {
