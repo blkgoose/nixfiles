@@ -8,6 +8,7 @@
     insomnia
     kubectl
     suite_py
+    pre-commit
   ];
 
   programs.vscode = {
