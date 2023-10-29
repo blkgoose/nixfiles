@@ -1,8 +1,8 @@
-{ ... }: {
+{ secret_dots, ... }: {
   imports = [ ./cloudflare-warp.nix ];
 
   services.cloudflare-warp = {
     enable = true;
-    certificate = ./Cloudflare_CA.pem;
+    certificate = "${secret_dots}/Cloudflare_CA.pem";
   };
 }
