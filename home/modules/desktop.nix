@@ -1,13 +1,5 @@
 { pkgs, dots, ... }: {
-  home.packages = with pkgs; [
-    discord
-    spotify
-    feh
-    gimp
-    xclip
-    autorandr
-    google-chrome
-  ];
+  home.packages = with pkgs; [ discord spotify feh gimp xclip google-chrome ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 

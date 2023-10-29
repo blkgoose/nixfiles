@@ -12,7 +12,7 @@
     ../modules/xmonad.nix
     ../modules/chromeapps.nix
     ../modules/aliases.nix
-    ../modules/autorandr
+    ../modules/autorandr.nix
     ../modules/battery_low_alert.nix
     ../modules/eye_saver.nix
   ];
