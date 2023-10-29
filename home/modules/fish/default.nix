@@ -6,11 +6,23 @@
 
   programs.fish = {
     enable = true;
+
+    shellAbbrs = {
+      gd = "git diff";
+      g = "git";
+      gp = "git push";
+      gs = "git s";
+      ga = "git add";
+      gdc = "git diff --cached";
+      gc = "git commit -m";
+    };
+
     shellAliases = {
       unp = "${pkgs.unp}/bin/unp --smart $argv";
       watch = "command watch -n0 --color $argv";
       clip = "${pkgs.xclip}/bin/xclip -selection clipboard $argv";
     };
+
     functions = {
       foreach = {
         body = "xargs -I'{}' fish -c $fun";
