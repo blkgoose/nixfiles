@@ -34,6 +34,10 @@
   services.logind.lidSwitch = "ignore";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 15d";
+  };
 
   system.stateVersion = "23.05";
 }
