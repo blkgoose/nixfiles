@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-xset q | grep "Monitor is On" -q || exit 1
