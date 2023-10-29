@@ -9,6 +9,7 @@
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/virtualization.nix
+    ../../modules/orca-slicer.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix
