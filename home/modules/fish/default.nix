@@ -66,7 +66,13 @@
                 set suffix '$'
         end
 
-        echo -n -s "[$status] " (set_color green)(basename (pwd))(set_color normal)" $suffix "
+        set nix_shell (
+            if test -n "$IN_NIX_SHELL"
+              echo (set_color cyan)"dev|"(set_color normal)
+            end
+        )
+
+        echo -n -s "$nix_shell""[$status] " (set_color green)(basename (pwd))(set_color normal)" $suffix "
       '';
 
       fish_right_prompt = ''
