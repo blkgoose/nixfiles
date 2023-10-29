@@ -40,11 +40,11 @@
       };
     in {
       nixosConfigurations = {
-        laptop = lib.nixosSystem {
+        bjorn = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = attrs;
-          modules = [ ./systems/laptop homeManager ];
+          modules = [ ./systems/bjorn homeManager ];
         };
       };
     };
