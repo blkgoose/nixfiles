@@ -1,8 +1,7 @@
-{ secret_dots, ... }: {
-  imports = [ ./cloudflare-warp.nix ];
+{ secret_dots, pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ cloudflare-warp ];
+  systemd.packages = with pkgs; [ cloudflare-warp ];
 
-  services.cloudflare-warp = {
-    enable = true;
-    certificate = "${secret_dots}/Cloudflare_CA.pem";
-  };
+  security.pki.certificateFiles =
+    [ "${secret_dots}/vpn/warp/Cloudflare_CA.pem" ];
 }
