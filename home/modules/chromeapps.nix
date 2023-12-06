@@ -138,7 +138,8 @@ let
       opts = work;
     };
     "swarmia" = {
-      url = "https://app.swarmia.com/insights";
+      url =
+        "https://app.swarmia.com/insights/code/overview?timeframe=last_7_days";
       opts = work;
     };
     "telegram" = {
