@@ -48,7 +48,16 @@ let
         "spotify: $volume%"
   '';
 
-  brightness_notification = pkgs.writers.writeBash "brightness_notification" ''
+  brightness_controller = pkgs.writers.writeBash "brightness_notification" ''
+    dir="$1"
+    inc="10"
+
+    if [[ "$dir" == "+" ]]; then
+        sudo ${pkgs.light}/bin/light -A "$inc"
+    else
+        sudo ${pkgs.light}/bin/light -U "$inc"
+    fi
+
     brightness=$(${pkgs.light}/bin/light -G | awk '{printf "%0.0f\n", $1}')
 
     ${pkgs.dunst}/bin/dunstify \
@@ -137,8 +146,8 @@ let
                 , ((0, xF86XK_AudioNext), spawn "${pkgs.playerctl}/bin/playerctl next")
                 , ((0, xF86XK_AudioPrev), spawn "${pkgs.playerctl}/bin/playerctl previous")
 
-                , ((0, xF86XK_MonBrightnessUp), spawn "${pkgs.light}/bin/light -A 10; ${brightness_notification}")
-                , ((0, xF86XK_MonBrightnessUp), spawn "${pkgs.light}/bin/light -U 10; ${brightness_notification}")
+                , ((0, xF86XK_MonBrightnessUp), spawn "${brightness_controller} +")
+                , ((0, xF86XK_MonBrightnessUp), spawn "${brightness_controller} -")
 
                 , ((mod4Mask, xK_i), spawn "systemctl suspend")
 
