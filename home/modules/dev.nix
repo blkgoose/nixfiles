@@ -9,6 +9,7 @@
     kubectl
     suite_py
     pre-commit
+    awscli2
   ];
 
   programs.vscode = {
