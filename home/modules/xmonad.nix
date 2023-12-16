@@ -49,16 +49,14 @@ let
   '';
 
   brightness_controller = pkgs.writers.writeBash "brightness_notification" ''
-    dir="$1"
-    inc="10"
+    inc="$1"
 
-    if [[ "$dir" == "+" ]]; then
-        sudo ${pkgs.light}/bin/light -A "$inc"
-    else
-        sudo ${pkgs.light}/bin/light -U "$inc"
-    fi
-
-    brightness=$(${pkgs.light}/bin/light -G | awk '{printf "%0.0f\n", $1}')
+    brightness="$(\
+        ${pkgs.brightnessctl}/bin/brightnessctl s $inc \
+        | ${pkgs.gnugrep}/bin/grep -oP '\d+' \
+        | ${pkgs.coreutils}/bin/tail -n+2 \
+        | ${pkgs.coreutils}/bin/head -1 
+    )"
 
     ${pkgs.dunst}/bin/dunstify \
         -a "brightness" \
@@ -66,7 +64,7 @@ let
         -i display-brightness-symbolic \
         -h int:value:"$brightness" \
         -h string:x-dunst-stack-tag:brightness \
-        "brightness: $brightness"
+        "brightness: $brightness%"
   '';
 
   volume_controller = pkgs.writers.writeBash "volume_controller" ''
@@ -146,8 +144,8 @@ let
                 , ((0, xF86XK_AudioNext), spawn "${pkgs.playerctl}/bin/playerctl next")
                 , ((0, xF86XK_AudioPrev), spawn "${pkgs.playerctl}/bin/playerctl previous")
 
-                , ((0, xF86XK_MonBrightnessUp), spawn "${brightness_controller} +")
-                , ((0, xF86XK_MonBrightnessUp), spawn "${brightness_controller} -")
+                , ((0, xF86XK_MonBrightnessUp), spawn "${brightness_controller} 10%+")
+                , ((0, xF86XK_MonBrightnessDown), spawn "${brightness_controller} 10%-")
 
                 , ((mod4Mask, xK_i), spawn "systemctl suspend")
 
