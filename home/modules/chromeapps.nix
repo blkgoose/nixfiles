@@ -151,7 +151,7 @@ let
       opts = personal;
     };
     "tvshowtime" = {
-      url = "https://www.tvtime.com/en/to-watch";
+      url = "https://app.tvtime.com/shows/watchlist";
       opts = personal;
     };
     "wallet" = {
