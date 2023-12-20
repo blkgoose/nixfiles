@@ -162,6 +162,10 @@ let
       url = "https://web.whatsapp.com/";
       opts = personal ++ no_plugins;
     };
+    "wellfare" = {
+      url = "https://prima.oneflex.aon.it/flexible-benefits";
+      opts = work;
+    };
     "xbox" = {
       url = "https://xbox.com/play";
       opts = personal ++ no_plugins;
