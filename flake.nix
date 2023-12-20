@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-23.11";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -12,7 +13,6 @@
 
     suite_py.url = "suite_py";
     prima-nix.url = "prima-nix";
-    orcaSlicer.url = "github:ovlach/nix-orca-slicer";
 
     secret_dots = {
       url = "git+file:./secret_dotfiles?shallow=1";
@@ -24,16 +24,27 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, suite_py, prima-nix
-    , orcaSlicer, dots, secret_dots, ... }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware
+    , suite_py, prima-nix, dots, secret_dots, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
 
-        overlays = [ suite_py.overlays.default prima-nix.overlays.default ];
+        overlays = [
+          suite_py.overlays.default
+          prima-nix.overlays.default
+          (self: super: {
+            unstable = import nixpkgs-unstable {
+              inherit system;
+
+              config = { allowUnfree = true; };
+            };
+          })
+        ];
       };
+
       lib = nixpkgs.lib;
       homeManager = {
         home-manager.extraSpecialArgs = attrs // { inherit system; };
