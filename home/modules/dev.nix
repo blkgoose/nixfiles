@@ -12,12 +12,4 @@
     awscli2
   ];
 
-  programs.vscode = {
-    enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      vscodevim.vim
-      ms-vsliveshare.vsliveshare
-      rust-lang.rust-analyzer
-    ];
-  };
 }
