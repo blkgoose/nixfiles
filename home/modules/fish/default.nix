@@ -9,6 +9,7 @@
 
     shellInit = ''
       eval (direnv hook fish)
+      eval (ssh-agent -c) > /dev/null
     '';
 
     shellAbbrs = {
