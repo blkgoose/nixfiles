@@ -7,6 +7,10 @@
   programs.fish = {
     enable = true;
 
+    shellInit = ''
+      eval (direnv hook fish)
+    '';
+
     shellAbbrs = {
       gd = "git diff";
       g = "git";
