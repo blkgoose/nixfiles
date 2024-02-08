@@ -7,7 +7,8 @@
     yarn
     insomnia
     kubectl
-    suite_py
+    # suite_py
+    openssl_legacy
     pre-commit
     awscli2
   ];
