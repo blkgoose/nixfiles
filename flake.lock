@@ -1,22 +1,5 @@
 {
   "nodes": {
-    "dots": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1696958275,
-        "narHash": "sha256-LM4nWrKUDaf5yfWMl8GVK6zp3QYUAOH2vEyI0ZUHk8U=",
-        "ref": "refs/heads/master",
-        "rev": "3e6200aa603929b6beeb3376fc942e290bb6d0f3",
-        "shallow": true,
-        "type": "git",
-        "url": "file:./dotfiles"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "file:./dotfiles"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -233,7 +216,6 @@
     },
     "root": {
       "inputs": {
-        "dots": "dots",
         "home-manager": "home-manager",
         "nix-flatpak": "nix-flatpak",
         "nixos-hardware": "nixos-hardware",

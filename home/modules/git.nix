@@ -1,4 +1,4 @@
-{ dots, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 let
   excludes = pkgs.writeText "excludes" ''
     mutagen.yml.lock

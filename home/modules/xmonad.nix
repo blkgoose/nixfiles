@@ -1,4 +1,4 @@
-{ dots, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 let
   mouse_move = "20";
 
