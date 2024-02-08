@@ -22,14 +22,7 @@
 
   networking.hostName = "toaster";
 
-  # hardware.opengl = {
-  #   driSupport.enable = true;
-  #   # extraPackages = with pkgs; [ vaapiIntel vaapiVdpau intel-compute-runtime ];
-  # };
-
   services.hardware.bolt.enable = true;
-
-  # services.xserver.videoDrivers = [ "modesetting" ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
