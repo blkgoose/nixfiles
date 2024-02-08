@@ -1,1 +1,1 @@
-{ pkgs, dots, ... }: { home.packages = with pkgs; [ alacritty ]; }
+{ pkgs, ... }: { home.packages = with pkgs; [ alacritty ]; }
