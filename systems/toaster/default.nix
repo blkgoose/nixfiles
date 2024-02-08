@@ -1,0 +1,41 @@
+{ config, pkgs, nixos-hardware, home-manager, ... }: {
+  imports = [
+    ./hardware-configuration.nix
+    nixos-hardware.nixosModules.common-gpu-amd
+    nixos-hardware.nixosModules.common-cpu-amd
+
+    ../../modules/grub.nix
+    ../../modules/hyprland.nix
+    ../../modules/xmonad.nix
+    ../../modules/network
+    ../../modules/sound.nix
+    ../../modules/virtualization.nix
+    ../../modules/3d-printing.nix
+
+    ../../modules/users
+    ../../modules/users/alessio.nix
+  ];
+
+  programs.command-not-found.enable = false;
+
+  environment.systemPackages = with pkgs; [ git vim wget ];
+
+  networking.hostName = "toaster";
+
+  # hardware.opengl = {
+  #   driSupport.enable = true;
+  #   # extraPackages = with pkgs; [ vaapiIntel vaapiVdpau intel-compute-runtime ];
+  # };
+
+  services.hardware.bolt.enable = true;
+
+  # services.xserver.videoDrivers = [ "modesetting" ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 15d";
+  };
+
+  system.stateVersion = "23.11";
+}

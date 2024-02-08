@@ -59,6 +59,12 @@
             nix-flatpak.nixosModules.nix-flatpak
           ];
         };
+        toaster = lib.nixosSystem {
+          inherit system pkgs;
+
+          specialArgs = attrs;
+          modules = [ ./systems/toaster homeManager ];
+        };
       };
     };
 }
