@@ -14,6 +14,8 @@
 
     ../../modules/users
     ../../modules/users/alessio.nix
+
+    ../../modules/prima
   ];
 
   programs.command-not-found.enable = false;
