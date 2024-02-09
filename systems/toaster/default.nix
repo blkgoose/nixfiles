@@ -1,4 +1,4 @@
-{ config, pkgs, nixos-hardware, home-manager, ... }: {
+{ pkgs, nixos-hardware, ... }: {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-gpu-amd
