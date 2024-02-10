@@ -76,6 +76,8 @@
       };
 
       fish_prompt = ''
+        set s $status
+
         switch "$USER"
             case root toor
                 set suffix '#'
@@ -89,7 +91,7 @@
             end
         )
 
-        echo -n -s "$nix_shell""[$status] " (set_color green)(basename (pwd))(set_color normal)" $suffix "
+        echo -n -s "$nix_shell""[$s] " (set_color green)(basename (pwd))(set_color normal)" $suffix "
       '';
 
       fish_right_prompt = ''
