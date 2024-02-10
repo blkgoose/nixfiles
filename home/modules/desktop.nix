@@ -1,4 +1,12 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  paper-conf = pkgs.writeText "hyprpaper.conf" ''
+    ipc = off
+
+    preload = ${../users/wallpaper}
+    wallpaper = , ${../users/wallpaper}
+  '';
+in {
   home.packages = with pkgs; [ discord spotify feh gimp xclip google-chrome ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
@@ -43,4 +51,5 @@
     #   corner-radius = 10.0;
     # };
   };
+  home.file.".config/hypr/hyprpaper.conf".source = paper-conf;
 }
