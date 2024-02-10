@@ -6,7 +6,6 @@
 
     ../../modules/grub.nix
     ../../modules/hyprland.nix
-    ../../modules/xmonad.nix
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/virtualization.nix
