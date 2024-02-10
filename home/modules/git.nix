@@ -11,13 +11,6 @@
       unstage = "reset HEAD --";
       yolo = "push --force-with-lease";
       fap = "fetch --all --prune";
-      spy =
-        "!git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | grep 'refs/remotes' | sed 's#refs/remotes/origin/##' | grep -v 'HEAD$' | sort -k5n -k2M -k3n -k4.1 -k4.2 -k4.3 | tac";
-      spyname = "!git spy | sort -k7,8";
-      branch-clean =
-        "!git branch --merged | grep -vE 'master|develop|\\*' | xargs git branch -d";
-      c = "!git diff --cached && git cz";
-      create-branch = "!git checkout -b";
     };
 
     extraConfig = {
