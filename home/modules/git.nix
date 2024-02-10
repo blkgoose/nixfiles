@@ -1,11 +1,8 @@
-{ pkgs, lib, ... }:
-let
-  excludes = pkgs.writeText "excludes" ''
-    mutagen.yml.lock
-  '';
-in {
+{ ... }: {
   programs.git = {
     enable = true;
+
+    ignores = [ ".direnv/" "mutagen.yaml.lock" ];
 
     aliases = {
       lg =
@@ -34,7 +31,6 @@ in {
         editor = "nvim";
         autocrlf = "input";
         filemode = false;
-        excludesfile = "${excludes}";
       };
       push = {
         followTags = true;
@@ -43,7 +39,6 @@ in {
       diff.tool = "vimdiff";
       difftool.prompt = false;
       merge.tool = "vimdiff";
-
     };
   };
 }
