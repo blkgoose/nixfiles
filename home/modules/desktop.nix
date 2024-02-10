@@ -7,7 +7,7 @@ let
     wallpaper = , ${../users/wallpaper}
   '';
 in {
-  home.packages = with pkgs; [ discord spotify feh gimp xclip google-chrome ];
+  home.packages = with pkgs; [ spotify feh gimp xclip google-chrome ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
