@@ -5,6 +5,7 @@ let
     "chrome" = "${pkgs.google-chrome}/bin/google-chrome-stable";
     "beekeeper" = "${pkgs.beekeeper-studio}/bin/beekeeper-studio";
     "zoom" = "${pkgs.zoom-us}/bin/zoom";
+    "vim" = "${pkgs.neovim-nightly}/bin/nvim";
   };
 
   mkAlias = name: command: {
