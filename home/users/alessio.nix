@@ -11,7 +11,6 @@
     ../modules/saint-peter.nix
     ../modules/chromeapps.nix
     ../modules/aliases.nix
-    ../modules/autorandr.nix
     ../modules/battery_low_alert.nix
     ../modules/eye_saver.nix
     ../modules/hyprland
