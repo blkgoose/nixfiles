@@ -1,4 +1,4 @@
-{ config, pkgs, nixos-hardware, home-manager, ... }: {
+{ pkgs, nixos-hardware, ... }: {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-gpu-intel
@@ -11,7 +11,6 @@
     ../../modules/sound.nix
     ../../modules/virtualization.nix
     ../../modules/3d-printing.nix
-    ../../modules/gaming.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix
