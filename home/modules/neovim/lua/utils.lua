@@ -14,8 +14,3 @@ end
 function _G.keymap(key, fun)
     vim.keymap.set('n', key, fun, {})
 end
-
-function _G.reload_conf()
-    cmd [[ Reload ]]
-    cmd [[ PackerCompile ]]
-end

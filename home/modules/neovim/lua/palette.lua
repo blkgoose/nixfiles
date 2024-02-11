@@ -60,7 +60,7 @@ local syntax = {
   todo_fg = colors.cyan,
   todo_bg = colors.grey2,
   number = colors.orange,
-  comment = colors.grey4,
+  comment = colors.grey7,
   type = colors.yellow,
   conditional = colors.red,
 }
@@ -138,6 +138,7 @@ local colorscheme = {
       ["@lsp.type.type"] = { fg = syntax.type },
       ["@lsp.type.typeParamater"] = { fg = syntax.type },
       ["@lsp.type.variable"] = { fg = syntax.variable },
+      LspInlayHint = { fg = colors.grey5 },
     },
     plugins = {
       microscope = {

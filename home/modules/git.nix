@@ -21,7 +21,7 @@
       init = { defaultBranch = "master"; };
       credential.helper = "store";
       core = {
-        editor = "nvim";
+        editor = "vim";
         autocrlf = "input";
         filemode = false;
       };
@@ -29,9 +29,9 @@
         followTags = true;
         autoSetupRemote = true;
       };
-      diff.tool = "vimdiff";
+      diff.tool = "vim -d";
       difftool.prompt = false;
-      merge.tool = "vimdiff";
+      merge.tool = "vim -d";
     };
   };
 }
