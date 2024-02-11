@@ -25,7 +25,6 @@
     shellAliases = {
       unp = "${pkgs.unp}/bin/unp --smart $argv";
       watch = "command watch -n0 --color $argv";
-      clip = "${pkgs.xclip}/bin/xclip -selection clipboard $argv";
     };
 
     functions = {
