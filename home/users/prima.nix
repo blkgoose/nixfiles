@@ -17,6 +17,7 @@
     ../modules/hyprland.nix
     ../modules/waybar.nix
     ../modules/prima.nix
+    ../modules/hyprpaper.nix
   ];
 
   home.file.".background-image".source = ./wallpaper;
