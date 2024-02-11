@@ -5,7 +5,7 @@
     xwayland.enable = true;
   };
   programs.waybar = { enable = true; };
-  environment.systemPackages = with pkgs; [ wofi hyprpaper ];
+  environment.systemPackages = with pkgs; [ wofi hyprpaper wl-clipboard ];
 
   services.xserver = {
     enable = true;
