@@ -17,6 +17,7 @@
     ../modules/eye_saver.nix
     ../modules/hyprland.nix
     ../modules/waybar.nix
+    ../modules/hyprpaper.nix
   ];
 
   home.file.".background-image".source = ./wallpaper;
