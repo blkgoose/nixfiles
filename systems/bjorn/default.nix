@@ -5,7 +5,6 @@
     nixos-hardware.nixosModules.common-pc-laptop
 
     ../../modules/base.nix
-    ../../modules/xmonad.nix
     ../../modules/hyprland.nix
     ../../modules/network
     ../../modules/sound.nix
