@@ -14,7 +14,6 @@
     suite_py.url = "suite_py";
     prima-nix.url = "prima-nix";
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.1.0";
 
     secret_dots = {
       url = "git+file:./secret_dotfiles?shallow=1";
@@ -22,8 +21,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, home-manager
-    , nixos-hardware, suite_py, prima-nix, secret_dots, ... }@attrs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware,
+    , suite_py, prima-nix, secret_dots, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -53,11 +52,7 @@
           inherit system pkgs;
 
           specialArgs = attrs;
-          modules = [
-            ./systems/bjorn
-            homeManager
-            nix-flatpak.nixosModules.nix-flatpak
-          ];
+          modules = [ ./systems/bjorn homeManager ];
         };
         toaster = lib.nixosSystem {
           inherit system pkgs;
