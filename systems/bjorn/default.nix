@@ -13,7 +13,7 @@
     ../../modules/3d-printing.nix
 
     ../../modules/users
-    ../../modules/users/alessio.nix
+    ../../modules/users/prima.nix
 
     ../../modules/prima
   ];

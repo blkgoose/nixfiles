@@ -7,7 +7,6 @@
     yarn
     insomnia
     kubectl
-    suite_py
     pre-commit
     awscli2
     pkg-config
