@@ -9,7 +9,6 @@
     ../modules/fish
     ../modules/dunst.nix
     ../modules/saint-peter.nix
-    ../modules/xmonad.nix
     ../modules/chromeapps.nix
     ../modules/aliases.nix
     ../modules/autorandr.nix
