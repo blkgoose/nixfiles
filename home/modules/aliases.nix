@@ -1,7 +1,8 @@
 { lib, pkgs, ... }:
 let
   apps = {
-    "screenshot" = "${pkgs.escrotum}/bin/escrotum --select --clipboard";
+    "screenshot" =
+      "${pkgs.unstable.hyprshot}/bin/hyprshot --mode region --clipboard-only --silent";
     "chrome" = "${pkgs.google-chrome}/bin/google-chrome-stable";
     "beekeeper" = "${pkgs.beekeeper-studio}/bin/beekeeper-studio";
     "zoom" = "${pkgs.zoom-us}/bin/zoom";
