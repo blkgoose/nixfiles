@@ -86,6 +86,10 @@ let
         sensitivity = -0.5
     }
 
+    binds {
+        allow_workspace_cycles = yes
+    }
+
     $terminal = alacritty
 
     $mainMod = SUPER
