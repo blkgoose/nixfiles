@@ -137,6 +137,7 @@ let
     bind = $mainMod SHIFT, 8, movetoworkspace, 8
     bind = $mainMod SHIFT, 9, movetoworkspace, 9
     bind = $mainMod SHIFT, 0, movetoworkspace, 10
+    bind = $mainMod, TAB, workspace, previous
 
     # mouse
     bindm = $mainMod, mouse:272, movewindow
