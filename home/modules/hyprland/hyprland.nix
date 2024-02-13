@@ -159,5 +159,9 @@ let
     bind = $mainMod, e, exec, ${pkgs.dunst}/bin/dunstctl history-pop
     bind = $mainMod, w, exec, ${pkgs.dunst}/bin/dunstctl close
     bind = $mainMod, r, exec, ${pkgs.dunst}/bin/dunstctl context
+
+    # brightness shortcuts
+    bind = , xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+
+    bind = , xf86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-
   '';
 in { home.file.".config/hypr/hyprland.conf".source = conf; }
