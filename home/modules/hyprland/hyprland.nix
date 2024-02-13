@@ -147,11 +147,15 @@ let
     bindm = $mainMod, mouse:272, movewindow
     bindm = $mainMod, mouse:273, resizewindow
 
-    # shortcuts
-    bind = , xf86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next
-    bind = , xf86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl prev
-    bind = , xf86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause
+    # audio shortcuts
+    bind = , xf86AudioRaiseVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bind = , xf86AudioLowerVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bind = , xf86AudioMute,        exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bind = , xf86AudioNext,        exec, ${pkgs.playerctl}/bin/playerctl next
+    bind = , xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl prev
+    bind = , xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause
 
+    # music shortcuts
     bind = $mainMod, e, exec, ${pkgs.dunst}/bin/dunstctl history-pop
     bind = $mainMod, w, exec, ${pkgs.dunst}/bin/dunstctl close
     bind = $mainMod, r, exec, ${pkgs.dunst}/bin/dunstctl context
