@@ -53,7 +53,7 @@ nmap("cf", ":!touch <cfile><cr>")
 nmap("*", '"syiw<Esc>: let @/ = @s<CR>:set hlsearch<CR>')
 nmap("<F1>", ':let @/ = ""<CR>')
 
--- opt.clipboard = "unnamed,unnamedplus"
+opt.clipboard = "unnamed,unnamedplus"
 
 -- highlight what has been copied
 cmd([[
