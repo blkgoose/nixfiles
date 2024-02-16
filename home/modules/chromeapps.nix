@@ -32,7 +32,7 @@ let
     };
     "discord" = {
       url = "https://discord.com/channels/@me";
-      opts = personal;
+      opts = no_plugins;
     };
     "disney" = {
       url = "https://disneyplus.com";
