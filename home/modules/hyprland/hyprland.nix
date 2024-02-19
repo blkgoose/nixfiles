@@ -3,9 +3,10 @@ let
   conf = pkgs.writeText "hyprland" ''
     monitor=,preferred,auto,auto,bitdepth, 8
 
+    exec-once=hyprpaper &
+    exec-once=swayidle -w
     exec-once=systemctl --user start waybar
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    exec-once=hyprpaper &
 
     env = XCURSOR_SIZE,24
 
