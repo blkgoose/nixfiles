@@ -11,4 +11,10 @@
     enable = true;
     displayManager.sddm.enable = true;
   };
+
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
 }
