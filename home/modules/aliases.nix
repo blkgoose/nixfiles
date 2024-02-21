@@ -7,6 +7,15 @@ let
     "beekeeper" = "${pkgs.beekeeper-studio}/bin/beekeeper-studio";
     "zoom" = "${pkgs.zoom-us}/bin/zoom";
     "vim" = "${pkgs.neovim-nightly}/bin/nvim";
+    "lock" = ''
+      ${pkgs.swaylock-effects}/bin/swaylock \
+            --screenshot \
+            --clock \
+            --indicator \
+            --effect-blur 7x5 \
+            --grace 2 \
+            --fade-in 0.2
+    '';
   };
 
   mkAlias = name: command: {
