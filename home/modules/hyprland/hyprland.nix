@@ -153,7 +153,7 @@ let
     bind = , xf86AudioLowerVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
     bind = , xf86AudioMute,        exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
     bind = , xf86AudioNext,        exec, ${pkgs.playerctl}/bin/playerctl next
-    bind = , xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl prev
+    bind = , xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl previous
     bind = , xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause
 
     # music shortcuts
