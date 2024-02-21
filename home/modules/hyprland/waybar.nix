@@ -21,9 +21,6 @@ let
         },
 
        "temperature": {
-            // "thermal-zone": 2,
-            // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-            // "format-critical": "{temperatureC}°C {icon}",
             "critical-threshold": 80,
             "interval": 2,
             "format": "{temperatureC}°C ",
