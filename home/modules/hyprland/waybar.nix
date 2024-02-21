@@ -11,10 +11,6 @@ let
 
         "hyprland/workspaces": {
             "all-outputs": true,
-            "format": "{icon}",
-            "format-icons": {
-                "active": "",
-             },
         },
 
         "clock": {
@@ -64,4 +60,77 @@ let
         }
     }
   '';
-in { home.file.".config/waybar/config".source = conf; }
+
+  style = pkgs.writeText "waybar" ''
+    window > box {
+      background: rgba(75, 75, 75, 0.3);
+
+      margin: 10px;
+      margin-bottom: 0;
+      border-radius: 20px;
+      padding-right: 30px;
+    }
+
+    window#waybar {
+      background: transparent;
+      color: #e5e9f0;
+    }
+
+    #workspaces > * {
+      transition: all 0.5s;
+    }
+
+    #workspaces button {
+      color: #ffffff;
+      border: none;
+      border-radius: 100%;
+    }
+
+    #workspaces button.focused {
+      background: #4c566a;
+    }
+
+    #workspaces button:hover {
+      background: rgba(75, 75, 75, 0.2);
+    }
+
+    #workspaces button.active {
+      background: rgba(255, 255, 255, 0.3);
+      color: black;
+    }
+
+    #workspaces button.urgent {
+      background-color: #bf616a;
+    }
+
+    #clock,
+    #battery,
+    #cpu,
+    #memory,
+    #temperature,
+    #backlight,
+    #network,
+    #pulseaudio,
+    #custom-media,
+    #tray,
+    #mode,
+    #idle_inhibitor {
+      padding: 0 5px;
+      margin: 0 5px;
+    }
+
+    #workspaces,
+    #clock {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 0 20px;
+    }
+
+    #workspaces {
+      margin-right: 20px;
+    }
+  '';
+in {
+  home.file.".config/waybar/config".source = conf;
+  home.file.".config/waybar/style.css".source = style;
+}
