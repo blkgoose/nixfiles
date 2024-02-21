@@ -68,7 +68,6 @@ let
       margin: 10px;
       margin-bottom: 0;
       border-radius: 20px;
-      padding-right: 30px;
     }
 
     window#waybar {
@@ -119,11 +118,16 @@ let
       margin: 0 5px;
     }
 
-    #workspaces,
-    #clock {
+    .modules-left,
+    .modules-center,
+    .modules-right {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 0 20px;
+    }
+
+    .modules-right {
+      padding-right: 30px;
     }
 
     #workspaces {
