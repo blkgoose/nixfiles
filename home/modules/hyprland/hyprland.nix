@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   conf = pkgs.writeText "hyprland" ''
-    monitor=,preferred,auto,auto,bitdepth, 8
+    monitor=,preferred,auto,1
 
     exec-once=hyprpaper &
     exec-once=swayidle -w
