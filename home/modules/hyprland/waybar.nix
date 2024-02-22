@@ -6,7 +6,7 @@ let
         "position": "top",
         "modules-left": [ "hyprland/workspaces", "hyprland/window" ],
         "modules-center": [ "clock" ],
-        "modules-right": [ "pulseaudio", "cpu", "temperature", "memory" ],
+        "modules-right": [ "pulseaudio", "battery", "cpu" ],
         "spacing": 2,
 
         "hyprland/workspaces": {
@@ -20,22 +20,20 @@ let
             "format-alt": "{:%Y-%m-%d}"
         },
 
-       "temperature": {
-            "critical-threshold": 80,
-            "interval": 2,
-            "format": "{temperatureC}°C ",
-            "format-icons": ["", "", ""]
+        "battery": {
+            "states": {
+                "warning": 30,
+                "critical": 15
+            },
+            "format": "{capacity}% {icon}",
+            "format-icons": ["", "", "", "", ""],
+            "tooltip": false
         },
 
         "cpu": {
             "interval": 2,
             "format": "{usage}% ",
             "tooltip": false
-        },
-
-        "memory": {
-            "interval": 2,
-            "format": "{}% "
         },
 
         "pulseaudio": {
