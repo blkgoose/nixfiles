@@ -21,9 +21,11 @@ let
         "battery": {
             "states": {
                 "warning": 30,
-                "critical": 15
+                "critical": 15,
+                "full": 95,
             },
             "format": "{capacity}% {icon}",
+            "format-full": "",
             "format-icons": ["", "", "", "", ""],
             "tooltip": false
         },
