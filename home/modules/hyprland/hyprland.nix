@@ -167,5 +167,9 @@ let
     # brightness shortcuts
     bind = , xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+
     bind = , xf86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-
+
+    # laptop lid switch
+    bindl = , switch:off:Lid Switch, exec, hyprctl reload
+    bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"
   '';
 in { home.file.".config/hypr/hyprland.conf".source = conf; }
