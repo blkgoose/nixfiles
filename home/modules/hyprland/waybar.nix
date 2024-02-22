@@ -14,10 +14,8 @@ let
         },
 
         "clock": {
-            "interval": 60,
-            "format": "  {:%a %b %d  %I:%M %p}", // %b %d %Y  --Date formatting
-            "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-            "format-alt": "{:%Y-%m-%d}"
+            "format": "  {:%a %b %d  %I:%M %p}",
+            "tooltip": false
         },
 
         "battery": {
@@ -37,9 +35,9 @@ let
         },
 
         "pulseaudio": {
-            "format": "{volume}% {icon}", //{format_source}",
-            "format-bluetooth": "{volume}% {icon} 󰂯", //{format_source}",
-            "format-bluetooth-muted": "󰖁 {icon} 󰂯", //{format_source}",
+            "format": "{volume}% {icon}",
+            "format-bluetooth": "{volume}% {icon} 󰂯",
+            "format-bluetooth-muted": "󰖁 {icon} 󰂯",
             "format-muted": "󰖁 {format_source}",
             "format-source": "{volume}% ",
             "format-source-muted": "",
