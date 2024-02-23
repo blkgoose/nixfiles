@@ -7,7 +7,6 @@
     ../modules/git.nix
     ../modules/neovim
     ../modules/fish
-    ../modules/dunst.nix
     ../modules/saint-peter.nix
     ../modules/chromeapps.nix
     ../modules/aliases.nix
