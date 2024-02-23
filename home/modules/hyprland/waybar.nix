@@ -7,7 +7,6 @@ let
         "modules-left": [ "hyprland/workspaces", "hyprland/window" ],
         "modules-center": [ "clock" ],
         "modules-right": [ "pulseaudio", "battery", "cpu" ],
-        "spacing": 2,
 
         "hyprland/workspaces": {
             "all-outputs": true,
@@ -78,6 +77,7 @@ let
       color: #ffffff;
       border: none;
       border-radius: 100%;
+      margin: 0 2px;
     }
 
     #workspaces button.focused {
