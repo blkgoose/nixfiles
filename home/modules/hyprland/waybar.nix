@@ -6,7 +6,7 @@ let
         "position": "top",
         "modules-left": [ "hyprland/workspaces", "hyprland/window" ],
         "modules-center": [ "clock" ],
-        "modules-right": [ "pulseaudio", "battery", "cpu" ],
+        "modules-right": [ "pulseaudio", "battery", "cpu", "custom/notification" ],
 
         "hyprland/workspaces": {
             "all-outputs": true,
@@ -51,7 +51,25 @@ let
                 "car": "",
                 "default": ["", "", ""]
             }
-        }
+        },
+
+        "custom/notification": {
+            "tooltip": false,
+            "format": "{icon}",
+            "format-icons": {
+                "notification": "<span foreground='red'><sup></sup></span>",
+                "none": "",
+                "dnd-notification": "<span foreground='red'><sup></sup></span>",
+                "dnd-none": "",
+                "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+                "inhibited-none": "",
+                "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+                "dnd-inhibited-none": ""
+            },
+            "return-type": "json",
+            "exec": "${pkgs.swaynotificationcenter}/bin/swaync-client -swb",
+            "escape": true
+          }
     }
   '';
 
@@ -97,18 +115,8 @@ let
       background-color: #bf616a;
     }
 
-    #clock,
-    #battery,
-    #cpu,
-    #memory,
-    #temperature,
-    #backlight,
-    #network,
-    #pulseaudio,
-    #custom-media,
-    #tray,
-    #mode,
-    #idle_inhibitor {
+
+    .modules-right * {
       padding: 0 5px;
       margin: 0 5px;
     }

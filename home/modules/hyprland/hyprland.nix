@@ -159,10 +159,9 @@ let
     bind = , xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl previous
     bind = , xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause
 
-    # music shortcuts
-    bind = $mainMod, e, exec, ${pkgs.dunst}/bin/dunstctl history-pop
-    bind = $mainMod, w, exec, ${pkgs.dunst}/bin/dunstctl close
-    bind = $mainMod, r, exec, ${pkgs.dunst}/bin/dunstctl context
+    # notification shortcuts
+    bind = $mainMod, e, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel
+    bind = $mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --close-latest
 
     # brightness shortcuts
     bind = , xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+
