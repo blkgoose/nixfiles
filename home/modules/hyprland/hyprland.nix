@@ -159,6 +159,10 @@ let
     bind = , xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl previous
     bind = , xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause
 
+    # media controls
+    bind = SHIFT, xf86AudioRaiseVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+
+    bind = SHIFT, xf86AudioLowerVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-
+
     # notification shortcuts
     bind = $mainMod, e, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel
     bind = $mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --close-latest
