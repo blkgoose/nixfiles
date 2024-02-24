@@ -6,7 +6,7 @@ let
         "position": "top",
         "modules-left": [ "hyprland/workspaces", "hyprland/window" ],
         "modules-center": [ "clock" ],
-        "modules-right": [ "pulseaudio", "battery", "cpu", "custom/notification" ],
+        "modules-right": [ "custom/nowplaying", "pulseaudio", "battery", "cpu", "custom/notification" ],
 
         "hyprland/workspaces": {
             "all-outputs": true,
@@ -51,6 +51,14 @@ let
                 "car": "",
                 "default": ["", "", ""]
             }
+        },
+
+        "custom/nowplaying": {
+            "interval": 1,
+            "exec": "${pkgs.playerctl}/bin/playerctl metadata --format '{{ title }} - {{ artist }}'",
+            "exec-if": "${pkgs.playerctl}/bin/playerctl --all-players status | ${pkgs.gnugrep}/bin/grep -q 'Playing'",
+            "format": "{} 󰝚",
+            "tooltip": false
         },
 
         "custom/notification": {
