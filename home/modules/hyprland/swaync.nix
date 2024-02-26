@@ -9,7 +9,7 @@ let
     }
 
     .notification {
-        background: rgba(75, 75, 75, 0.8);
+        background: rgba(75, 75, 75, 0.6);
         min-height: 75px;
         padding: 10px;
         border-radius: 20px;
@@ -21,19 +21,27 @@ let
 
     .floating-notifications .notification-row {
         background: rgba(75, 75, 75, 0.3);
-        margin-right: 25px;
         padding: 10px;
         padding-bottom: 0;
+        margin: 0 10px;
+    }
+
+    .floating-notifications .notification-row:first-child {
+        margin-top: 10px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
     }
 
     .floating-notifications .notification-row:last-child {
-        border-radius: 0 0 20px 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
         padding-bottom: 10px;
     }
 
     .control-center {
         background: rgba(75, 75, 75, 0.3);
-        margin-right: 25px;
+        margin: 10px;
+        border-radius: 20px;
     }
 
     .control-center .notification-row {
