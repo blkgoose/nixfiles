@@ -9,7 +9,7 @@
 
   services.xserver = {
     enable = true;
-    displayManager.sddm.enable = true;
+    displayManager.gdm.enable = true;
   };
 
   xdg.portal.enable = true;
