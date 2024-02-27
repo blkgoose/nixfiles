@@ -165,7 +165,7 @@ let
 
     # notification shortcuts
     bind = $mainMod, e, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel
-    bind = $mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --close-latest
+    bind = $mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest
 
     # brightness shortcuts
     bind = , xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+
