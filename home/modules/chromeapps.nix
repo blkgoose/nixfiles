@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   personal = [ "--profile-directory='Default'" ];
   work = [ "--profile-directory='Profile 1'" ];
@@ -190,7 +190,7 @@ let
     { url, opts ? [ ] }:
     let
       spacedOpts = lib.strings.concatStringsSep " " opts;
-      chrome = "chrome";
+      chrome = "${pkgs.google-chrome}/bin/google-chrome-stable";
       chromeCall = ''
         ${chrome} --app='${url}' --new-window ${spacedOpts}
       '';
