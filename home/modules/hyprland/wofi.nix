@@ -25,6 +25,7 @@ let
 
     #input {
       color: white;
+      caret-color: white;
       padding: 5px 20px;
       margin: 5px;
       border-radius: 20px;
