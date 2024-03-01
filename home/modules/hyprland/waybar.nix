@@ -6,7 +6,7 @@ let
         "position": "top",
         "modules-left": [ "hyprland/workspaces", "hyprland/window" ],
         "modules-center": [ "clock" ],
-        "modules-right": [ "custom/nowplaying", "pulseaudio", "battery", "cpu", "custom/notification" ],
+        "modules-right": [ "custom/spotify", "pulseaudio", "battery", "cpu", "custom/notification" ],
 
         "hyprland/workspaces": {
             "all-outputs": true,
@@ -53,11 +53,11 @@ let
             }
         },
 
-        "custom/nowplaying": {
+        "custom/spotify": {
             "interval": 1,
-            "exec": "${pkgs.playerctl}/bin/playerctl metadata --format '{{ title }} - {{ artist }}'",
-            "exec-if": "${pkgs.playerctl}/bin/playerctl --all-players status | ${pkgs.gnugrep}/bin/grep -q 'Playing'",
-            "format": "{} 󰝚",
+            "exec": "${pkgs.playerctl}/bin/playerctl metadata --player spotify --format '{{ title }} - {{ artist }}'",
+            "exec-if": "${pkgs.playerctl}/bin/playerctl --player spotify status | ${pkgs.gnugrep}/bin/grep -q 'Playing'",
+            "format": "{} ",
             "tooltip": false
         },
 
