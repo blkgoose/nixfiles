@@ -47,8 +47,8 @@ let
             passes = 1
         }
 
-        layerrule = blur, waybar|swaync
-        layerrule = ignorezero, waybar|swaync
+        layerrule = blur, waybar|swaync|wofi
+        layerrule = ignorezero, waybar|swaync|wofi
 
         drop_shadow = yes
         shadow_range = 4
