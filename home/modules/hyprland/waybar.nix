@@ -23,7 +23,7 @@ let
                 "critical": 15,
                 "full": 95,
             },
-            "format": "{capacity}% {icon}",
+            "format": "{time} {icon}",
             "format-full": "",
             "format-icons": ["", "", "", "", ""],
             "tooltip": false
