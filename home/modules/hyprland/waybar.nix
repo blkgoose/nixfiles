@@ -21,8 +21,8 @@ let
             "states": {
                 "warning": 30,
                 "critical": 15,
-                "full": 95,
             },
+            "full-at": 95,
             "format": "{time} {icon}",
             "format-full": "",
             "format-icons": ["", "", "", "", ""],
