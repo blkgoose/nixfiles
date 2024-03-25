@@ -101,6 +101,10 @@ let
       url = "https://www.notion.so";
       opts = work;
     };
+    "onepassword" = {
+      url = "https://prima.1password.eu/home";
+      opts = work;
+    };
     "onshape" = {
       url = "https://cad.onshape.com";
       opts = personal ++ no_plugins;
