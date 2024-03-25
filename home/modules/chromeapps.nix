@@ -175,9 +175,9 @@ let
       url = "https://xbox.com/play";
       opts = personal ++ no_plugins;
     };
-    "youtrack-backlog" = {
+    "backlog" = {
       url =
-        "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/search/Team%20Intermediaries%20Experience%20(INTEXN)%20Backlog-967";
+        "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/issues/INTEXN?q=State:%20{No%20State%7d";
       opts = work;
     };
     "youtrack" = {
