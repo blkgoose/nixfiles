@@ -1,6 +1,12 @@
 { lib, pkgs, ... }:
 let
   apps = {
+    "mirror" = ''
+      ${pkgs.wdomirror}/bin/wdomirror
+                $(${pkgs.wdomirror}/bin/wdomirror
+                  | ${pkgs.gnugrep}/bin/grep -oP '(?<=ID: )d+'
+                  | ${pkgs.coreutils}/bin/head -1)
+    '';
     "screenshot" =
       "${pkgs.unstable.hyprshot}/bin/hyprshot --mode region --clipboard-only --silent";
     "chrome" = "${pkgs.google-chrome}/bin/google-chrome-stable";
