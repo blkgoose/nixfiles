@@ -30,7 +30,6 @@ let
       url = "https://app.datadoghq.eu/";
       opts = work;
     };
-    "discord" = { url = "https://discord.com/channels/@me"; };
     "disney" = {
       url = "https://disneyplus.com";
       opts = personal;
