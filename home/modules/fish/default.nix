@@ -23,8 +23,8 @@
     };
 
     shellAliases = {
-      unp = "${pkgs.unp}/bin/unp --smart $argv";
-      watch = "command watch -n0 --color $argv";
+      unp = "${pkgs.unp}/bin/unp --smart";
+      watch = "command watch -n0 --color";
     };
 
     functions = {
