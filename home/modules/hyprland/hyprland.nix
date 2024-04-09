@@ -7,6 +7,7 @@ let
     exec-once=swayidle -w
     exec-once=systemctl --user start waybar
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    exec-once=${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit
 
     env = XCURSOR_SIZE,24
 
