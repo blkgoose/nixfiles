@@ -3,6 +3,12 @@
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
+  home.pointerCursor = {
+    name = "cursor";
+    package = pkgs.apple-cursor;
+    size = 20;
+  };
+
   services.wlsunset = {
     enable = true;
     latitude = "42.50";
