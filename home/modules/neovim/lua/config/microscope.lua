@@ -59,6 +59,7 @@ local function rotate_layout(instance)
 end
 
 microscope.setup({
+  layout = layout_list[1],
   prompt = "> ",
   size = {
     width = 125,
@@ -70,6 +71,8 @@ microscope.setup({
     ["<c-n>"] = actions.scroll_down,
     ["<c-p>"] = actions.scroll_up,
     ["<c-m>"] = actions.toggle_full_screen,
+    ["<c-q>"] = files.actions.quickfix,
+    ["<c-h>"] = actions.hide,
     ["<c-a>"] = rotate_layout,
     ["<a-cr>"] = actions.refine,
     ["<CR>"] = actions.open,
@@ -86,14 +89,8 @@ keymap("<leader>fw", ":Microscope workspace_grep<CR>")
 keymap("<leader>fW", ":Microscope workspace_fuzzy<CR>")
 keymap("<leader>of", ":Microscope file<CR>")
 keymap("<leader>ob", ":Microscope buffer<CR>")
+keymap("<c-h>", ":MicroscopeResume<CR>")
 keymap("gi", ":Microscope code_implementations<CR>")
 keymap("gd", ":Microscope code_definitions<CR>")
 keymap("gr", ":Microscope code_references<CR>")
 keymap("gt", ":Microscope code_type_definition<CR>")
-
-for finder, _ in pairs(microscope.finders) do
-  microscope.finders[finder]:override({
-    bindings = { ["<c-q>"] = files.actions.quickfix },
-    layout = layout_list[1],
-  })
-end
