@@ -8,6 +8,7 @@ let
     exec-once=systemctl --user start waybar
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once=${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit
+    exec-once=hyprctl setcursor Bibata-Modern-Classic 20
 
     env = XCURSOR_SIZE,24
 
