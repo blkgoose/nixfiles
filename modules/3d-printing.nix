@@ -1,1 +1,1 @@
-{ pkgs, ... }: { environment.systemPackages = [ pkgs.unstable.bambu-studio ]; }
+{ pkgs, ... }: { environment.systemPackages = [ pkgs.unstable.orca-slicer ]; }
