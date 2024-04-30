@@ -96,6 +96,10 @@ let
       url = "https://search.nixos.org/packages";
       opts = personal;
     };
+    "nix-rev" = {
+      url = "https://lazamar.co.uk/nix-versions";
+      opts = personal;
+    };
     "notion" = {
       url = "https://www.notion.so";
       opts = work;
