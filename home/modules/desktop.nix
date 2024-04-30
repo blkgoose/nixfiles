@@ -4,8 +4,8 @@
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   home.pointerCursor = {
-    name = "cursor";
-    package = pkgs.apple-cursor;
+    name = "Bibata-Modern.Classic";
+    package = pkgs.bibata-cursors;
     size = 20;
   };
 
