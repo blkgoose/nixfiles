@@ -26,10 +26,6 @@ let
       url = "https://www.crunchyroll.com/it";
       opts = personal ++ no_plugins;
     };
-    "datadog" = {
-      url = "https://app.datadoghq.eu/";
-      opts = work;
-    };
     "disney" = {
       url = "https://disneyplus.com";
       opts = personal;
