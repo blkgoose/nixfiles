@@ -1,5 +1,12 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ spotify feh gimp google-chrome discord ];
+  home.packages = with pkgs; [
+    spotify
+    feh
+    gimp
+    google-chrome
+    discord
+    immersed-vr
+  ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
