@@ -26,7 +26,13 @@
 
   hardware.opengl = {
     driSupport.enable = true;
-    extraPackages = with pkgs; [ vaapiIntel vaapiVdpau intel-compute-runtime ];
+    extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      intel-compute-runtime
+      libvdpau-va-gl
+      libgpg-error
+    ];
   };
 
   services.hardware.bolt.enable = true;
