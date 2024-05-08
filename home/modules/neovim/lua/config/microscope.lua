@@ -2,11 +2,14 @@ local microscope = require("microscope")
 
 local actions = require("microscope.builtin.actions")
 local files = require("microscope-files")
+local files_utils = require("microscope-files.utils")
 local buffers = require("microscope-buffers")
 local code = require("microscope-code")
 
 local display = require("microscope.api.display")
 local builtin = require("microscope.builtin.layouts")
+
+files_utils.max_size = 2^18;
 
 local layout_list = {
   function(opts)
