@@ -105,6 +105,8 @@ let
     bind = $mainMod SHIFT, C, killactive, 
     bind = $mainMod, V, togglefloating, 
     bind = $mainMod, P, exec, wofi --show run
+    bind = $mainMod, S, togglespecialworkspace,
+    bind = $mainMod SHIFT, S, movetoworkspace, special
     bind = $mainMod, SPACE, pseudo, # dwindle
     bind = $mainMod, RETURN, togglesplit, # dwindle
 
