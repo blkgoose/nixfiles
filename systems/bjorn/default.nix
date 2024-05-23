@@ -13,7 +13,6 @@
 
     ../../modules/users
     ../../modules/users/prima.nix
-    ../../modules/users/alessio.nix
 
     ../../modules/prima
   ];
