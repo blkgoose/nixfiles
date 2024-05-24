@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -15,7 +15,10 @@
         "hyprctl setcursor Bibata-Modern-Classic 20"
       ];
 
-      env = "XCURSOR_SIZE, 24";
+      env = [
+        "XCURSOR_SIZE, 24"
+        "PATH, ${config.home.homeDirectory}/.local/bin:$PATH"
+      ];
 
       input = {
         kb_layout = "us";
