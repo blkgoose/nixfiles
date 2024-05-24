@@ -1,182 +1,171 @@
-{ pkgs, ... }:
-let
-  conf = pkgs.writeText "hyprland" ''
-    monitor=,preferred,auto,1
+{ pkgs, ... }: {
+  wayland.windowManager.hyprland = {
+    enable = true;
+    settings = {
+      "$terminal" = "alacritty";
 
-    exec-once=hyprpaper &
-    exec-once=swayidle -w
-    exec-once=systemctl --user start waybar
-    exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    exec-once=${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit
-    exec-once=hyprctl setcursor Bibata-Modern-Classic 20
+      monitor = ",preferred,auto,1";
 
-    env = XCURSOR_SIZE,24
+      exec-once = [
+        "hyprpaper &"
+        "swayidle -w"
+        "systemctl --user start waybar"
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        "${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit"
+        "hyprctl setcursor Bibata-Modern-Classic 20"
+      ];
 
-    input {
-        kb_layout = us
-        kb_variant =
-        kb_model =
-        kb_options = compose:ralt,caps:none
-        kb_rules =
+      env = "XCURSOR_SIZE, 24";
 
-        follow_mouse = 1
+      input = {
+        kb_layout = "us";
+        kb_options = "compose:ralt,caps:none";
 
-        touchpad {
-            natural_scroll = no
-        }
+        follow_mouse = 1;
 
-        sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-    }
+        touchpad = { natural_scroll = "no"; };
 
-    general {
-        gaps_in = 5
-        gaps_out = 10
-        border_size = 2
-        col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-        col.inactive_border = rgba(595959aa)
+        sensitivity = 0;
+      };
 
-        layout = dwindle
+      general = {
+        gaps_in = 5;
+        gaps_out = 10;
+        border_size = 2;
+        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.inactive_border" = "rgba(595959aa)";
 
-        allow_tearing = false
-    }
+        layout = "dwindle";
 
-    decoration {
-        rounding = 10
+        allow_tearing = false;
+      };
 
-        blur {
-            enabled = true
-            size = 3
-            passes = 1
-        }
+      decoration = {
+        rounding = 10;
 
-        layerrule = blur, waybar|swaync|wofi
-        layerrule = ignorezero, waybar|swaync|wofi
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+        };
 
-        drop_shadow = yes
-        shadow_range = 4
-        shadow_render_power = 3
-        col.shadow = rgba(1a1a1aee)
-    }
+        layerrule =
+          [ "blur, waybar|swaync|wofi" "ignorezero, waybar|swaync|wofi" ];
 
-    animations {
-        enabled = yes
+        drop_shadow = "yes";
+        shadow_range = 4;
+        shadow_render_power = 3;
+        "col.shadow" = "rgba(1a1a1aee)";
+      };
 
-        bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+      animations = {
+        enabled = "yes";
 
-        animation = windows, 1, 7, myBezier
-        animation = windowsOut, 1, 7, default, popin 80%
-        animation = border, 1, 10, default
-        animation = borderangle, 1, 8, default
-        animation = fade, 1, 7, default
-        animation = workspaces, 1, 6, default
-    }
+        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
 
-    dwindle {
-        pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-        preserve_split = yes # you probably want this
-    }
+        animation = [
+          "windows, 1, 7, myBezier"
+          "windowsOut, 1, 7, default, popin 80%"
+          "border, 1, 10, default"
+          "borderangle, 1, 8, default"
+          "fade, 1, 7, default"
+          "workspaces, 1, 6, default"
+        ];
+      };
 
-    master {
-        new_is_master = true
-    }
+      dwindle = {
+        pseudotile = "yes";
+        preserve_split = "yes";
+      };
 
-    gestures {
-        workspace_swipe = off
-    }
+      master = { new_is_master = true; };
 
-    misc {
-        force_default_wallpaper = 0
-    }
+      gestures = { workspace_swipe = "off"; };
 
-    device:epic-mouse-v1 {
-        sensitivity = -0.5
-    }
+      misc = {
+        force_default_wallpaper = 0;
+        disable_hyprland_logo = true;
+      };
 
-    binds {
-        allow_workspace_cycles = yes
-    }
+      "device:epic-mouse-v1" = { sensitivity = -0.5; };
 
-    $terminal = alacritty
+      "$mainMod" = "SUPER";
 
-    $mainMod = SUPER
+      bind = [
+        "$mainMod SHIFT, RETURN, exec, $terminal"
+        "$mainMod SHIFT, C, killactive, "
+        "$mainMod, V, togglefloating, "
+        "$mainMod, P, exec, wofi --show run"
+        "$mainMod, S, togglespecialworkspace,"
+        "$mainMod SHIFT, S, movetoworkspace, special"
+        "$mainMod, SPACE, pseudo, # dwindle"
+        "$mainMod, RETURN, togglesplit, # dwindle"
 
-    # base binds
-    bind = $mainMod SHIFT, RETURN, exec, $terminal
-    bind = $mainMod SHIFT, C, killactive, 
-    bind = $mainMod, V, togglefloating, 
-    bind = $mainMod, P, exec, wofi --show run
-    bind = $mainMod, S, togglespecialworkspace,
-    bind = $mainMod SHIFT, S, movetoworkspace, special
-    bind = $mainMod, SPACE, pseudo, # dwindle
-    bind = $mainMod, RETURN, togglesplit, # dwindle
+        "$mainMod, h, movefocus, l"
+        "$mainMod, l, movefocus, r"
+        "$mainMod, k, movefocus, u"
+        "$mainMod, j, movefocus, d"
 
-    # focus
-    bind = $mainMod, h, movefocus, l
-    bind = $mainMod, l, movefocus, r
-    bind = $mainMod, k, movefocus, u
-    bind = $mainMod, j, movefocus, d
+        "$mainMod SHIFT, h, movewindow, l"
+        "$mainMod SHIFT, l, movewindow, r"
+        "$mainMod SHIFT, k, movewindow, u"
+        "$mainMod SHIFT, j, movewindow, d"
 
-    # move
-    bind = $mainMod SHIFT, h, movewindow, l
-    bind = $mainMod SHIFT, l, movewindow, r
-    bind = $mainMod SHIFT, k, movewindow, u
-    bind = $mainMod SHIFT, j, movewindow, d
+        "$mainMod CONTROL, h, resizeactive, -50 0"
+        "$mainMod CONTROL, l, resizeactive, 50 0"
+        "$mainMod CONTROL, k, resizeactive, 0 -50"
+        "$mainMod CONTROL, j, resizeactive, 0 50"
 
-    # resize
-    binde = $mainMod CONTROL, h, resizeactive, -50 0
-    binde = $mainMod CONTROL, l, resizeactive, 50 0
-    binde = $mainMod CONTROL, k, resizeactive, 0 -50
-    binde = $mainMod CONTROL, j, resizeactive, 0 50
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
+        "$mainMod, 3, workspace, 3"
+        "$mainMod, 4, workspace, 4"
+        "$mainMod, 5, workspace, 5"
+        "$mainMod, 6, workspace, 6"
+        "$mainMod, 7, workspace, 7"
+        "$mainMod, 8, workspace, 8"
+        "$mainMod, 9, workspace, 9"
+        "$mainMod, 0, workspace, 10"
+        "$mainMod SHIFT, 1, movetoworkspace, 1"
+        "$mainMod SHIFT, 2, movetoworkspace, 2"
+        "$mainMod SHIFT, 3, movetoworkspace, 3"
+        "$mainMod SHIFT, 4, movetoworkspace, 4"
+        "$mainMod SHIFT, 5, movetoworkspace, 5"
+        "$mainMod SHIFT, 6, movetoworkspace, 6"
+        "$mainMod SHIFT, 7, movetoworkspace, 7"
+        "$mainMod SHIFT, 8, movetoworkspace, 8"
+        "$mainMod SHIFT, 9, movetoworkspace, 9"
+        "$mainMod SHIFT, 0, movetoworkspace, 10"
+        "$mainMod, TAB, workspace, previous"
 
-    # workspace
-    bind = $mainMod, 1, workspace, 1
-    bind = $mainMod, 2, workspace, 2
-    bind = $mainMod, 3, workspace, 3
-    bind = $mainMod, 4, workspace, 4
-    bind = $mainMod, 5, workspace, 5
-    bind = $mainMod, 6, workspace, 6
-    bind = $mainMod, 7, workspace, 7
-    bind = $mainMod, 8, workspace, 8
-    bind = $mainMod, 9, workspace, 9
-    bind = $mainMod, 0, workspace, 10
-    bind = $mainMod SHIFT, 1, movetoworkspace, 1
-    bind = $mainMod SHIFT, 2, movetoworkspace, 2
-    bind = $mainMod SHIFT, 3, movetoworkspace, 3
-    bind = $mainMod SHIFT, 4, movetoworkspace, 4
-    bind = $mainMod SHIFT, 5, movetoworkspace, 5
-    bind = $mainMod SHIFT, 6, movetoworkspace, 6
-    bind = $mainMod SHIFT, 7, movetoworkspace, 7
-    bind = $mainMod SHIFT, 8, movetoworkspace, 8
-    bind = $mainMod SHIFT, 9, movetoworkspace, 9
-    bind = $mainMod SHIFT, 0, movetoworkspace, 10
-    bind = $mainMod, TAB, workspace, previous
+        ", xf86AudioRaiseVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ", xf86AudioLowerVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        ", xf86AudioMute,        exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        ", xf86AudioNext,        exec, ${pkgs.playerctl}/bin/playerctl next"
+        ", xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl previous"
+        ", xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause"
 
-    # mouse
-    bindm = $mainMod, mouse:272, movewindow
-    bindm = $mainMod, mouse:273, resizewindow
+        "SHIFT, xf86AudioRaiseVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+"
+        "SHIFT, xf86AudioLowerVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-"
 
-    # audio shortcuts
-    bind = , xf86AudioRaiseVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bind = , xf86AudioLowerVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
-    bind = , xf86AudioMute,        exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bind = , xf86AudioNext,        exec, ${pkgs.playerctl}/bin/playerctl next
-    bind = , xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl previous
-    bind = , xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause
+        "$mainMod, e, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
+        "$mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest"
 
-    # media controls
-    bind = SHIFT, xf86AudioRaiseVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+
-    bind = SHIFT, xf86AudioLowerVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-
+        ", xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+"
+        ", xf86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-"
+      ];
 
-    # notification shortcuts
-    bind = $mainMod, e, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel
-    bind = $mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest
+      bindm = [
+        "$mainMod, mouse:272, movewindow"
+        "$mainMod, mouse:273, resizewindow"
+      ];
 
-    # brightness shortcuts
-    bind = , xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+
-    bind = , xf86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-
+      bindl = [
+        ", switch:off:Lid Switch, exec, hyprctl reload"
+        " , switch:on:Lid Switch, exec, hyprctl keyword monitor 'eDP-1, disable'"
+      ];
 
-    # laptop lid switch
-    bindl = , switch:off:Lid Switch, exec, hyprctl reload
-    bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"
-  '';
-in { home.file.".config/hypr/hyprland.conf".source = conf; }
+      binds = { allow_workspace_cycles = "yes"; };
+    };
+  };
+}
