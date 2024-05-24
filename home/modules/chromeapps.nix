@@ -14,6 +14,10 @@ let
       opts = personal;
     };
     "calendar".url = "https://calendar.google.com/calendar";
+    "chatGPT" = {
+      url = "https://chatgpt.com/";
+      opts = personal;
+    };
     "chess".url = "https://www.chess.com";
     "codescene" = {
       url =
@@ -115,6 +119,10 @@ let
     "personio" = {
       url = "https://prima-assicurazioni.personio.de";
       opts = work;
+    };
+    "perplexity" = {
+      url = "https://www.perplexity.ai/";
+      opts = personal;
     };
     "photos" = {
       url = "https://photos.google.com";
