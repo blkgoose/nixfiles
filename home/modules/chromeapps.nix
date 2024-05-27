@@ -30,6 +30,11 @@ let
       url = "https://www.crunchyroll.com/it";
       opts = personal ++ no_plugins;
     };
+    "dashboard-sec" = {
+      url =
+        "https://security-metrics.helloprima.com/vm/projects/INT%20-%20Intermediaries%20Experience%20&%20Network%20Management.html";
+      opts = work;
+    };
     "disney" = {
       url = "https://disneyplus.com";
       opts = personal;
