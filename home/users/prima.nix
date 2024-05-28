@@ -14,6 +14,7 @@
     ../modules/eye_saver.nix
     ../modules/hyprland
     ../modules/prima.nix
+    ../modules/prima-git.nix
   ];
 
   programs.home-manager.enable = true;
