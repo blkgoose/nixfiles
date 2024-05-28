@@ -7,7 +7,6 @@
     yarn
     insomnia
     kubectl
-    pre-commit
     awscli2
     pkg-config
     openssl
