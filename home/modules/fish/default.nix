@@ -1,4 +1,6 @@
 { pkgs, ... }: {
+  imports = [ ./commit-message.nix ];
+
   home.file.".config/fish" = {
     source = ./conf;
     recursive = true;
@@ -19,7 +21,7 @@
       gs = "git s";
       ga = "git add";
       gdc = "git diff --cached";
-      gc = "git commit -m";
+      gc = { function = "__ai_generated_commit"; };
     };
 
     shellAliases = {
@@ -28,6 +30,11 @@
     };
 
     functions = {
+      __ai_generated_commit = {
+        body =
+          ''echo "git commit -m '"(git diff --cached | commit-generator)"'"'';
+      };
+
       foreach = {
         body = "xargs -I'{}' fish -c $fun";
         description = "run function on every argument ({})";
