@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     nodejs_20
     rustup
-    nixfmt
+    nixfmt-classic
     clang
     yarn
     insomnia
