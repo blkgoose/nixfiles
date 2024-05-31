@@ -12,13 +12,10 @@
         "systemctl --user start waybar"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit"
-        "hyprctl setcursor Bibata-Modern-Classic 20"
+        "hyprctl setcursor Bibata-Modern-Classic 24"
       ];
 
-      env = [
-        "XCURSOR_SIZE, 24"
-        "PATH, ${config.home.homeDirectory}/.local/bin:$PATH"
-      ];
+      env = [ "PATH, ${config.home.homeDirectory}/.local/bin:$PATH" ];
 
       input = {
         kb_layout = "us";
