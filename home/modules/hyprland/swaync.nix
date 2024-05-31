@@ -1,6 +1,12 @@
 { pkgs, ... }:
 let
-  style = pkgs.writeText "sway-style" ''
+  conf = pkgs.writeText "swaync-conf" ''
+    {
+        "hide-on-clear": true
+    }
+  '';
+
+  style = pkgs.writeText "swaync-style" ''
     * {
         all: unset;
         font-size: 14px;
@@ -86,7 +92,10 @@ let
 in {
   home.packages = with pkgs; [ swaynotificationcenter ];
 
-  home.file.".config/swaync/style.css".source = style;
+  xdg.configFile = {
+    "swaync/config.json".source = conf;
+    "swaync/style.css".source = style;
+  };
 
   systemd.user.services.swaync = {
     Unit = {
