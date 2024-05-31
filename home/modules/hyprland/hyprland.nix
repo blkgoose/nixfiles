@@ -90,8 +90,6 @@
         disable_hyprland_logo = true;
       };
 
-      "device:epic-mouse-v1" = { sensitivity = -0.5; };
-
       "$mainMod" = "SUPER";
 
       bind = [
