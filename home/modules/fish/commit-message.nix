@@ -3,6 +3,13 @@ let
   openai_key =
     lib.removeSuffix "\n" (builtins.readFile "${secret_dots}/openai_key");
 
+  prompt = ''
+    Rewrite the following Git diff into a concise and informative commit message using conventional commit, 
+    starting in lowercase, giving a minimal description, within 25 characters. 
+    The '-' indicate removed lines and '+' added lines. 
+    Use unchanged lines and file names for context:
+  '';
+
   generator = pkgs.writers.writeBash "generator" ''
     set -e
     model="gpt-3.5-turbo"
@@ -10,15 +17,11 @@ let
     diff=$(${pkgs.coreutils}/bin/cat /dev/stdin)
     escaped_diff=$(echo "$diff" | ${pkgs.jq}/bin/jq -sR)
 
-    prompt_template="Rewrite the following Git diff into a concise and informative commit message using the conventional commit standard, giving as brief description as possible, within 45 characters preferably less, using the '-' to indicate removed lines and '+' for added lines. Use unchanged lines for context only:\n"
-    instruction='\n\nProvide a short and concise imperative single-line commit message that briefly describes the changes made in this diff, the first letter after the conventional commit type should be lowercase.'
-
     payload=$(${pkgs.jq}/bin/jq \
         -n \
-        --arg prompt_template "$prompt_template" \
+        --arg prompt "${prompt}" \
         --arg diff "$escaped_diff" \
-        --arg instruction "$instruction" \
-        --arg model "$model" '{model: $model, messages: [{role: "user", content: ($prompt_template + $diff + $instruction)}] }'\
+        --arg model "$model" '{model: $model, messages: [{role: "user", content: ($prompt + $diff)}] }'\
     )
 
     response=$(${pkgs.curl}/bin/curl -s https://api.openai.com/v1/chat/completions \
