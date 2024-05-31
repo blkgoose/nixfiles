@@ -1,10 +1,19 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  stdCompl = name:
+    let
+      plugin = pkgs.fetchFromGitHub {
+        owner = "fish-shell";
+        repo = "fish-shell";
+        rev = "29f35d6cdfdb75d54ce4040f18250cfb0eb438fe";
+        sha256 = "Ir0ndjS84XrQwB/k/nmf3K01BCtJQVm+m7WFgEnuXoY=";
+      } + "/share/completions/" + name + ".fish";
+    in {
+      name = name;
+      src = assert builtins.pathExists plugin; plugin;
+    };
+in {
   imports = [ ./commit-message.nix ];
-
-  home.file.".config/fish" = {
-    source = ./conf;
-    recursive = true;
-  };
 
   programs.fish = {
     enable = true;
@@ -13,6 +22,13 @@
       eval (direnv hook fish)
       eval (ssh-agent -c) > /dev/null
     '';
+
+    plugins = [
+      (stdCompl "nmcli")
+      (stdCompl "aws")
+      (stdCompl "docker")
+      (stdCompl "make")
+    ];
 
     shellAbbrs = {
       gd = "git diff";
