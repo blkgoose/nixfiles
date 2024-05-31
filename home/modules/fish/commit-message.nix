@@ -10,8 +10,8 @@ let
     diff=$(${pkgs.coreutils}/bin/cat /dev/stdin)
     escaped_diff=$(echo "$diff" | ${pkgs.jq}/bin/jq -sR)
 
-    prompt_template="Rewrite the following Git diff into a concise and informative commit message using the conventional commit standard, within 75 characters preferably less, using the '-' to indicate removed lines and '+' for added lines. Use unchanged lines for context only:\n"
-    instruction='\n\nProvide a short and concise imperative single-line commit message that briefly describes the changes made in this diff.'
+    prompt_template="Rewrite the following Git diff into a concise and informative commit message using the conventional commit standard, giving as brief description as possible, within 45 characters preferably less, using the '-' to indicate removed lines and '+' for added lines. Use unchanged lines for context only:\n"
+    instruction='\n\nProvide a short and concise imperative single-line commit message that briefly describes the changes made in this diff, the first letter after the conventional commit type should be lowercase.'
 
     payload=$(${pkgs.jq}/bin/jq \
         -n \
