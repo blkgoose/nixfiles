@@ -5,5 +5,6 @@ let
 
     preload = ${./wallpaper}
     wallpaper = , ${./wallpaper}
+    splash = false
   '';
 in { home.file.".config/hypr/hyprpaper.conf".source = paper-conf; }
