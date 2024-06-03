@@ -16,13 +16,6 @@ let
       name = repo + subPath;
       src = assert builtins.pathExists src; src;
     };
-
-  stdCompl = name:
-    plugin "fish-shell/fish-shell" {
-      rev = "29f35d6cdfdb75d54ce4040f18250cfb0eb438fe";
-      sha256 = "Ir0ndjS84XrQwB/k/nmf3K01BCtJQVm+m7WFgEnuXoY=";
-      subPath = "/share/completions/" + name + ".fish";
-    };
 in {
   imports = [ ./commit-message.nix ];
 
@@ -35,11 +28,6 @@ in {
     '';
 
     plugins = [
-      (stdCompl "nmcli")
-      (stdCompl "aws")
-      (stdCompl "docker")
-      (stdCompl "make")
-
       (plugin "jorgebucaran/fisher" {
         sha256 = "e8gIaVbuUzTwKtuMPNXBT5STeddYqQegduWBtURLT3M=";
       })
