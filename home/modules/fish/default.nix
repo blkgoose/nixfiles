@@ -1,16 +1,27 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
-  stdCompl = name:
+  plugin = repo:
+    { rev ? "master", sha256 ? "", subPath ? "" }:
     let
-      plugin = pkgs.fetchFromGitHub {
-        owner = "fish-shell";
-        repo = "fish-shell";
-        rev = "29f35d6cdfdb75d54ce4040f18250cfb0eb438fe";
-        sha256 = "Ir0ndjS84XrQwB/k/nmf3K01BCtJQVm+m7WFgEnuXoY=";
-      } + "/share/completions/" + name + ".fish";
+      _repo = lib.strings.splitString "/" repo;
+      owner = builtins.elemAt _repo 0;
+      name = builtins.elemAt _repo 1;
+      src = pkgs.fetchFromGitHub {
+        owner = owner;
+        repo = name;
+        rev = rev;
+        sha256 = sha256;
+      } + subPath;
     in {
-      name = name;
-      src = assert builtins.pathExists plugin; plugin;
+      name = repo + subPath;
+      src = assert builtins.pathExists src; src;
+    };
+
+  stdCompl = name:
+    plugin "fish-shell/fish-shell" {
+      rev = "29f35d6cdfdb75d54ce4040f18250cfb0eb438fe";
+      sha256 = "Ir0ndjS84XrQwB/k/nmf3K01BCtJQVm+m7WFgEnuXoY=";
+      subPath = "/share/completions/" + name + ".fish";
     };
 in {
   imports = [ ./commit-message.nix ];
@@ -28,6 +39,10 @@ in {
       (stdCompl "aws")
       (stdCompl "docker")
       (stdCompl "make")
+
+      (plugin "jorgebucaran/fisher" {
+        sha256 = "e8gIaVbuUzTwKtuMPNXBT5STeddYqQegduWBtURLT3M=";
+      })
     ];
 
     shellAbbrs = {
