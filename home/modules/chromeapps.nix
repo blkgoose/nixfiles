@@ -145,6 +145,10 @@ let
       url = "https://www.printables.com";
       opts = personal;
     };
+    "prozis" = {
+      url = "https://www.prozis.com/it/it";
+      opts = personal;
+    };
     "pyxis-doc" = {
       url = "http://elm.prima.design";
       opts = work;
