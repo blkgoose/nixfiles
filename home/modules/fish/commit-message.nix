@@ -4,10 +4,10 @@ let
     lib.removeSuffix "\n" (builtins.readFile "${secret_dots}/openai_key");
 
   prompt = ''
-    Rewrite the following Git diff into a concise and informative commit message using conventional commit, 
-    starting in lowercase, giving a minimal description, within 25 characters. 
-    The '-' indicate removed lines and '+' added lines. 
-    Use unchanged lines and file names for context:
+    Rewrite the following Git diff into a concise and informative commit message using the conventional commit standard,
+    the first letter of the message MUST be lowercase, give a minimal description within 25 characters.
+
+    The '-' indicate removed lines and '+' added lines, use unchanged lines and file names for context:
   '';
 
   generator = pkgs.writers.writeBash "generator" ''
