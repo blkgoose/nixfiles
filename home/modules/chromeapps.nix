@@ -9,6 +9,10 @@ let
       url = "https://amazon.it";
       opts = personal;
     };
+    "bambustore" = {
+      url = "https://eu.store.bambulab.com/";
+      opts = personal;
+    };
     "books" = {
       url = "https://play.google.com/books";
       opts = personal;
