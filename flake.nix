@@ -6,6 +6,9 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixpkgs-insomnia.url =
+      "github:nixos/nixpkgs?rev=336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +24,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware
-    , suite_py, prima-nix, secret_dots, ... }@attrs:
+    , suite_py, prima-nix, secret_dots, nixpkgs-insomnia, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -37,6 +40,8 @@
 
               config.allowUnfree = true;
             };
+
+            insomnia-old = import nixpkgs-insomnia { inherit system; };
           })
         ];
       };
