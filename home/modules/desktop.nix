@@ -3,12 +3,6 @@
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
-  home.pointerCursor = {
-    name = "Bibata-Modern.Classic";
-    package = pkgs.bibata-cursors;
-    size = 20;
-  };
-
   services.wlsunset = {
     enable = true;
     latitude = "42.50";
