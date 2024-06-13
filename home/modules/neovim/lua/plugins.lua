@@ -15,6 +15,8 @@ local palette = require("palette")
 local colors = palette.colors
 
 require("lazy").setup({
+  { "github/copilot.vim" },
+
   {
     "danielefongo/microscope",
     dependencies = {
