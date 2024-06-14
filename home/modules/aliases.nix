@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 let
   apps = {
+    "record" = "${pkgs.kooha}/bin/kooha";
     "screenshot" =
       "${pkgs.unstable.hyprshot}/bin/hyprshot --mode region --clipboard-only --silent";
     "chrome" = "${pkgs.google-chrome}/bin/google-chrome-stable";
