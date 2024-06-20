@@ -15,6 +15,13 @@ local palette = require("palette")
 local colors = palette.colors
 
 require("lazy").setup({
+  {
+    "danielefongo/recode.nvim",
+    dependencies = {
+        "neovim/nvim-lspconfig"
+    },
+  },
+
   { "github/copilot.vim" },
 
   {
