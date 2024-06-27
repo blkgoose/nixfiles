@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
-  xdg.configFile."nvim/init.lua".source = ./init.lua;
-  xdg.configFile."nvim/lua/".source = ./lua;
+{ pkgs, config, ... }: {
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
+    "/home/prima/.config/nix/home/modules/neovim";
 
   programs.neovim = {
     package = pkgs.unstable.neovim-unwrapped;
