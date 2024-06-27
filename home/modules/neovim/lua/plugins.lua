@@ -59,6 +59,9 @@ require("lazy").setup({
       colorscheme = palette.colorscheme,
       diagnostic_underline = "underline",
     },
+    config = function() require("themer").setup()
+        vim.keymap.del("n", "<leader>c")
+    end,
   },
 
   {
@@ -93,9 +96,6 @@ require("lazy").setup({
           enable = true,
         },
       })
-
-      -- opt.foldmethod = "expr"
-      -- opt.foldexpr = "nvim_treesitter#foldexpr()"
     end,
   },
 
