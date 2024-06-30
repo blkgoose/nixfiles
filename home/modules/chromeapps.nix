@@ -161,6 +161,10 @@ let
       url = "https://reddit.com";
       opts = personal;
     };
+    "rp-app" = {
+      url = "https://training.rpstrength.com/";
+      opts = personal;
+    };
     "sheets".url = "https://docs.google.com/spreadsheets";
     "slack" = {
       url = "https://prima.slack.com";
