@@ -192,6 +192,10 @@ let
       url = "https://app.tvtime.com/shows/watchlist";
       opts = personal;
     };
+    "udemy" = {
+      url = "https://prima.udemy.com/organization/home/";
+      opts = work;
+    };
     "wallet" = {
       url = "https://web.budgetbakers.com/dashboard";
       opts = personal ++ no_plugins;
