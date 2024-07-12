@@ -49,6 +49,8 @@ cmd([[
     nnoremap <leader>P :call PairMode()<CR>
 ]])
 
+cmd([[ colorscheme retrobox ]])
+
 nmap("cf", ":!touch <cfile><cr>")
 nmap("*", '"syiw<Esc>: let @/ = @s<CR>:set hlsearch<CR>')
 nmap("<F1>", ':let @/ = ""<CR>')
