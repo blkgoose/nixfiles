@@ -11,9 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local palette = require("palette")
-local colors = palette.colors
-
 require("lazy").setup({
   {
     "danielefongo/recode.nvim",
@@ -50,17 +47,6 @@ require("lazy").setup({
           { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
         },
       })
-    end,
-  },
-
-  {
-    "ThemerCorp/themer.lua",
-    opts = {
-      colorscheme = palette.colorscheme,
-      diagnostic_underline = "underline",
-    },
-    config = function() require("themer").setup()
-        vim.keymap.del("n", "<leader>c")
     end,
   },
 
@@ -316,13 +302,6 @@ require("lazy").setup({
     opts = { window = { relative = "editor" } },
     dependencies = { "neovim/nvim-lspconfig" },
   },
-
-  -- {
-  --   "lvimuser/lsp-inlayhints.nvim",
-  --   branch = "anticonceal",
-  --   event = "BufReadPost",
-  --   opts = { inlay_hints = { highlight = colors.grey3 } },
-  -- },
 
   {
     "hrsh7th/nvim-cmp",
