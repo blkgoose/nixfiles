@@ -23,19 +23,19 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware
-    , suite_py, prima-nix, secret_dots, nixpkgs-insomnia, ... }@attrs:
+  outputs = { nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
+
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
 
         overlays = [
-          suite_py.overlays.default
-          prima-nix.overlays.default
+          inputs.suite_py.overlays.default
+          inputs.prima-nix.overlays.default
           (self: super: {
-            unstable = import nixpkgs-unstable {
+            unstable = import inputs.nixpkgs-unstable {
               inherit system;
 
               config.allowUnfree = true;
@@ -48,20 +48,20 @@
 
       lib = nixpkgs.lib;
       homeManager = {
-        home-manager.extraSpecialArgs = attrs // { inherit system; };
+        home-manager.extraSpecialArgs = inputs // { inherit system; };
       };
     in {
       nixosConfigurations = {
         bjorn = lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = attrs;
+          specialArgs = inputs;
           modules = [ ./systems/bjorn homeManager ];
         };
         toaster = lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = attrs;
+          specialArgs = inputs;
           modules = [ ./systems/toaster homeManager ];
         };
       };
