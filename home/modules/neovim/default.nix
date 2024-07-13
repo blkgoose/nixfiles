@@ -1,6 +1,13 @@
-{ pkgs, config, ... }: {
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
-    "/home/prima/.config/nix/home/modules/neovim";
+{ pkgs, config, lib, self, ... }:
+let
+  configHome = config.xdg.configHome + "/nix/";
+
+  mkMutableLink = path:
+    config.lib.file.mkOutOfStoreSymlink
+    (configHome + lib.strings.removePrefix (toString self) (toString path));
+
+in {
+  xdg.configFile."nvim".source = mkMutableLink ./.;
 
   programs.neovim = {
     package = pkgs.unstable.neovim-unwrapped;
