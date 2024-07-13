@@ -41,7 +41,11 @@
               config.allowUnfree = true;
             };
 
-            insomnia-old = import nixpkgs-insomnia { inherit system; };
+          })
+
+          (self: super: {
+            insomnia =
+              (import inputs.nixpkgs-insomnia { inherit system; }).insomnia;
           })
         ];
       };
