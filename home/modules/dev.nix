@@ -5,7 +5,7 @@
     nixfmt-classic
     clang
     yarn
-    insomnia-old.insomnia
+    insomnia
     kubectl
     awscli2
     pkg-config
