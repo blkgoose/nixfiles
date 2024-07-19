@@ -78,7 +78,7 @@
         special_scale_factor = 0.85;
       };
 
-      master = { new_is_master = true; };
+      master = { new_status = "master"; };
 
       gestures = { workspace_swipe = "off"; };
 
