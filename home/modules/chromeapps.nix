@@ -30,6 +30,10 @@ let
     };
     "coggle".url = "https://coggle.it";
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
+    "cronometer" = {
+      url = "https://cronometer.com/";
+      opts = personal;
+    };
     "crunchyroll" = {
       url = "https://www.crunchyroll.com/it";
       opts = personal ++ no_plugins;
