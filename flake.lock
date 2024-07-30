@@ -244,10 +244,10 @@
     "secret_dots": {
       "flake": false,
       "locked": {
+        "dirtyRev": "6f800cea2d87896414e801135f280ef14ca8142f-dirty",
+        "dirtyShortRev": "6f800ce-dirty",
         "lastModified": 1720786437,
-        "narHash": "sha256-9TQ8inl2fwfJBHO78ojjOIWVBc5bamyyxtZ1LkBy5Fk=",
-        "ref": "refs/heads/master",
-        "rev": "6f800cea2d87896414e801135f280ef14ca8142f",
+        "narHash": "sha256-g/jT6eNYfOSpsHz62aUvOAfiv5BcuVUtmpAGZ5iUYOk=",
         "shallow": true,
         "type": "git",
         "url": "file:./secret_dotfiles"
