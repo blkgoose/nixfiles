@@ -7,21 +7,23 @@ let
     BAT_PCT=`${pkgs.acpi}/bin/acpi -b | ${pkgs.gnugrep}/bin/grep -P -o '[0-9]+(?=%)'`
     BAT_STA=`${pkgs.acpi}/bin/acpi -b | ${pkgs.gnugrep}/bin/grep -P -o '\w+(?=,)'`
 
-    test $BAT_PCT -le ${low_level} && test $BAT_PCT -gt ${critical_level} && test $BAT_STA = "Discharging" \
-        && DISPLAY=:0.0 ${pkgs.dunst}/bin/dunstify \
+    if test $BAT_PCT -le ${low_level} && test $BAT_PCT -gt ${critical_level} && test $BAT_STA = "Discharging"; then
+        DISPLAY=:0.0 ${pkgs.dunst}/bin/dunstify \
             -a battery \
             -h string:x-dunst-stack-tag:battery \
             -u normal \
             -i battery-caution \
             "Would be wise to keep the charger nearby."
+    fi
 
-    test $BAT_PCT -le ${critical_level} && test $BAT_STA = "Discharging" \
-        && DISPLAY=:0.0 ${pkgs.dunst}/bin/dunstify \
-            -a battery
+    if test $BAT_PCT -le ${critical_level} && test $BAT_STA = "Discharging"; then
+        DISPLAY=:0.0 ${pkgs.dunst}/bin/dunstify \
+            -a battery \
             -h string:x-dunst-stack-tag:battery \
             -u critical \
             -i battery-empty \
             "Charge me or watch me die!"
+    fi
   '';
 in {
   systemd.user.services."low_battery_notify" = {
