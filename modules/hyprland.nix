@@ -4,7 +4,6 @@
     package = pkgs.unstable.hyprland;
     xwayland.enable = true;
   };
-  programs.waybar = { enable = true; };
   environment.systemPackages = with pkgs; [ hyprpaper wl-clipboard ];
 
   services.xserver = {
