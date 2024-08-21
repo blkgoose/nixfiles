@@ -31,7 +31,7 @@ let
     "coggle".url = "https://coggle.it";
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
     "cronometer" = {
-      url = "https://cronometer.com/";
+      url = "https://cronometer.com/#diary";
       opts = personal;
     };
     "crunchyroll" = {
