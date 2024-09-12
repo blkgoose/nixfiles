@@ -14,10 +14,7 @@
         "${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit"
       ];
 
-      env = [
-        "PATH, ${config.home.homeDirectory}/.local/bin:$PATH"
-        "WLR_NO_HARDWARE_CURSORS, 1"
-      ];
+      env = [ "PATH, ${config.home.homeDirectory}/.local/bin:$PATH" ];
 
       input = {
         kb_layout = "us";
