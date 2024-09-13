@@ -350,7 +350,7 @@ require("lazy").setup({
           ["<C-p>"] = cmp.mapping.scroll_docs(-4),
           ["<C-n>"] = cmp.mapping.scroll_docs(4),
           ["<esc>"] = cmp.mapping.abort(),
-          ["<cr>"] = cmp.mapping.confirm({ select = true }),
+          ["<cr>"] = cmp.mapping.confirm({ select = false }),
         },
         sources = {
           { name = "copilot" },
