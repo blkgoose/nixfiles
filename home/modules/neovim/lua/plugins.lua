@@ -19,7 +19,7 @@ require("lazy").setup({
     },
   },
 
-  { "github/copilot.vim" },
+  -- { "github/copilot.vim" },
 
   {
     "danielefongo/microscope",
@@ -311,6 +311,19 @@ require("lazy").setup({
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "hrsh7th/vim-vsnip",
+      {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
+      {
+        "zbirenbaum/copilot.lua",
+        opts = {
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+        },
+      },
     },
     config = function()
       local cmp = require("cmp")
@@ -320,6 +333,12 @@ require("lazy").setup({
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
+        completion = {
+          autocomplete = {
+            cmp.TriggerEvent.TextChanged,
+            cmp.TriggerEvent.InsertEnter,
+          },
+        },
         snippet = {
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body)
@@ -328,10 +347,13 @@ require("lazy").setup({
         mapping = {
           ["<C-k>"] = cmp.mapping.select_prev_item(),
           ["<C-j>"] = cmp.mapping.select_next_item(),
-          ["<C-e>"] = cmp.mapping.close(),
+          ["<C-p>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-n>"] = cmp.mapping.scroll_docs(4),
+          ["<esc>"] = cmp.mapping.abort(),
           ["<cr>"] = cmp.mapping.confirm({ select = true }),
         },
         sources = {
+          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "vsnip" },
           { name = "path" },
