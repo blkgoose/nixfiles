@@ -10,6 +10,8 @@ in {
 
   xdg.configFile."git/hooks/pre-commit".source =
     pkgs.writers.writeBash "pre-commit" ''
+      set -e
+
       PROJ_ROOT=$(git rev-parse --show-toplevel)
       HOOK_PATH=$PROJ_ROOT/.git/hooks/pre-commit
 
