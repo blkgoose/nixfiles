@@ -211,6 +211,22 @@
         "type": "github"
       }
     },
+    "prima-appsec": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1726494752,
+        "narHash": "sha256-fjUfSWXspHW437mZL9OXwTkPogKl7MzbWqGqouD3akg=",
+        "ref": "master",
+        "rev": "4f6d43a55eb8b8ce8ec9ed37702591346f854ea3",
+        "revCount": 816,
+        "type": "git",
+        "url": "ssh://git@github.com/primait/appsec-automation.git"
+      },
+      "original": {
+        "id": "prima-appsec",
+        "type": "indirect"
+      }
+    },
     "prima-nix": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -236,6 +252,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-insomnia": "nixpkgs-insomnia",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "prima-appsec": "prima-appsec",
         "prima-nix": "prima-nix",
         "secret_dots": "secret_dots",
         "suite_py": "suite_py"
