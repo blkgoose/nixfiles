@@ -37,7 +37,6 @@
 
         overlays = [
           inputs.suite_py.overlays.default
-          inputs.prima-nix.overlays.default
           (self: super: {
             unstable = import inputs.nixpkgs-unstable {
               inherit system;

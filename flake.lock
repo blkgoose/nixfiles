@@ -232,11 +232,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1690460368,
-        "narHash": "sha256-8AiTbdtdHBXiCySduzHYgJdsBMZ56EnqsvsmCZYsKOM=",
-        "ref": "crowdstrike-download-script",
-        "rev": "4fe273da856ae89bd98b1adad0e6be694ccd4130",
-        "revCount": 9,
+        "lastModified": 1727771927,
+        "narHash": "sha256-DWD/IJpsWydA+yytj45hnFsQOWfj/WzXSB20KHE0scw=",
+        "ref": "master",
+        "rev": "3abc6db1790ea02aaf2ea489b39f2c95bc962b85",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/primait/prima.nix.git"
       },
@@ -261,10 +261,10 @@
     "secret_dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1723533904,
-        "narHash": "sha256-g/jT6eNYfOSpsHz62aUvOAfiv5BcuVUtmpAGZ5iUYOk=",
+        "lastModified": 1727772531,
+        "narHash": "sha256-eJePXC8Ztx09v0SnyL+NnOnXoIhRkpHVPe31+kxAyuU=",
         "ref": "refs/heads/master",
-        "rev": "235be9cc761f7f74d0abc678b3c522b3f010e3e9",
+        "rev": "aa582b56efff7fd18ff1f0b7fd6af7f82b7f9f73",
         "shallow": true,
         "type": "git",
         "url": "file:./secret_dotfiles"
