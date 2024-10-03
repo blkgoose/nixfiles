@@ -117,6 +117,10 @@ let
       url = "https://lazamar.co.uk/nix-versions";
       opts = personal;
     };
+    "noogle" = {
+      url = "https://www.noogle.dev";
+      opts = personal;
+    };
     "notion" = {
       url = "https://www.notion.so";
       opts = work;
