@@ -1,5 +1,5 @@
 { pkgs, config, ... }: {
-  home.packages = with pkgs; [ fzf sesh zoxide ];
+  home.packages = with pkgs; [ fzf unstable.sesh zoxide tmuxinator ];
 
   programs.tmux = {
     enable = true;
@@ -19,6 +19,8 @@
     extraConfig = ''
       bind -n m-H swap-pane -D
       bind -n m-L swap-pane -U
+
+      set -g detach-on-destroy off
 
       bind-key -n 'M-r' source-file "${config.xdg.configHome}/tmux/tmux.conf" \; display "Configuration Reloaded!"
 
