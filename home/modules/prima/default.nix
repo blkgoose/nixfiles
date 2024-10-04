@@ -1,4 +1,6 @@
 { pkgs, secret_dots, ... }: {
+  imports = [ ./git.nix ];
+
   home.packages = with pkgs; [ suite_py ];
 
   home.file = {
