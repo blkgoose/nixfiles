@@ -4,10 +4,10 @@ let
     lib.removeSuffix "\n" (builtins.readFile "${secret_dots}/openai_key");
 
   prompt = ''
-    Rewrite the following Git diff into a concise and informative commit message using the conventional commit standard,
-    the first letter of the message MUST be lowercase, give a minimal description within 25 characters.
-
-    The '-' indicate removed lines and '+' added lines, use unchanged lines and file names for context:
+    Here you have 20 lines of commits, use these as an example.
+    The lines after the first 20 are the diff of the current changes, the '-' indicate removed lines and '+' added lines.
+    Use the unchanged lines and file names for context.
+    Rewrite the following Git diff into a concise and informative commit message:
   '';
 
   generator = pkgs.writers.writeBash "generator" ''
@@ -16,12 +16,15 @@ let
 
     diff=$(${pkgs.coreutils}/bin/cat /dev/stdin)
     escaped_diff=$(echo "$diff" | ${pkgs.jq}/bin/jq -sR)
+    previous_commits=$(git log --oneline | head -20)
+    escaped_commits=$(echo "$previous_commits" | ${pkgs.jq}/bin/jq -sR)
 
     payload=$(${pkgs.jq}/bin/jq \
         -n \
-        --arg prompt "${prompt}" \
-        --arg diff "$escaped_diff" \
-        --arg model "$model" '{model: $model, messages: [{role: "user", content: ($prompt + $diff)}] }'\
+        --arg prompt "${prompt}\n" \
+        --arg diff "$escaped_diff\n" \
+        --arg commits "$escaped_commits\n" \
+        --arg model "$model" '{model: $model, messages: [{role: "user", content: ($prompt + $commits + $diff)}] }'\
     )
 
     response=$(${pkgs.curl}/bin/curl -s https://api.openai.com/v1/chat/completions \
