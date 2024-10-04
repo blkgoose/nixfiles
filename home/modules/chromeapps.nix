@@ -69,6 +69,10 @@ let
       url = "https://hckrnews.com/";
       opts = personal;
     };
+    "hm-search" = {
+      url = "https://home-manager-options.extranix.com/";
+      opts = personal;
+    };
     "instagram" = {
       url = "https://instagram.com";
       opts = personal;
