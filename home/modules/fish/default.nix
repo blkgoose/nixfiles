@@ -23,7 +23,6 @@ in {
     enable = true;
 
     shellInit = ''
-      eval (direnv hook fish)
       eval (ssh-agent -c) > /dev/null
     '';
 
