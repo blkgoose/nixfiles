@@ -179,7 +179,7 @@ let
     };
     "sheets".url = "https://docs.google.com/spreadsheets";
     "slack" = {
-      url = "https://prima.slack.com";
+      url = "https://app.slack.com/client/T024WK3NT/C04KE5JMKFG";
       opts = work;
     };
     "swarmia" = {
