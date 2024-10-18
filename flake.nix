@@ -70,7 +70,7 @@
       homeConfigurations."alessiobiancone" =
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home/users/prima.nix ];
+          modules = [ ./home/systems/shittop.nix ];
         };
     };
 }
