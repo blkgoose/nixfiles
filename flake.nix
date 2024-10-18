@@ -59,12 +59,6 @@
       };
     in {
       nixosConfigurations = {
-        bjorn = lib.nixosSystem {
-          inherit system pkgs;
-
-          specialArgs = inputs;
-          modules = [ ./systems/bjorn homeManager ];
-        };
         toaster = lib.nixosSystem {
           inherit system pkgs;
 
