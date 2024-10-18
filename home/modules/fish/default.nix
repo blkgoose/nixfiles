@@ -17,7 +17,7 @@ let
       src = assert builtins.pathExists src; src;
     };
 in {
-  imports = [ ./commit-message.nix ];
+  # imports = [ ./commit-message.nix ];
 
   programs.fish = {
     enable = true;
@@ -28,7 +28,7 @@ in {
 
     plugins = [
       (plugin "jorgebucaran/fisher" {
-        sha256 = "e8gIaVbuUzTwKtuMPNXBT5STeddYqQegduWBtURLT3M=";
+        sha256 = "pR5RKU+zIb7CS0Y6vjx2QIZ8Iu/3ojRfAcAdjCOxl1U=";
       })
     ];
 
