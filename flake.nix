@@ -14,20 +14,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    suite_py.url = "suite_py";
-    prima-nix.url = "prima-nix";
-    prima-appsec = {
-      url = "prima-appsec";
-      flake = false;
-    };
+    # suite_py.url = "suite_py";
+    # prima-nix.url = "prima-nix";
+    # prima-appsec = {
+    #   url = "prima-appsec";
+    #   flake = false;
+    # };
 
-    secret_dots = {
-      url = "git+file:./secret_dotfiles?shallow=1";
-      flake = false;
-    };
+    # secret_dots = {
+    #   url = "git+file:./secret_dotfiles?shallow=1";
+    #   flake = false;
+    # };
   };
 
-  outputs = { nixpkgs, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -36,7 +36,7 @@
         config.allowUnfree = true;
 
         overlays = [
-          inputs.suite_py.overlays.default
+          # inputs.suite_py.overlays.default
           (self: super: {
             unstable = import inputs.nixpkgs-unstable {
               inherit system;
@@ -71,6 +71,11 @@
           specialArgs = inputs;
           modules = [ ./systems/toaster homeManager ];
         };
+      };
+
+      homeConfigurations."alessiobiancone" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./home/users/prima.nix ];
       };
     };
 }
