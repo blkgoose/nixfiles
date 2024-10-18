@@ -67,9 +67,10 @@
         };
       };
 
-      homeConfigurations."alessiobiancone" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home/users/prima.nix ];
-      };
+      homeConfigurations."alessiobiancone" =
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home/users/prima.nix ];
+        };
     };
 }
