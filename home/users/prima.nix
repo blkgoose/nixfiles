@@ -8,7 +8,7 @@
     ../modules/neovim
     ../modules/fish
     # ../modules/prima
-    # ../modules/saint-peter.nix
+    ../modules/saint-peter.nix
     ../modules/chromeapps.nix
     ../modules/aliases.nix
     ../modules/battery_low_alert.nix
