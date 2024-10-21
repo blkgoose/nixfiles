@@ -16,17 +16,17 @@
 
     nixgl.url = "github:nix-community/nixGL";
 
-    # suite_py.url = "suite_py";
-    # prima-nix.url = "prima-nix";
-    # prima-appsec = {
-    #   url = "prima-appsec";
-    #   flake = false;
-    # };
+    suite_py.url = "suite_py";
+    prima-nix.url = "prima-nix";
+    prima-appsec = {
+      url = "prima-appsec";
+      flake = false;
+    };
 
-    # secret_dots = {
-    #   url = "git+file:./secret_dotfiles?shallow=1";
-    #   flake = false;
-    # };
+    secret_dots = {
+      url = "git+file:./secret_dotfiles?shallow=1";
+      flake = false;
+    };
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
@@ -38,7 +38,7 @@
         config.allowUnfree = true;
 
         overlays = [
-          # inputs.suite_py.overlays.default
+          inputs.suite_py.overlays.default
           inputs.nixgl.overlay
           (self: super: {
             unstable = import inputs.nixpkgs-unstable {
@@ -70,10 +70,14 @@
         };
       };
 
-      homeConfigurations."alessiobiancone" =
-        home-manager.lib.homeManagerConfiguration {
+      homeConfigurations = {
+        "alessiobiancone" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+
+          extraSpecialArgs = inputs // { inherit system; };
+
           modules = [ ./home/systems/shittop.nix ];
         };
+      };
     };
 }
