@@ -1,12 +1,14 @@
-{ pkgs, secret_dots, ... }: {
+{ secret_dots, ... }: {
   xdg.configFile = {
     "saint-peter.json".source = "${secret_dots}/saint-peter/saint-peter.json";
   };
 
-  home.file.".ssh/config".source = pkgs.writeText "config" ''
-    Host github.com
-       HostName github.com
-       User git
-       IdentityFile ~/.ssh/SAINT_PETER_GIT_KEY
-  '';
+  home.file.".ssh/config" = {
+    text = ''
+      Host github.com
+         HostName github.com
+         User git
+         IdentityFile ~/.ssh/SAINT_PETER_GIT_KEY
+    '';
+  };
 }
