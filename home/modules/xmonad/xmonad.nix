@@ -19,8 +19,13 @@
 
       import XMonad.Actions.CycleWS
 
+      spacing' gap =
+          spacingRaw False
+          (Border 0 gap 0 gap) True
+          (Border gap 0 gap 0) True
+
       myConf = def { terminal = "alacritty"
-                   , layoutHook = (spacing 10 $ Tall 1 (3/100) (1/2))
+                   , layoutHook = (spacing' 10 $ Tall 1 (3/100) (1/2))
                    , borderWidth = 3
                    , focusedBorderColor = "#B388FF"
                    , modMask = mod4Mask
