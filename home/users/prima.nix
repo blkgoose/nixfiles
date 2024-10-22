@@ -7,7 +7,7 @@
     ../modules/git.nix
     ../modules/neovim
     ../modules/fish
-    # ../modules/prima
+    ../modules/prima
     ../modules/saint-peter.nix
     ../modules/chromeapps.nix
     ../modules/aliases.nix
