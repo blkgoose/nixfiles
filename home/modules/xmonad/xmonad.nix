@@ -28,6 +28,7 @@
                    , layoutHook = (spacing' 10 $ Tall 1 (3/100) (1/2))
                    , borderWidth = 3
                    , focusedBorderColor = "#B388FF"
+                   , normalBorderColor = "#F5F5F5"
                    , modMask = mod4Mask
                    }
                   `additionalKeys`
