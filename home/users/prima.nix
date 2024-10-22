@@ -12,8 +12,8 @@
     ../modules/chromeapps.nix
     ../modules/aliases.nix
     ../modules/battery_low_alert.nix
-    ../modules/eye_saver.nix
     ../modules/tmux.nix
+    ../modules/xmonad
   ];
 
   home.username = "alessiobiancone";
