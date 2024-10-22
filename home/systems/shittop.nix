@@ -19,7 +19,7 @@ let
   # hyprland = (wrapNixGL pkgs.hyprland);
   alacritty = (wrapNixGL pkgs.alacritty);
 in {
-  imports = [ ../users/prima.nix ];
+  imports = [ ../users/prima.nix ../modules/docker.nix ];
   # overrides
   programs.alacritty.package = pkgs.emptyDirectory; # installed by system
   # programs.fish.package = pkgs.fish; # installed by system
