@@ -2,21 +2,6 @@
   "flakes": [
     {
       "from": {
-        "id": "suite_py",
-        "type": "indirect"
-      },
-      "to": {
-        "lastModified": 1712735366,
-        "narHash": "sha256-0G9nDZHUX8bBZ8S4uWiudCMeaAPayo3G0lPSg+gZ32I=",
-        "ref": "master",
-        "rev": "584b5f5eb3df0c2edf275ad9bcc41677c75a9636",
-        "revCount": 576,
-        "type": "git",
-        "url": "ssh://git@github.com/primait/suite_py.git"
-      }
-    },
-    {
-      "from": {
         "id": "prima-appsec",
         "type": "indirect"
       },
@@ -43,6 +28,16 @@
         "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/primait/prima.nix.git"
+      }
+    },
+    {
+      "from": {
+        "id": "suite_py",
+        "type": "indirect"
+      },
+      "to": {
+        "type": "git",
+        "url": "ssh://git@github.com/primait/suite_py.git"
       }
     }
   ],
