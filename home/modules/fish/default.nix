@@ -17,7 +17,7 @@ let
       src = assert builtins.pathExists src; src;
     };
 in {
-  # imports = [ ./commit-message.nix ];
+  imports = [ ./commit-message.nix ];
 
   programs.fish = {
     enable = true;
