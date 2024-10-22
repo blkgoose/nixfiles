@@ -53,6 +53,10 @@
             insomnia =
               (import inputs.nixpkgs-insomnia { inherit system; }).insomnia;
           })
+
+          (self: super: {
+            nixGL = import ./home/lib/nixgl.nix { inherit pkgs; };
+          })
         ];
       };
 
