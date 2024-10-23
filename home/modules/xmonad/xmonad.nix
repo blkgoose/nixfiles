@@ -5,13 +5,14 @@
     config = pkgs.writeText "xmonad-config" ''
       import XMonad
       import XMonad.Util.EZConfig (additionalKeys)
-      import XMonad.Layout.Dwindle
-      import XMonad.Layout.Spacing
       import Data.Ratio
       import XMonad.Hooks.EwmhDesktops
       import XMonad.Actions.UpdatePointer (updatePointer)
       import XMonad.Util.Run
       import Graphics.X11.ExtraTypes.XF86
+
+      import XMonad.Layout.Dwindle
+      import XMonad.Layout.Spacing
 
       import XMonad.Hooks.DynamicLog
       import XMonad.Hooks.StatusBar
