@@ -5,7 +5,7 @@
     config = pkgs.writeText "xmonad-config" ''
       import XMonad
       import XMonad.Util.EZConfig (additionalKeys)
-      import XMonad.Layout
+      import XMonad.Layout.Dwindle
       import XMonad.Layout.Spacing
       import Data.Ratio
       import XMonad.Hooks.EwmhDesktops
@@ -25,7 +25,7 @@
           (Border gap 0 gap 0) True
 
       myConf = def { terminal = "alacritty"
-                   , layoutHook = (spacing' 10 $ Tall 1 (3/100) (1/2))
+                   , layoutHook = (spacing' 10 $ Dwindle R CW 1.5 1.1)
                    , borderWidth = 3
                    , focusedBorderColor = "#B388FF"
                    , normalBorderColor = "#F5F5F5"
