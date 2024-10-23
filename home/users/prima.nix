@@ -4,6 +4,7 @@
     ../modules/core.nix
     ../modules/desktop.nix
     ../modules/dev.nix
+    ../modules/docker.nix
     ../modules/git.nix
     ../modules/neovim
     ../modules/fish
