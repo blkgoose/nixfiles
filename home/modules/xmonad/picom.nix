@@ -11,7 +11,7 @@
 
   systemd.user.services."picom" = {
     Unit.Description = "Runs picom correctly";
-    Service.ExecStart = with pkgs; "${(nixGL picom)}/bin/picom";
+    Service.ExecStart = "${pkgs.picom}/bin/picom";
     Install.WantedBy = [ "graphical-session.target" ];
 
     Unit = {
