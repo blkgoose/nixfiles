@@ -1,10 +1,6 @@
 { pkgs, ... }: {
-  imports = [ ./xmonad.nix ./xmobar.nix ./picom.nix ./dunst.nix ];
+  imports =
+    [ ./xmonad.nix ./xmobar.nix ./picom.nix ./dunst.nix ./wallpaper.nix ];
 
-  home.packages = with pkgs; [ feh imagemagick autorandr pavucontrol ];
-
-  home.file.".background-image" = {
-    source = ./wallpaper;
-    onChange = "${pkgs.feh}/bin/feh --bg-fill ~/.background-image";
-  };
+  home.packages = with pkgs; [ autorandr pavucontrol ];
 }
