@@ -14,7 +14,10 @@
       import XMonad.Layout.Dwindle
       import XMonad.Layout.Spacing
       import XMonad.Layout.WindowNavigation
+      import XMonad.Layout.WindowArranger
+      import XMonad.Layout.NoBorders
 
+      import XMonad.Util.Loggers
       import XMonad.Hooks.DynamicLog
       import XMonad.Hooks.StatusBar
       import XMonad.Hooks.StatusBar.PP
@@ -27,8 +30,8 @@
           (Border gap 0 gap 0) True
 
       myConf = def { terminal = "alacritty"
-                   , layoutHook = windowNavigation $ (spacing' 10 $ Dwindle R CW 1.5 1.1)
-                   , borderWidth = 3
+                   , layoutHook = smartBorders $ navigation $ (spacing' 10 $ Dwindle R CW 1 1.1)
+                   , borderWidth = 4
                    , focusedBorderColor = "#B388FF"
                    , normalBorderColor = "#F5F5F5"
                    , modMask = mod4Mask
@@ -42,6 +45,8 @@
                   ++ movement
                   ++ mediaKeys
                   ++ notifications
+
+      navigation = configurableNavigation (navigateBrightness 0)
 
       notifications =
           [ ((mod4Mask, xK_e), spawn "${pkgs.dunst}/bin/dunstctl history-pop")
@@ -70,10 +75,33 @@
           , ((mod4Mask .|. shiftMask, xK_j), sendMessage $ Swap D)
           , ((mod4Mask .|. shiftMask, xK_k), sendMessage $ Swap U)
           , ((mod4Mask .|. shiftMask, xK_l), sendMessage $ Swap R)
+          , ((mod4Mask .|. controlMask, xK_l), sendMessage Expand)
+          , ((mod4Mask .|. controlMask, xK_h), sendMessage Shrink)
           ]
 
+      xmobarProp' config =
+          withEasySB (statusBarProp "xmobar" (pure xmobarPP')) (\_ -> (mod4Mask, xK_b)) config
+
+      xmobarPP' = def
+          { ppCurrent = purple
+          , ppHidden = offwhite
+          , ppOrder = \(ws:_:t:_) -> [ws, t]
+          , ppTitle = lowwhite
+          }
+        where
+          purple = xmobarColor purpleColor ""
+          offwhite = xmobarColor offwhiteColor ""
+          lowwhite = xmobarColor "#505050" ""
+          red = xmobarColor "#FF5252" ""
+
+          ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
+
+      purpleColor, offwhiteColor :: String
+      purpleColor = "#B388FF"
+      offwhiteColor = "#F5F5F5"
+
       main :: IO ()
-      main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ myConf
+      main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp' $ myConf
     '';
   };
 }
