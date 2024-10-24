@@ -11,4 +11,7 @@
   xsession.initExtra = ''
     ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option compose:ralt
   '';
+
+  fonts.fontconfig.enable = true;
+  home.packages = with pkgs; [ nerdfonts ];
 }
