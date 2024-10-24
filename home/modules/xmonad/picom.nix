@@ -3,7 +3,7 @@
     text = ''
       vsync = true;
       backend = "glx";
-      corner-radius = 10;
+      corner-radius = 20;
       round-borders = 1;
     '';
     onChange = "${pkgs.systemd}/bin/systemctl --user restart picom";
