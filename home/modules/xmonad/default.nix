@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./xmonad.nix ./xmobar.nix ./picom.nix ];
+  imports = [ ./xmonad.nix ./xmobar.nix ./picom.nix ./dunst.nix ];
 
   home.packages = with pkgs; [ feh imagemagick autorandr pavucontrol ];
 
