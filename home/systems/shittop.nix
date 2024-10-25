@@ -3,7 +3,7 @@
 
   # overrides because ubuntu sucks
   programs.alacritty.package = with pkgs; nixGL alacritty;
-  systemd.user.services."picom".Service.ExecStart = with pkgs;
+  systemd.user.services.picom.Service.ExecStart = with pkgs;
     lib.mkForce "${(nixGL picom)}/bin/picom";
 
   xsession.enable = true;

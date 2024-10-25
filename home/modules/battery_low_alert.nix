@@ -26,7 +26,7 @@ let
     fi
   '';
 in {
-  systemd.user.services."low_battery_notify" = {
+  systemd.user.services.low_battery_notify = {
     Unit.Description = "low battery notifier";
     Service.ExecStart = low_battery_notify;
   };
