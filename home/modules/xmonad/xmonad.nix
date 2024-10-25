@@ -30,7 +30,7 @@
           (Border gap 0 gap 0) True
 
       myConf = def { terminal = "alacritty"
-                   , layoutHook = smartBorders $ navigation $ (spacing' 10 $ Dwindle R CW 1 1.1)
+                   , layoutHook = lessBorders OnlyFloat $ navigation $ (spacing' 10 $ Dwindle R CW 1 1.1)
                    , borderWidth = 4
                    , focusedBorderColor = "#B388FF"
                    , normalBorderColor = "#F5F5F5"
