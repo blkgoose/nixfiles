@@ -33,7 +33,7 @@
     '';
   };
 
-  systemd.user.services."xmobar" = {
+  systemd.user.services.xmobar = {
     Unit.Description = "Runs xmobar";
     Service.ExecStart = "${pkgs.xmobar}/bin/xmobar";
     Install.WantedBy = [ "graphical-session.target" ];

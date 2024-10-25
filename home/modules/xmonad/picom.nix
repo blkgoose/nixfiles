@@ -9,7 +9,7 @@
     onChange = "${pkgs.systemd}/bin/systemctl --user restart picom";
   };
 
-  systemd.user.services."picom" = {
+  systemd.user.services.picom = {
     Unit.Description = "Runs picom correctly";
     Service.ExecStart = "${pkgs.picom}/bin/picom";
     Install.WantedBy = [ "graphical-session.target" ];
