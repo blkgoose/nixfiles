@@ -14,6 +14,7 @@
     ../modules/battery_low_alert.nix
     ../modules/tmux.nix
     ../modules/xmonad
+    ../modules/game.nix
   ];
 
   home.username = "alessiobiancone";
