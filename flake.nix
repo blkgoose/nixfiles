@@ -8,6 +8,8 @@
 
     nixpkgs-insomnia.url =
       "github:nixos/nixpkgs?rev=336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3";
+    nixpkgs-discord.url =
+      "github:nixos/nixpkgs?rev=b3a285628a6928f62cdf4d09f4e656f7ecbbcafb";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -52,6 +54,10 @@
           (self: super: {
             insomnia =
               (import inputs.nixpkgs-insomnia { inherit system; }).insomnia;
+            discord = (import inputs.nixpkgs-discord {
+              inherit system;
+              config.allowUnfree = true;
+            }).discord;
           })
 
           (self: super: {
