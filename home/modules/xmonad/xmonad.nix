@@ -24,10 +24,23 @@
 
       import XMonad.Actions.CycleWS
 
+      import XMonad.Util.NamedScratchpad
+
+      import Data.List (isInfixOf)
+
       spacing' gap =
           spacingRaw False
           (Border 0 gap 0 gap) True
           (Border gap 0 gap 0) True
+
+      scratchpads =
+          [ NS "slack" "slack" (c ~? "app.slack.com__client") nonFloating
+          , NS "youtrack" "youtrack" (c ~? "myjetbrains.com__youtrack_agiles") nonFloating
+          , NS "notion" "notion" (c ~? "www.notion.so") nonFloating
+          , NS "calendar" "calendar" (c ~? "calendar.google.com__calendar") nonFloating
+          ] where
+              c = stringProperty "WM_CLASS"
+              q ~? x = fmap (x `isInfixOf`) q
 
       myConf = def { terminal = "alacritty"
                    , layoutHook = lessBorders OnlyFloat $ navigation $ (spacing' 10 $ Dwindle R CW 1 1.1)
@@ -35,12 +48,18 @@
                    , focusedBorderColor = "#B388FF"
                    , normalBorderColor = "#F5F5F5"
                    , modMask = mod4Mask
+                   , manageHook = namedScratchpadManageHook scratchpads
                    }
                   `additionalKeys`
                   [ ((mod4Mask, xK_c), spawn "${pkgs.autorandr}/bin/autorandr -c")
                   , ((mod4Mask, xK_i), spawn "systemctl suspend")
                   , ((mod4Mask, xK_Tab), toggleWS)
                   , ((mod4Mask, xK_p), spawn "${pkgs.rofi}/bin/rofi -show run")
+
+                  , ((mod4Mask, xK_s), namedScratchpadAction scratchpads "slack")
+                  , ((mod4Mask, xK_y), namedScratchpadAction scratchpads "youtrack")
+                  , ((mod4Mask, xK_n), namedScratchpadAction scratchpads "notion")
+                  , ((mod4Mask, xK_c), namedScratchpadAction scratchpads "calendar")
                   ]
                   ++ movement
                   ++ mediaKeys
