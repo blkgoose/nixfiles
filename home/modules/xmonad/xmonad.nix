@@ -51,7 +51,7 @@
                    , manageHook = namedScratchpadManageHook scratchpads
                    }
                   `additionalKeys`
-                  [ ((mod4Mask, xK_c), spawn "${pkgs.autorandr}/bin/autorandr -c")
+                  [ ((mod4Mask .|. controlMask, xK_c), spawn "${pkgs.autorandr}/bin/autorandr -c || ${pkgs.autorandr}/bin/autorandr clone-largest")
                   , ((mod4Mask, xK_i), spawn "systemctl suspend")
                   , ((mod4Mask, xK_Tab), toggleWS)
                   , ((mod4Mask, xK_p), spawn "${pkgs.rofi}/bin/rofi -show run")
