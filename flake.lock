@@ -322,7 +322,8 @@
         "prima-appsec": "prima-appsec",
         "prima-nix": "prima-nix",
         "secret_dots": "secret_dots",
-        "suite_py": "suite_py"
+        "suite_py": "suite_py",
+        "system-manager": "system-manager"
       }
     },
     "secret_dots": {
@@ -361,6 +362,26 @@
       "original": {
         "id": "suite_py",
         "type": "indirect"
+      }
+    },
+    "system-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1730795217,
+        "narHash": "sha256-OR/Eq6HyQRwGt7CYSg/WTlx5QyiaWgBIIF5wajWBT2A=",
+        "owner": "numtide",
+        "repo": "system-manager",
+        "rev": "91ba1bdaf3914ff943f3278d9d3d50295d2f7349",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "system-manager",
+        "type": "github"
       }
     },
     "systems": {

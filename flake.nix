@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixgl.url = "github:nix-community/nixGL";
 
     suite_py.url = "suite_py";
@@ -31,7 +36,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, system-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -88,6 +93,49 @@
 
           modules = [ ./home/systems/shittop.nix ];
         };
+      };
+
+      systemConfigs.default = system-manager.lib.makeSystemConfig {
+        modules = [
+          ({ ... }:
+            let
+              pkgs = import inputs.nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+              };
+
+              cloudflare-ca = pkgs.fetchurl {
+                url =
+                  "https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem";
+                sha256 = "sha256-7p2+Y657zy1TZAsOnZIKk+7haQ9myGTDukKdmupHVNX=";
+              };
+            in {
+              nixpkgs.hostPlatform = "x86_64-linux";
+
+              environment.etc."ssl/certs/cloudflare.crt".source = cloudflare-ca;
+
+              systemd.services.dockerd = {
+                enable = true;
+                serviceConfig = {
+                  Type = "notify";
+                  ExecStart = "${pkgs.docker}/bin/dockerd";
+                };
+                description = "Runs docker daemon";
+                after = [ "network.target" ];
+                wantedBy = [ "multi-user.target" ];
+              };
+
+              systemd.services.warp-svc = {
+                enable = true;
+                serviceConfig = {
+                  ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
+                };
+                description = "Runs warp daemon";
+                after = [ "network.target" ];
+                wantedBy = [ "multi-user.target" ];
+              };
+            })
+        ];
       };
     };
 }
