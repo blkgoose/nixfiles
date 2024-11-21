@@ -44,7 +44,6 @@
 
         overlays = [
           inputs.suite_py.overlays.default
-          inputs.nixgl.overlay
           (self: super: {
             unstable = import inputs.nixpkgs-unstable {
               inherit system;
@@ -61,6 +60,7 @@
             }).discord;
           })
 
+          inputs.nixgl.overlay
           (self: super: {
             nixGL = import ./home/lib/nixgl.nix { inherit pkgs; };
           })
