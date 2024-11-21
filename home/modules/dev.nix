@@ -5,7 +5,7 @@
     nixfmt-classic
     clang
     yarn
-    insomnia
+    bruno
     kubectl
     awscli2
     pkg-config
