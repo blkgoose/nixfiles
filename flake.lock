@@ -160,22 +160,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-insomnia": {
-      "locked": {
-        "lastModified": 1708814358,
-        "narHash": "sha256-mYJwTy2TNTOXbxVtmhXDv98F2ORhxRzL1S6yw1+1G20=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1729256560,
@@ -317,7 +301,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-discord": "nixpkgs-discord",
-        "nixpkgs-insomnia": "nixpkgs-insomnia",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "prima-appsec": "prima-appsec",
         "prima-nix": "prima-nix",
