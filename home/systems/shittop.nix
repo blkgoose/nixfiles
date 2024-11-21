@@ -7,10 +7,6 @@
     lib.mkForce "${(nixGL picom)}/bin/picom";
 
   xsession.enable = true;
-  xsession.initExtra = ''
-    ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option compose:ralt
-    ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:none
-  '';
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [ nerdfonts docker ];
