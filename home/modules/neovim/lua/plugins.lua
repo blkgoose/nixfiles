@@ -15,7 +15,7 @@ require("lazy").setup({
   {
     "danielefongo/recode.nvim",
     dependencies = {
-        "neovim/nvim-lspconfig"
+      "neovim/nvim-lspconfig",
     },
   },
 
@@ -34,7 +34,7 @@ require("lazy").setup({
     end,
   },
 
- {
+  {
     "luukvbaal/statuscol.nvim",
     lazy = false,
     config = function()
@@ -175,7 +175,7 @@ require("lazy").setup({
           if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true)
           end
-        end
+        end,
       })
 
       local lsps = {

@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: {
+{ pkgs, config, ... }: {
   xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
     "/home/alessiobiancone/.config/nix/home/modules/neovim";
 
