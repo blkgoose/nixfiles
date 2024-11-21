@@ -204,18 +204,15 @@ require("lazy").setup({
         marksman = {},
         pylsp = {},
         taplo = {},
-        tsserver = {
-          settings = {
-            javascript = { format = { enable = false } },
-            typescript = { format = { enable = false } },
-          },
-        },
         nil_ls = {},
       }
 
       local local_lsps = {
         rust_analyzer = {
           cmd = { "rust-analyzer" },
+        },
+        hls = {
+          cmd = { "haskell-language-server-wrapper", "--lsp" },
         },
       }
 
@@ -263,6 +260,7 @@ require("lazy").setup({
         taplo = null_ls.builtins.formatting.taplo, -- toml
         eslint = null_ls.builtins.formatting.eslint, -- ts (js)
         nixfmt = null_ls.builtins.formatting.nixfmt, -- nix
+        fourmolu = null_ls.builtins.formatting.fourmolu, -- haskell
       }
 
       local local_sources = {
