@@ -2,6 +2,7 @@
 let
   personal = [ "--profile-directory='Default'" ];
   work = [ "--profile-directory='Profile 1'" ];
+  unsafe = [ "--disable-web-security --user-data-dir=/tmp/unsafe-chrome" ];
   no_plugins = [ "--disable-extensions" "--disable-plugins" ];
 
   apps = {
@@ -64,6 +65,10 @@ let
     "hackernews" = {
       url = "https://hckrnews.com/";
       opts = personal;
+    };
+    "hutch-localhost" = {
+      url = "http://localhost:3000";
+      opts = unsafe;
     };
     "hm-search" = {
       url = "https://home-manager-options.extranix.com/";
