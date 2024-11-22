@@ -2,7 +2,7 @@
 # DEPRECATED. USE `pkgs.writeShellApplication` INSTEAD
 let
   apps = {
-    "chrome" = "${pkgs.google-chrome}/bin/google-chrome-stable";
+    "chrome" = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
     "beekeeper" = "${pkgs.beekeeper-studio}/bin/beekeeper-studio";
     "zoom" = "${pkgs.zoom-us}/bin/zoom";
   };

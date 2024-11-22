@@ -3,7 +3,7 @@
     spotify
     feh
     gimp
-    google-chrome
+    # google-chrome
     discord
     orca-slicer
   ];

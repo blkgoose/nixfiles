@@ -9,5 +9,5 @@
   xsession.enable = true;
 
   fonts.fontconfig.enable = true;
-  home.packages = with pkgs; [ nerdfonts docker ];
+  home.packages = with pkgs; [ nerdfonts docker (nixGL google-chrome) ];
 }
