@@ -244,7 +244,7 @@ let
     { url, opts ? [ ] }:
     let
       spacedOpts = lib.strings.concatStringsSep " " opts;
-      chrome = "${pkgs.google-chrome}/bin/google-chrome-stable";
+      chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
       chromeCall = ''
         ${chrome} --app='${url}' --new-window ${spacedOpts}
       '';
