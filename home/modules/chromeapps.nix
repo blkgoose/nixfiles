@@ -1,8 +1,10 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 let
   personal = [ "--profile-directory='Default'" ];
   work = [ "--profile-directory='Profile 1'" ];
-  unsafe = [ "--disable-web-security --user-data-dir=/tmp/unsafe-chrome" ];
+  unsafe = [
+    "--disable-web-security --user-data-dir=${config.xdg.configHome}/unsafe-chrome"
+  ];
   no_plugins = [ "--disable-extensions" "--disable-plugins" ];
 
   apps = {
