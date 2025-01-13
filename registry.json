@@ -2,17 +2,12 @@
   "flakes": [
     {
       "from": {
-        "id": "prima-appsec",
+        "id": "suite_py",
         "type": "indirect"
       },
       "to": {
-        "lastModified": 1726494752,
-        "narHash": "sha256-fjUfSWXspHW437mZL9OXwTkPogKl7MzbWqGqouD3akg=",
-        "ref": "master",
-        "rev": "4f6d43a55eb8b8ce8ec9ed37702591346f854ea3",
-        "revCount": 816,
         "type": "git",
-        "url": "ssh://git@github.com/primait/appsec-automation.git"
+        "url": "ssh://git@github.com/primait/suite_py.git"
       }
     },
     {
@@ -21,23 +16,8 @@
         "type": "indirect"
       },
       "to": {
-        "lastModified": 1727771927,
-        "narHash": "sha256-DWD/IJpsWydA+yytj45hnFsQOWfj/WzXSB20KHE0scw=",
-        "ref": "master",
-        "rev": "3abc6db1790ea02aaf2ea489b39f2c95bc962b85",
-        "revCount": 8,
         "type": "git",
-        "url": "ssh://git@github.com/primait/prima.nix.git"
-      }
-    },
-    {
-      "from": {
-        "id": "suite_py",
-        "type": "indirect"
-      },
-      "to": {
-        "type": "git",
-        "url": "ssh://git@github.com/primait/suite_py.git"
+        "url": "file:///home/alessiobiancone/proj/prima.nix"
       }
     }
   ],

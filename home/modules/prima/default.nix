@@ -1,5 +1,5 @@
-{ pkgs, secret_dots, ... }: {
-  imports = [ ./git.nix ];
+{ pkgs, prima-nix, secret_dots, ... }: {
+  imports = [ prima-nix.homeManagerModules.gitleaks ];
 
   home.packages = with pkgs; [ suite_py cloudflare-warp ];
 
@@ -7,4 +7,6 @@
     ".npmrc".source = "${secret_dots}/npm/npmrc";
     ".suite_py/config.yml".source = "${secret_dots}/suite_py/config.yml";
   };
+
+  prima.gitleaks.enable = true;
 }
