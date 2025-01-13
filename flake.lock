@@ -263,31 +263,32 @@
     "prima-appsec": {
       "flake": false,
       "locked": {
-        "lastModified": 1726494752,
-        "narHash": "sha256-fjUfSWXspHW437mZL9OXwTkPogKl7MzbWqGqouD3akg=",
-        "ref": "master",
-        "rev": "4f6d43a55eb8b8ce8ec9ed37702591346f854ea3",
-        "revCount": 816,
+        "lastModified": 1736757603,
+        "narHash": "sha256-KuFuSK026a5x1oHAAgnii90vnIK4Io0umSHDP9Z1ph8=",
+        "ref": "refs/heads/master",
+        "rev": "cb4c0867d77fc0abb9453060a2a73fd4494824fe",
+        "revCount": 1000,
         "type": "git",
-        "url": "ssh://git@github.com/primait/appsec-automation.git"
+        "url": "ssh://git@github.com/primait/appsec-automation"
       },
       "original": {
-        "id": "prima-appsec",
-        "type": "indirect"
+        "type": "git",
+        "url": "ssh://git@github.com/primait/appsec-automation"
       }
     },
     "prima-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "prima-appsec": "prima-appsec"
       },
       "locked": {
-        "lastModified": 1727771927,
-        "narHash": "sha256-DWD/IJpsWydA+yytj45hnFsQOWfj/WzXSB20KHE0scw=",
-        "ref": "master",
-        "rev": "3abc6db1790ea02aaf2ea489b39f2c95bc962b85",
-        "revCount": 8,
+        "lastModified": 1736258175,
+        "narHash": "sha256-DwK6pjfnYcGFkTkRlIiELQtoW9Hl8+GLiXSjL6Z/fAU=",
+        "ref": "refs/heads/feat/gitleaks",
+        "rev": "be8d1b51bd403907f355f700541775a3e107458a",
+        "revCount": 18,
         "type": "git",
-        "url": "ssh://git@github.com/primait/prima.nix.git"
+        "url": "file:///home/alessiobiancone/proj/prima.nix"
       },
       "original": {
         "id": "prima-nix",
@@ -302,7 +303,6 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-discord": "nixpkgs-discord",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "prima-appsec": "prima-appsec",
         "prima-nix": "prima-nix",
         "secret_dots": "secret_dots",
         "suite_py": "suite_py",

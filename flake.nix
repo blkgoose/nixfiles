@@ -23,10 +23,6 @@
 
     suite_py.url = "suite_py";
     prima-nix.url = "prima-nix";
-    prima-appsec = {
-      url = "prima-appsec";
-      flake = false;
-    };
 
     secret_dots = {
       url = "git+file:./secret_dotfiles?shallow=1";
