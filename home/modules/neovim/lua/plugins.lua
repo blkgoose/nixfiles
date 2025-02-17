@@ -222,6 +222,17 @@ require("lazy").setup({
         ensure_installed = vim.tbl_keys(lsps),
       })
 
+      -- ignore server error for rust-analyzer
+      for _, method in ipairs({ "textDocument/diagnostic", "workspace/diagnostic" }) do
+        local default_diagnostic_handler = vim.lsp.handlers[method]
+        vim.lsp.handlers[method] = function(err, result, context, config)
+          if err ~= nil and err.code == -32802 then
+            return
+          end
+          return default_diagnostic_handler(err, result, context, config)
+        end
+      end
+
       for lsp_name, config in pairs(vim.tbl_deep_extend("force", lsps, local_lsps)) do
         lsp[lsp_name].setup({
           capabilities = capabilities,
