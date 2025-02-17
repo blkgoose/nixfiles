@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
-  cloudflare-ca = pkgs.fetchurl {
+  cloudflare-ca = ./cloudflare_ca.crt;
+  cloudflare-ca-old = pkgs.fetchurl {
     url =
       "https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem";
     sha256 = "sha256-7p2+Y657zy1TZAsOnZIKk+7haQ9myGTDukKdmupHVNX=";
@@ -9,6 +10,7 @@ in {
   nixpkgs.hostPlatform = "x86_64-linux";
 
   environment.etc."ssl/certs/cloudflare.crt".source = cloudflare-ca;
+  environment.etc."ssl/certs/cloudflare-old.crt".source = cloudflare-ca-old;
 
   # remember to add user to docker group
   systemd.services.dockerd = {

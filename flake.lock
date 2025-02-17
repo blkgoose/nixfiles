@@ -263,11 +263,11 @@
     "prima-appsec": {
       "flake": false,
       "locked": {
-        "lastModified": 1736757603,
-        "narHash": "sha256-KuFuSK026a5x1oHAAgnii90vnIK4Io0umSHDP9Z1ph8=",
+        "lastModified": 1738139744,
+        "narHash": "sha256-uhue365owQQELew4+S1z+S3Z2oKkE4i90N1l+9sz0ic=",
         "ref": "refs/heads/master",
-        "rev": "cb4c0867d77fc0abb9453060a2a73fd4494824fe",
-        "revCount": 1000,
+        "rev": "f86047e16885e4d788676b73369ace108ccfad60",
+        "revCount": 1030,
         "type": "git",
         "url": "ssh://git@github.com/primait/appsec-automation"
       },
