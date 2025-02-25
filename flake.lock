@@ -263,11 +263,11 @@
     "prima-appsec": {
       "flake": false,
       "locked": {
-        "lastModified": 1738139744,
-        "narHash": "sha256-uhue365owQQELew4+S1z+S3Z2oKkE4i90N1l+9sz0ic=",
+        "lastModified": 1740474217,
+        "narHash": "sha256-vLwJN+k4F0j7Y5AURTs8iECg1jFp7XZ8wbyxhekcZtM=",
         "ref": "refs/heads/master",
-        "rev": "f86047e16885e4d788676b73369ace108ccfad60",
-        "revCount": 1030,
+        "rev": "f0a82846345352d4f0204101147752ab23f35ddd",
+        "revCount": 1053,
         "type": "git",
         "url": "ssh://git@github.com/primait/appsec-automation"
       },
@@ -282,13 +282,13 @@
         "prima-appsec": "prima-appsec"
       },
       "locked": {
-        "lastModified": 1736258175,
-        "narHash": "sha256-DwK6pjfnYcGFkTkRlIiELQtoW9Hl8+GLiXSjL6Z/fAU=",
-        "ref": "refs/heads/feat/gitleaks",
-        "rev": "be8d1b51bd403907f355f700541775a3e107458a",
-        "revCount": 18,
+        "lastModified": 1738314254,
+        "narHash": "sha256-4YI/dCebjeO+JjzlOLwyZL9Kcfgdyx6nBSXru9+WsSw=",
+        "ref": "refs/heads/master",
+        "rev": "7ce11e7c053e4564e80b4576e65de785b4db553a",
+        "revCount": 15,
         "type": "git",
-        "url": "file:///home/alessiobiancone/proj/prima.nix"
+        "url": "ssh://git@github.com/primait/prima.nix.git"
       },
       "original": {
         "id": "prima-nix",

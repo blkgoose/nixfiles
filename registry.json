@@ -17,7 +17,7 @@
       },
       "to": {
         "type": "git",
-        "url": "file:///home/alessiobiancone/proj/prima.nix"
+        "url": "ssh://git@github.com/primait/prima.nix.git"
       }
     }
   ],
