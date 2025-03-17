@@ -194,11 +194,6 @@ let
       url = "https://web.telegram.org/k/";
       opts = personal ++ no_plugins;
     };
-    "todo" = {
-      url =
-        "https://www.notion.so/helloprima/466621313add41888e11d72140f2032a?v=5466df551d3b44b9b50f10eeb798448b&pvs=4";
-      opts = work;
-    };
     "trello" = {
       url = "https://www.trello.com";
       opts = personal;
