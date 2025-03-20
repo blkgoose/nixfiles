@@ -9,7 +9,7 @@
         };
         size = 11.0;
       };
-      shell.program = "${pkgs.fish}/bin/fish";
+      terminal.shell.program = "${pkgs.fish}/bin/fish";
     };
   };
 }
