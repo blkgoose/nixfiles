@@ -5,6 +5,7 @@
 
   home.file = {
     ".npmrc".source = "${secret_dots}/npm/npmrc";
+    ".cargo/credentials.toml".source = "${secret_dots}/cargo/credentials.toml";
     ".suite_py/config.yml".source = "${secret_dots}/suite_py/config.yml";
   };
 
