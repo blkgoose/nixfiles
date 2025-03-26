@@ -6,9 +6,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-discord.url =
-      "github:nixos/nixpkgs?rev=b3a285628a6928f62cdf4d09f4e656f7ecbbcafb";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,13 +44,6 @@
               config.allowUnfree = true;
             };
 
-          })
-
-          (self: super: {
-            discord = (import inputs.nixpkgs-discord {
-              inherit system;
-              config.allowUnfree = true;
-            }).discord;
           })
 
           inputs.nixgl.overlay
