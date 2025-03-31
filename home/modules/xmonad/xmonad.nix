@@ -77,6 +77,8 @@
       mediaKeys =
           [ ((0, xF86XK_AudioLowerVolume), spawn "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%;")
           , ((0, xF86XK_AudioRaiseVolume), spawn "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%;")
+          , ((shiftMask, xF86XK_AudioLowerVolume), spawn "${pkgs.playerctl}/bin/playerctl -p spotify volume 0.1-")
+          , ((shiftMask, xF86XK_AudioRaiseVolume), spawn "${pkgs.playerctl}/bin/playerctl -p spotify volume 0.1+")
           , ((0, xF86XK_AudioMute), spawn "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle;")
           , ((0, xF86XK_AudioPlay), spawn "${pkgs.playerctl}/bin/playerctl play-pause")
           , ((0, xF86XK_AudioNext), spawn "${pkgs.playerctl}/bin/playerctl next")
