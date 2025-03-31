@@ -13,7 +13,7 @@ in {
 
   home.packages = with pkgs; [
     autorandr
-    pavucontrol
+    pwvucontrol
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
     (alias "lock" "${sloc}/bin/slock")
   ];
