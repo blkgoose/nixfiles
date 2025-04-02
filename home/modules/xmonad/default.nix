@@ -15,7 +15,7 @@ in {
     autorandr
     pwvucontrol
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
-    (alias "lock" "${sloc}/bin/slock")
+    (alias "lock" "${slock}/bin/slock")
   ];
 
   systemd.user.services."keyboard-configurations" = {
