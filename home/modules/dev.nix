@@ -10,6 +10,7 @@
     awscli2
     pkg-config
     openssl
+    fh
   ];
 
   programs.direnv = {
