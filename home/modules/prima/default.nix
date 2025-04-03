@@ -1,7 +1,7 @@
 { pkgs, prima-nix, secret_dots, ... }: {
   imports = [ prima-nix.homeManagerModules.gitleaks ];
 
-  home.packages = with pkgs; [ suite_py cloudflare-warp ];
+  home.packages = with pkgs; [ suite_py cloudflare-warp cloudflared ];
 
   home.file = {
     ".npmrc".source = "${secret_dots}/npm/npmrc";
