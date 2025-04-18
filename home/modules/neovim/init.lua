@@ -31,6 +31,56 @@ opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 opt.mouse = ""
 
+local lsp_path = vim.fs.joinpath(vim.fn.stdpath("config"), "lsp")
+local lsps = {}
+for fname, _ in vim.fs.dir(lsp_path) do
+    lsps[#lsps + 1] = fname:match("^([^/]+).lua$")
+end
+vim.lsp.enable(lsps)
+
+vim.diagnostic.config({
+    float = { border = "rounded" },
+    underline = true,
+    virtual_text = true,
+    virtual_lines = false,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client:supports_method("textDocument/completion") then
+            vim.lsp.completion.enable(true, client.id, args.buf)
+        end
+
+        if
+            client
+            and not client:supports_method("textDocument/willSaveWaitUntil")
+            and client:supports_method("textDocument/formatting")
+        then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = args.buf,
+                callback = function()
+                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+                end,
+            })
+        end
+
+        -- Keymaps
+        local bufopts = { buffer = args.buf, noremap = true, silent = true }
+        local opts = { buffer = args.buf }
+
+        vim.keymap.set("n", "<leader>h", vim.lsp.buf.signature_help, bufopts)
+        vim.keymap.set("n", "<leader>R", vim.lsp.buf.rename, bufopts)
+        vim.keymap.set("n", "<space>j", vim.diagnostic.goto_next, bufopts)
+        vim.keymap.set("n", "<space>k", vim.diagnostic.goto_prev, bufopts)
+        vim.keymap.set({ "n", "v" }, "<leader>c", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "<leader>cf", function()
+            vim.lsp.buf.format({ async = true })
+        end, opts)
+    end,
+})
+
 cmd([[
     let s:pair_mode = 1
     function! PairMode()
