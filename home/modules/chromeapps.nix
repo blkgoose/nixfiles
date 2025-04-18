@@ -242,7 +242,7 @@ let
   };
 
   mkChromeApp = name:
-    { url, opts ? [ ] }:
+    { url, opts ? [ ], }:
     let
       spacedOpts = lib.strings.concatStringsSep " " opts;
       chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";

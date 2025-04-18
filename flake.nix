@@ -58,6 +58,9 @@
         home-manager.extraSpecialArgs = inputs // { inherit system; };
       };
     in {
+      formatter.x86_64-linux =
+        nixpkgs.legacyPackages.x86_64-linux.nixfmt-classic;
+
       nixosConfigurations = {
         toaster = lib.nixosSystem {
           inherit system pkgs;
