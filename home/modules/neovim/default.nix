@@ -9,4 +9,8 @@
     viAlias = true;
     vimAlias = true;
   };
+
+  home.packages = with pkgs; [
+    lua-language-server
+  ];
 }

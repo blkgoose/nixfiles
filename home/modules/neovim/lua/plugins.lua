@@ -5,20 +5,13 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  {
-    "danielefongo/recode.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-  },
-
   { "github/copilot.vim" },
 
   {
@@ -134,182 +127,12 @@ require("lazy").setup({
   { "mechatroner/rainbow_csv" },
   { "dag/vim-fish" },
 
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "ray-x/lsp_signature.nvim",
-      "hrsh7th/nvim-cmp",
-      "hrsh7th/cmp-nvim-lsp",
-    },
-    keys = {
-      { "<leader>c", ":lua vim.lsp.buf.code_action()<cr>" },
-      { "<leader>h", ":lua vim.lsp.buf.signature_help()<cr>" },
-      { "<leader>R", ":lua vim.lsp.buf.rename()<cr>" },
-      { "<space>k", ":lua vim.diagnostic.goto_prev({ wrap = false })<cr>" },
-      { "<space>j", ":lua vim.diagnostic.goto_next({ wrap = false })<cr>" },
-    },
-    config = function()
-      local lsp = require("lspconfig")
-      local cmp = require("cmp_nvim_lsp")
-      local signature = require("lsp_signature")
-
-      local mason = require("mason")
-      local mason_lsp_config = require("mason-lspconfig")
-
-      local flags = { debounce_text_changes = 150 }
-      local capabilities = cmp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-      local function cmd_path(server)
-        return fn.glob(fn.stdpath("data") .. "/lsp/bin/" .. server)
-      end
-
-      local function on_attach(client, bufnr)
-        signature.on_attach({ bind = true }, bufnr)
-      end
-
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(true)
-          end
-        end,
-      })
-
-      local lsps = {
-        bashls = {},
-        cssls = {},
-        dockerls = {},
-        elixirls = {
-          -- cmd = { cmd_path("elixir-ls") },
-          settings = {
-            elixirLS = {
-              fetchDeps = false,
-              mixEnv = "dev",
-            },
-          },
-        },
-        elmls = {},
-        html = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              diagnostics = { globals = { "vim" } },
-              format = { enable = false },
-            },
-          },
-        },
-        marksman = {},
-        pylsp = {},
-        taplo = {},
-        nil_ls = {},
-      }
-
-      local local_lsps = {
-        rust_analyzer = {
-          cmd = { "rust-analyzer" },
-        },
-        hls = {
-          cmd = { "haskell-language-server-wrapper", "--lsp" },
-        },
-      }
-
-      mason.setup({ install_root_dir = fn.stdpath("data") .. "/lsp/" })
-
-      mason_lsp_config.setup({
-        ensure_installed = vim.tbl_keys(lsps),
-      })
-
-      -- ignore server error for rust-analyzer
-      for _, method in ipairs({ "textDocument/diagnostic", "workspace/diagnostic" }) do
-        local default_diagnostic_handler = vim.lsp.handlers[method]
-        vim.lsp.handlers[method] = function(err, result, context, config)
-          if err ~= nil and err.code == -32802 then
-            return
-          end
-          return default_diagnostic_handler(err, result, context, config)
-        end
-      end
-
-      for lsp_name, config in pairs(vim.tbl_deep_extend("force", lsps, local_lsps)) do
-        lsp[lsp_name].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-          flags = flags,
-          cmd = config.cmd,
-          settings = config.settings or {},
-        })
-      end
-    end,
-  },
-
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "jay-babu/mason-null-ls.nvim",
-      "nvim-lua/plenary.nvim",
-    },
-    event = "VeryLazy",
-    config = function()
-      local mason = require("mason")
-      local null_ls = require("null-ls")
-      local mason_null_ls = require("mason-null-ls")
-
-      local null_sources = {
-        shfmt = null_ls.builtins.formatting.shfmt, -- bash / sh
-        mix = null_ls.builtins.formatting.mix, -- elixir
-        elm_format = null_ls.builtins.formatting.elm_format, -- elm
-        prettier = null_ls.builtins.formatting.prettier, -- html stuff
-        stylua = null_ls.builtins.formatting.stylua.with({
-          extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
-        }), -- lua
-        markdownlint = null_ls.builtins.formatting.markdownlint, -- markdown
-        black = null_ls.builtins.formatting.black, -- python
-        taplo = null_ls.builtins.formatting.taplo, -- toml
-        eslint = null_ls.builtins.formatting.eslint, -- ts (js)
-        nixfmt = null_ls.builtins.formatting.nixfmt, -- nix
-        fourmolu = null_ls.builtins.formatting.fourmolu, -- haskell
-      }
-
-      local local_sources = {
-        rustfmt = null_ls.builtins.formatting.rustfmt, -- rust
-      }
-
-      mason.setup({ install_root_dir = fn.stdpath("data") .. "/lsp/" })
-
-      null_ls.setup({
-        sources = vim.tbl_values(vim.tbl_deep_extend("force", null_sources, local_sources)),
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.format({
-                  filter = function()
-                    return client.name == "null-ls"
-                  end,
-                })
-              end,
-            })
-          end
-        end,
-      })
-
-      mason_null_ls.setup({
-        ensure_installed = vim.tbl_keys(null_sources),
-      })
-    end,
-  },
 
   {
     "j-hui/fidget.nvim",
     tag = "legacy",
     event = "BufReadPre",
     opts = { window = { relative = "editor" } },
-    dependencies = { "neovim/nvim-lspconfig" },
   },
 
   {
@@ -383,6 +206,4 @@ require("lazy").setup({
       require("stay-centered")
     end,
   },
-}, {
-  dev = { path = "~/proj/pers/lua/" },
 })
