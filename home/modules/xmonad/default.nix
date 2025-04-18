@@ -18,18 +18,31 @@ in {
     (alias "lock" "${slock}/bin/slock")
   ];
 
-  systemd.user.services."keyboard-configurations" = {
+  systemd.user.services."dock-settings" = {
     Service = {
-      ExecStart = pkgs.writers.writeBash "keyconfig" ''
-        ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option compose:ralt
-        ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:none
+      ExecStart = pkgs.writers.writeBash "dock-set" ''
+        udevadm monitor --environment --udev | while read -r line; do
+          if echo "$line" | grep -q "change"; then
+            while read -r detail; do
+              if echo "$detail" | grep -q "ID_INPUT_KEYBOARD=1"; then
+                  ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option compose:ralt
+                  ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:none
+                  break
+              fi
+            done
+          fi
+        done
       '';
+      Restart = "on-failure";
+      RestartSec = 2;
     };
+
     Unit = {
-      Description = "Configures setxkbmap";
+      Description = "Dock setting adjuster";
       After = "graphical-session.target";
       PartOf = "graphical-session.target";
     };
+
     Install.WantedBy = [ "graphical-session.target" ];
   };
 }
