@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   plugin = repo:
-    { rev ? "master", sha256 ? "", subPath ? "" }:
+    { rev ? "master", sha256 ? "", subPath ? "", }:
     let
       _repo = lib.strings.splitString "/" repo;
       owner = builtins.elemAt _repo 0;
