@@ -46,10 +46,6 @@ let
         "https://security-metrics.helloprima.com/vm/projects/INT%20-%20Intermediaries%20Experience%20&%20Network%20Management.html";
       opts = work;
     };
-    "discord" = {
-      url = "https://discord.com/channels/@me";
-      opts = work ++ no_plugins;
-    };
     "disney" = {
       url = "https://disneyplus.com";
       opts = personal;
