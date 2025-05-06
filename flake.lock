@@ -217,11 +217,11 @@
     "secret_dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1745396768,
-        "narHash": "sha256-vYzsp1q34zQiDN5A/wkKyvyLcG4tEuWdrX1Q40afKXE=",
+        "lastModified": 1746517436,
+        "narHash": "sha256-304samaZ9wfyXhHGWwHPKJJgeiJEmhlw25akdwyGNVk=",
         "ref": "refs/heads/master",
-        "rev": "18e2e7705751e699dbcdd8ffad12e9029d14cef3",
-        "revCount": 21,
+        "rev": "3b49102cf8f28a9b897d9034ff62e8475cb19008",
+        "revCount": 22,
         "shallow": true,
         "type": "git",
         "url": "file:./secret_dotfiles"
