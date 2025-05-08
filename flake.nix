@@ -50,6 +50,16 @@
           (self: super: {
             nixGL = import ./home/lib/nixgl.nix { inherit pkgs; };
           })
+
+          (self: super: {
+            alias = name: command:
+              pkgs.writeShellApplication {
+                inherit name;
+                text = ''
+                  ${command} "$@"
+                '';
+              };
+          })
         ];
       };
 
