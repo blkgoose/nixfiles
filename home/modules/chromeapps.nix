@@ -7,44 +7,52 @@ let
   ];
   no_plugins = [ "--disable-extensions" "--disable-plugins" ];
 
+  chromeWrapper = opts: url:
+    let
+      chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
+      spacedOpts = lib.strings.concatStringsSep " " opts;
+    in ''
+      ${chrome} --app='${url}' --new-window ${spacedOpts}
+    '';
+
   apps = {
     "amazon" = {
       url = "https://amazon.it";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "bambustore" = {
       url = "https://eu.store.bambulab.com/";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "books" = {
       url = "https://play.google.com/books";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "calendar".url = "https://calendar.google.com/calendar";
     "chatGPT" = {
       url = "https://chatgpt.com/";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "chess".url = "https://www.chess.com";
     "codescene" = {
       url =
         "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "coggle".url = "https://coggle.it";
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
     "cronometer" = {
       url = "https://cronometer.com/#diary";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "crunchyroll" = {
       url = "https://www.crunchyroll.com/it";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "dashboard-sec" = {
       url =
         "https://security-metrics.helloprima.com/vm/projects/INT%20-%20Intermediaries%20Experience%20&%20Network%20Management.html";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "discord" = {
       url = "https://discord.com/channels/@me";
@@ -52,212 +60,202 @@ let
     };
     "disney" = {
       url = "https://disneyplus.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "drone_ci" = {
       url = "https://drone-1.prima.it";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "elm-search" = {
       url = "https://klaftertief.github.io/elm-search/";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "facebook" = {
       url = "https://www.facebook.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "github".url = "https://github.com";
     "gmail".url = "https://mail.google.com";
     "hackernews" = {
       url = "https://hckrnews.com/";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "hutch-localhost" = {
       url = "http://localhost:3000";
-      opts = unsafe;
+      wrapper = chromeWrapper unsafe;
     };
     "hm-search" = {
       url = "https://home-manager-options.extranix.com/";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "instagram" = {
       url = "https://instagram.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "keep" = {
       url = "https://keep.google.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "maps" = {
       url = "https://www.google.it/maps/preview";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "meet" = {
       url = "https://meet.google.com";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "messages" = {
       url = "https://messages.google.com/web/conversations";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "miro" = {
       url = "https://miro.com/app/dashboard";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "n2f" = {
       url = "https://www.n2f.com/app/#";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "netflix" = {
       url = "https://www.netflix.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "news" = {
       url = "https://news.google.it";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "nibol" = {
       url = "https://app.nibol.co";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "nix-search" = {
       url = "https://search.nixos.org/packages";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "nix-rev" = {
       url = "https://lazamar.co.uk/nix-versions";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "noogle" = {
       url = "https://www.noogle.dev";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "notion" = {
       url = "https://www.notion.so";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "onepassword" = {
       url = "https://prima.1password.eu/home";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "onshape" = {
       url = "https://cad.onshape.com";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
-    "paint" = {
-      url = "https://jspaint.app/";
-      opts = [ "" ];
-    };
+    "paint" = { url = "https://jspaint.app/"; };
     "personio" = {
       url = "https://prima-assicurazioni.personio.de";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "perplexity" = {
       url = "https://www.perplexity.ai/";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "photos" = {
       url = "https://photos.google.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "primevideo" = {
       url = "https://www.primevideo.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "printables" = {
       url = "https://www.printables.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "prozis" = {
       url = "https://www.prozis.com/it/it";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "pyxis-doc" = {
       url = "http://elm.prima.design";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "reddit" = {
       url = "https://reddit.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "rp-app" = {
       url = "https://training.rpstrength.com/";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "sheets".url = "https://docs.google.com/spreadsheets";
     "slack" = {
       url = "https://app.slack.com/client/T024WK3NT/C04KE5JMKFG";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "swarmia" = {
       url =
         "https://app.swarmia.com/insights/code/overview?timeframe=last_7_days";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "telegram" = {
       url = "https://web.telegram.org/k/";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "trello" = {
       url = "https://www.trello.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "tvshowtime" = {
       url = "https://app.tvtime.com/shows/watchlist";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
     "udemy" = {
       url = "https://prima.udemy.com/organization/home/";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "wallet" = {
       url = "https://web.budgetbakers.com/dashboard";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "whatsapp" = {
       url = "https://web.whatsapp.com/";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "wellfare" = {
       url = "https://prima.oneflex.aon.it/flexible-benefits";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "xbox" = {
       url = "https://xbox.com/play";
-      opts = personal ++ no_plugins;
+      wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "backlog" = {
       url =
         "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/issues/INTEXN?q=State:%20{No%20State%7d";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "youtrack" = {
       url = "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
-      opts = work;
+      wrapper = chromeWrapper work;
     };
     "youtube" = {
       url = "https://youtube.com";
-      opts = personal;
+      wrapper = chromeWrapper personal;
     };
   };
 
-  mkChromeApp = name:
-    { url, opts ? [ ], }:
-    let
-      spacedOpts = lib.strings.concatStringsSep " " opts;
-      chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
-      chromeCall = ''
-        ${chrome} --app='${url}' --new-window ${spacedOpts}
-      '';
-    in {
+  mkWrappedApp = name:
+    { url, wrapper ? chromeWrapper [ ] }: {
       name = ".local/bin/${name}";
       value = {
         text = ''
           #!/usr/bin/env bash
 
-          ${chromeCall}
+          ${(wrapper url)}
         '';
         executable = true;
       };
     };
-in { home.file = lib.attrsets.mapAttrs' mkChromeApp apps; }
+in { home.file = lib.attrsets.mapAttrs' mkWrappedApp apps; }
