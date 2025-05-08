@@ -57,10 +57,9 @@
       homeManager = {
         home-manager.extraSpecialArgs = inputs // { inherit system; };
       };
-    in {
-      formatter.x86_64-linux =
-        nixpkgs.legacyPackages.x86_64-linux.nixfmt-classic;
 
+      fmt = nixpkgs.legacyPackages.x86_64-linux.nixfmt-classic;
+    in {
       nixosConfigurations = {
         toaster = lib.nixosSystem {
           inherit system pkgs;
@@ -88,6 +87,13 @@
           };
           modules = [ ./systems/shittop ];
         };
+      };
+
+      formatter.x86_64-linux = fmt;
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [ pkgs.openssl ];
+
+        buildInputs = [ fmt pkgs.nil ];
       };
     };
 }
