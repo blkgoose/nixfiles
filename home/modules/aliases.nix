@@ -3,8 +3,6 @@
 let
   apps = {
     "chrome" = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
-    "beekeeper" = "${pkgs.beekeeper-studio}/bin/beekeeper-studio";
-    "zoom" = "${pkgs.zoom-us}/bin/zoom";
   };
 
   mkAlias = name: command: {

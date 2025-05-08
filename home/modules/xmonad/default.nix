@@ -1,13 +1,4 @@
-{ pkgs, ... }:
-let
-  alias = name: command:
-    pkgs.writeShellApplication {
-      inherit name;
-      text = ''
-        ${command} "$@"
-      '';
-    };
-in {
+{ pkgs, ... }: {
   imports =
     [ ./xmonad.nix ./xmobar.nix ./picom.nix ./dunst.nix ./wallpaper.nix ];
 
