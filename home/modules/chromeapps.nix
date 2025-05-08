@@ -56,7 +56,9 @@ let
     };
     "discord" = {
       url = "https://discord.com/channels/@me";
-      opts = personal ++ no_plugins;
+      wrapper = url:
+        let chromium = "${(pkgs.nixGL pkgs.chromium)}/bin/chromium";
+        in "${chromium} --app='${url}' --new-window";
     };
     "disney" = {
       url = "https://disneyplus.com";
