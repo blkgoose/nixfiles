@@ -12,11 +12,14 @@ in {
     [ ./xmonad.nix ./xmobar.nix ./picom.nix ./dunst.nix ./wallpaper.nix ];
 
   home.packages = with pkgs; [
+    feh
     autorandr
     pwvucontrol
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
     (alias "lock" "${slock}/bin/slock")
   ];
+
+  services.batsignal.enable = true;
 
   systemd.user.services."dock-settings" = {
     Service = {
