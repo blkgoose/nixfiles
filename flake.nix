@@ -52,6 +52,11 @@
           })
 
           (self: super: {
+            system-manager =
+              inputs.system-manager.packages.${system}.system-manager;
+          })
+
+          (self: super: {
             alias = name: command:
               pkgs.writeShellApplication {
                 inherit name;
@@ -68,7 +73,7 @@
         home-manager.extraSpecialArgs = inputs // { inherit system; };
       };
 
-      fmt = nixpkgs.legacyPackages.x86_64-linux.nixfmt-classic;
+      fmt = nixpkgs.legacyPackages.${system}.nixfmt-classic;
     in {
       nixosConfigurations = {
         toaster = lib.nixosSystem {
@@ -99,8 +104,8 @@
         };
       };
 
-      formatter.x86_64-linux = fmt;
-      devShells.x86_64-linux.default = pkgs.mkShell {
+      formatter.${system} = fmt;
+      devShells.${system}.default = pkgs.mkShell {
         LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [ pkgs.openssl ];
 
         buildInputs = [ fmt pkgs.nil ];
