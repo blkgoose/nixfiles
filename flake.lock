@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744743431,
-        "narHash": "sha256-iyn/WBYDc7OtjSawbegINDe/gIkok888kQxk3aVnkgg=",
+        "lastModified": 1746171682,
+        "narHash": "sha256-EyXUNSa+H+YvGVuQJP1nZskXAowxKYp79RNUsNdQTj4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c61bfe3ae692f42ce688b5865fac9e0de58e1387",
+        "rev": "50eee705bbdbac942074a8c120e8194185633675",
         "type": "github"
       },
       "original": {
@@ -75,11 +75,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1744633460,
-        "narHash": "sha256-fbWE4Xpw6eH0Q6in+ymNuDwTkqmFmtxcQEmtRuKDTTk=",
+        "lastModified": 1746621361,
+        "narHash": "sha256-T9vOxEqI1j1RYugV0b9dgy0AreiZ9yBDKZJYyclF0og=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "9a049b4a421076d27fee3eec664a18b2066824cb",
+        "rev": "2ea3ad8a1f26a76f8a8e23fc4f7757c46ef30ee5",
         "type": "github"
       },
       "original": {
@@ -169,11 +169,11 @@
     "prima-appsec": {
       "flake": false,
       "locked": {
-        "lastModified": 1744880060,
-        "narHash": "sha256-4eDKQ1+QjnNpQxjMUH5IxGyn1ijafn+PxkVvBpbAgSE=",
+        "lastModified": 1746715495,
+        "narHash": "sha256-N6hrbWwJ2aYl+AFXnutqBy1dDsZFOa8ZHJOzwJCMOrY=",
         "ref": "refs/heads/master",
-        "rev": "51cd6639c558f4a9ee8c6aefd446c4327ca2af30",
-        "revCount": 1093,
+        "rev": "cb69c38870b3d1b48b67761c350f4a679004978f",
+        "revCount": 1105,
         "type": "git",
         "url": "ssh://git@github.com/primait/appsec-automation"
       },
@@ -188,11 +188,11 @@
         "prima-appsec": "prima-appsec"
       },
       "locked": {
-        "lastModified": 1741965806,
-        "narHash": "sha256-V4Jzeg1begfUTSfK+n6y+35/7/p7xbgQKRJslqxpjjk=",
+        "lastModified": 1746025030,
+        "narHash": "sha256-PtLsxPrlEfLWRkiyKVAvk2QrMbh52OkJHoGCjPYwxcg=",
         "ref": "refs/heads/master",
-        "rev": "572e9585f2c5cbbb6d9e019347c4590d1cdc66b1",
-        "revCount": 16,
+        "rev": "923a321f13ba57cf29c27321239ab2acbbf3153a",
+        "revCount": 17,
         "type": "git",
         "url": "ssh://git@github.com/primait/prima.nix.git"
       },
@@ -238,11 +238,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1744720896,
-        "narHash": "sha256-7HQKKpyUWTUYqspJlw7Ip+s8wYlceijOBoddRjOsOzc=",
+        "lastModified": 1746689591,
+        "narHash": "sha256-VQJsLcQOkQB/XpyZ9L/UA0ZxwELq0HRh/NbAt0hUqAE=",
         "ref": "refs/heads/master",
-        "rev": "48e54a53e9b88e1020307f7d658873a86cd767ad",
-        "revCount": 718,
+        "rev": "e1793cf592bcd09d03b0db1695986310b1bc7410",
+        "revCount": 721,
         "type": "git",
         "url": "ssh://git@github.com/primait/suite_py.git"
       },
