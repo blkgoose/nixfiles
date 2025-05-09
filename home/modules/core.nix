@@ -13,5 +13,8 @@
     tree
     unp
     unzip
+    # wrapped to sudo by default
+    (alias "system-manager"
+      ''sudo "$(which ${system-manager}/bin/system-manager)"'')
   ];
 }
