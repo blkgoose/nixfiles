@@ -9,7 +9,6 @@
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/virtualization.nix
-    ../../modules/3d-printing.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix
