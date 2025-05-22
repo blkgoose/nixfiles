@@ -2,7 +2,7 @@
   programs.xmobar = {
     enable = true;
     extraConfig = ''
-      Config { template = "    %XMonadLog% } %time% {%battery% %cpu% %memory%    "
+      Config { template = "    %XMonadLog% } %time% {%battery% [%cpu% %thermal0%] %memory%    "
              , bgColor = "#212121"
              , fgColor = "#F5F5F5"
              , font = "RobotoMono Nerd Font"
@@ -12,6 +12,11 @@
                                     , "-H", "50"
                                     , "--high", "red"
                                     ] 10
+                          , Run ThermalZone 0 [ "--template", "<temp>°C"
+                                              , "--low", "20"
+                                              , "--high", "40"
+                                              , "--high", "red"
+                                              ] 10
                           , Run Memory [ "--template", " <usedratio>%"
                                        , "--high", "red"
                                        ] 10
