@@ -146,6 +146,25 @@
         "url": "file:secret_dotfiles"
       }
     },
+    "suite_py": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1746689591,
+        "narHash": "sha256-VQJsLcQOkQB/XpyZ9L/UA0ZxwELq0HRh/NbAt0hUqAE=",
+        "ref": "refs/heads/master",
+        "rev": "e1793cf592bcd09d03b0db1695986310b1bc7410",
+        "revCount": 721,
+        "type": "git",
+        "url": "ssh://git@github.com/primait/suite_py.git"
+      },
+      "original": {
+        "id": "suite_py",
+        "type": "indirect"
+      }
+    },
     "system-manager": {
       "inputs": {
         "nixpkgs": [
