@@ -107,15 +107,13 @@
           { ppCurrent = purple
           , ppHidden = offwhite
           , ppOrder = \(ws:_:t:_) -> [ws, t]
-          , ppTitle = lowwhite
+          , ppTitle = lowwhite . shorten 30
           }
         where
           purple = xmobarColor purpleColor ""
           offwhite = xmobarColor offwhiteColor ""
           lowwhite = xmobarColor "#505050" ""
           red = xmobarColor "#FF5252" ""
-
-          ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
 
       purpleColor, offwhiteColor :: String
       purpleColor = "#B388FF"
