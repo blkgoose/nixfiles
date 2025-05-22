@@ -18,8 +18,8 @@
 
     nixgl.url = "github:nix-community/nixGL";
 
-    # suite_py.url = "suite_py";
-    # prima-nix.url = "prima-nix";
+    suite_py.url = "suite_py";
+    prima-nix.url = "prima-nix";
 
     secret_dots = {
       url = "git+file:secret_dotfiles?shallow=1";
@@ -36,7 +36,7 @@
         config.allowUnfree = true;
 
         overlays = [
-          # inputs.suite_py.overlays.default
+          inputs.suite_py.overlays.default
           (self: super: {
             unstable = import inputs.nixpkgs-unstable {
               inherit system;
