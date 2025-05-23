@@ -13,8 +13,8 @@
                                     , "--high", "red"
                                     ] 10
                           , Run ThermalZone 0 [ "--template", "<temp>°C"
-                                              , "--low", "20"
-                                              , "--high", "40"
+                                              , "--Low", "20"
+                                              , "--High", "80"
                                               , "--high", "red"
                                               ] 10
                           , Run Memory [ "--template", " <usedratio>%"
