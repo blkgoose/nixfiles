@@ -77,8 +77,6 @@
       homeManager = {
         home-manager.extraSpecialArgs = inputs // { inherit system; };
       };
-
-      fmt = nixpkgs.legacyPackages.${system}.nixfmt-classic;
     in {
       nixosConfigurations = {
         toaster = lib.nixosSystem {
@@ -109,11 +107,6 @@
         };
       };
 
-      formatter.${system} = fmt;
-      devShells.${system}.default = pkgs.mkShell {
-        LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [ pkgs.openssl ];
-
-        buildInputs = [ fmt pkgs.nil ];
-      };
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
     };
 }

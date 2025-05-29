@@ -36,12 +36,12 @@
       }
       {
         mode = "n";
-        key = "<space>h";
+        key = "<leader>h";
         action = "<cmd>:lua vim.lsp.buf.signature_help()<CR>";
       }
       {
         mode = "n";
-        key = "<space>R";
+        key = "<leader>R";
         action = "<cmd>:lua vim.lsp.buf.rename()<CR>";
       }
       {
@@ -74,10 +74,31 @@
         key = "<leader>gs";
         action = "<cmd>:Gvdiffsplit<CR>";
       }
+       {
+      mode = "n";
+      key = "gd";
+      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+    }
+    {
+      mode = "n";
+      key = "gr";
+      action = "<cmd>lua vim.lsp.buf.references()<CR>";
+    }
+    {
+      mode = "n";
+      key = "gi";
+      action = "<cmd>lua vim.lsp.buf.implementation()<CR>";
+    }
+    {
+      mode = "n";
+      key = "gt";
+      action = "<cmd>lua vim.lsp.buf.type_definition()<CR>";
+    }
     ];
 
     lsp = {
       inlayHints.enable = true;
+
       servers = {
         rust_analyzer = {
           settings = {
@@ -93,6 +114,7 @@
             cmd = [ "${pkgs.nil}/bin/nil" ];
             root_markers = [ "flake.nix" ];
             filetypes = [ "nix" ];
+            settings."nil".formatting.command = "${pkgs.nixfmt}/bin/nixfmt";
           };
           enable = true;
         };
@@ -169,6 +191,29 @@
       copilot-vim
       CopilotChat-nvim
     ];
+
+    extraConfigLua = ''
+        -- Autoformat on save for supported buffers
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          callback = function(args)
+            vim.lsp.buf.format({ async = true })
+          end,
+        })
+
+        -- highlight what has been copied
+        vim.api.nvim_create_autocmd("TextYankPost", {
+          callback = function()
+            vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
+          end,
+        })
+
+        -- Disable * behaviour
+        vim.keymap.set("n", "*", function()
+              local word = vim.fn.expand("<cword>")
+              vim.fn.setreg("/", word)
+              vim.opt.hlsearch = true
+        end)
+    '';
 
     opts = {
       number = true;
