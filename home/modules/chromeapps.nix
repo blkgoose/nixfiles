@@ -54,12 +54,6 @@ let
         "https://security-metrics.helloprima.com/vm/projects/INT%20-%20Intermediaries%20Experience%20&%20Network%20Management.html";
       wrapper = chromeWrapper work;
     };
-    "discord" = {
-      url = "https://discord.com/channels/@me";
-      wrapper = url:
-        let chromium = "${(pkgs.nixGL pkgs.chromium)}/bin/chromium";
-        in "${chromium} --app='${url}' --new-window";
-    };
     "disney" = {
       url = "https://disneyplus.com";
       wrapper = chromeWrapper personal;
