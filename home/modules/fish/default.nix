@@ -1,36 +1,10 @@
-{ pkgs, lib, ... }:
-let
-  plugin = repo:
-    { rev ? "master", sha256 ? "", subPath ? "", }:
-    let
-      _repo = lib.strings.splitString "/" repo;
-      owner = builtins.elemAt _repo 0;
-      name = builtins.elemAt _repo 1;
-      src = pkgs.fetchFromGitHub {
-        owner = owner;
-        repo = name;
-        rev = rev;
-        sha256 = sha256;
-      } + subPath;
-    in {
-      name = repo + subPath;
-      src = assert builtins.pathExists src; src;
-    };
-in {
-  imports = [ ./commit-message.nix ];
-
+{ pkgs, lib, ... }: {
   programs.fish = {
     enable = true;
 
     shellInit = ''
       eval (ssh-agent -c) > /dev/null
     '';
-
-    plugins = [
-      (plugin "jorgebucaran/fisher" {
-        sha256 = "pR5RKU+zIb7CS0Y6vjx2QIZ8Iu/3ojRfAcAdjCOxl1U=";
-      })
-    ];
 
     shellAbbrs = {
       gd = "git diff";
@@ -39,7 +13,6 @@ in {
       gs = "git s";
       ga = "git add";
       gdc = "git diff --cached";
-      gc = { function = "__ai_generated_commit"; };
     };
 
     shellAliases = {
@@ -48,11 +21,6 @@ in {
     };
 
     functions = {
-      __ai_generated_commit = {
-        body =
-          ''echo "git commit -m '"(git diff --cached | commit-generator)"'"'';
-      };
-
       foreach = {
         body = "xargs -I'{}' fish -c $fun";
         description = "run function on every argument ({})";
