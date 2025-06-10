@@ -6,7 +6,7 @@ return {
     settings = {
         ["rust-analyzer"] = {
             rust = {
-                analyzerTargetDir = true,
+                analyzerTargetDir = false,
             },
             assist = {
                 importEnforceGranularity = true,
