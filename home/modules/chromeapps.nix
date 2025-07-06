@@ -71,6 +71,10 @@ let
       wrapper = chromeWrapper personal;
     };
     "github".url = "https://github.com";
+    "gemini" = {
+      url = "https://gemini.google.com";
+      wrapper = chromeWrapper work;
+    };
     "gmail".url = "https://mail.google.com";
     "hackernews" = {
       url = "https://hckrnews.com/";
