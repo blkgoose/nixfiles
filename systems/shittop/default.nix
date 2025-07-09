@@ -38,4 +38,20 @@ in {
     description = "Runs earlyOOM daemon";
     wantedBy = [ "multi-user.target" ];
   };
+
+  systemd.services.bigswap = {
+    enable = true;
+    serviceConfig = {
+      ExecStart = "${pkgs.writeShellScript "bigswap" ''
+        swapfile="/bigswap"
+        if [[ ! -f $swapfile ]]; then
+          ${pkgs.coreutils}/bin/dd if=/dev/zero of=$swapfile bs=1024 count=32GB
+          ${pkgs.util-linux}/bin/mkswap $swapfile
+        fi
+        ${pkgs.util-linux}/bin/swapon $swapfile
+      ''}";
+    };
+    description = "Ensures 32GB swap file is created and enabled";
+    wantedBy = [ "multi-user.target" ];
+  };
 }
