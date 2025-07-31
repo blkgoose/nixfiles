@@ -41,6 +41,10 @@ let
     };
     "coggle".url = "https://coggle.it";
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
+    "copilot" = {
+      url = "https://github.com/copilot";
+      wrapper = chromeWrapper work;
+    };
     "cronometer" = {
       url = "https://cronometer.com/#diary";
       wrapper = chromeWrapper personal;
