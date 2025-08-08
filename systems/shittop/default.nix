@@ -35,6 +35,7 @@ in {
   systemd.services.bigswap = {
     enable = true;
     serviceConfig = {
+      Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "bigswap" ''
         swapfile="/bigswap"
         if [[ ! -f $swapfile ]]; then
