@@ -43,7 +43,6 @@
 
               config.allowUnfree = true;
             };
-
           })
 
           inputs.nixgl.overlay
