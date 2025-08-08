@@ -54,4 +54,17 @@ in {
     description = "Ensures 32GB swap file is created and enabled";
     wantedBy = [ "multi-user.target" ];
   };
+
+  systemd.services.brightness-permission = {
+    enable = true;
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.writeShellScript "brightness-permission" ''
+        chgrp video /sys/class/backlight/*/brightness
+        chmod g+w /sys/class/backlight/*/brightness
+      ''}";
+    };
+    description = "Sets permissions for xbacklight";
+    wantedBy = [ "multi-user.target" ];
+  };
 }
