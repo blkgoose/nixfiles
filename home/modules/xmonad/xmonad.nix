@@ -68,9 +68,8 @@
       navigation = configurableNavigation (navigateBrightness 0)
 
       notifications =
-          [ ((mod4Mask, xK_e), spawn "${pkgs.dunst}/bin/dunstctl history-pop")
-          , ((mod4Mask, xK_w), spawn "${pkgs.dunst}/bin/dunstctl close")
-          , ((mod4Mask, xK_r), spawn "${pkgs.dunst}/bin/dunstctl context")
+          [ ((mod4Mask, xK_m), spawn "${pkgs.dunst}/bin/dunstctl history-pop")
+          , ((mod4Mask .|. shiftMask, xK_m), spawn "${pkgs.dunst}/bin/dunstctl close")
           , ((0, xK_Caps_Lock), spawn "${pkgs.dunst}/bin/dunstctl set-paused toggle")
           ]
 
