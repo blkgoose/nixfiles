@@ -32,13 +32,6 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
-  systemd.services.earlyoom = {
-    enable = true;
-    serviceConfig = { ExecStart = "${pkgs.earlyoom}/bin/earlyoom"; };
-    description = "Runs earlyOOM daemon";
-    wantedBy = [ "multi-user.target" ];
-  };
-
   systemd.services.bigswap = {
     enable = true;
     serviceConfig = {
