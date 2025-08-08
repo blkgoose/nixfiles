@@ -5,7 +5,7 @@
     nixfmt-classic
     clang
     yarn
-    bruno
+    unstable.bruno
     kubectl
     awscli2
     pkg-config
