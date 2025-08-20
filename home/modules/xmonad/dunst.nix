@@ -114,7 +114,7 @@ in {
         show_indicators = "yes";
         icon_position = "left";
         enable_recursive_icon_lookup = true;
-        icon_theme = "Papirus, hicolor";
+        # icon_theme = "Papirus, hicolor";
         min_icon_size = 48;
         max_icon_size = 60;
         sticky_history = "yes";
@@ -155,44 +155,38 @@ in {
         timeout = 0;
       };
 
-      spotify = {
+      z_1_spotify = {
         appname = "Spotify";
         urgency = "low";
       };
 
-      spotify_volume = {
-        appname = "volume:spotify";
-        highlight = "#ff7ca4";
-        format = "<b>%s</b>\\n";
+      z_2_osd_spotify_volume = {
+        appname = "osd:volume:spotify";
+        highlight = "#1db954";
+        format = "<b>spotify: %s</b>\\n";
         history_ignore = "yes";
       };
 
-      brightness = {
-        appname = "brightness";
+      z_3_osd_brightness = {
+        appname = "osd:brightness";
         highlight = "#fddddd";
-        format = "<b>%s</b>\\n";
+        format = "<b>brightness: %s</b>\\n";
         history_ignore = "yes";
       };
 
-      volume = {
-        appname = "volume";
+      z_4_osd_volume = {
+        appname = "osd:volume";
         highlight = "#ff7ca4";
-        format = "<b>%s</b>\\n";
+        format = "<b>volume: %s</b>\\n";
         history_ignore = "yes";
       };
 
-      battery = {
-        appname = "battery";
-        format = "<b>%s</b>\\n";
-        history_ignore = "yes";
-      };
-
-      kdeconnect = {
+      z_5_kdeconnect = {
         appname = "KDE Connect";
         format = "<b>%s</b>\\n\\n%b\\n";
       };
 
-      chrome = {
+      z_6_chrome = {
         appname = "Google Chrome";
         script = lib.meta.getExe chrome_notification_mapper;
         format = "";
