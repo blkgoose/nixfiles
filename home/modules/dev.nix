@@ -11,6 +11,7 @@
     pkg-config
     openssl
     fh
+    (alias "gemini-cli" "${(gemini-cli)}/bin/gemini")
   ];
 
   programs.direnv = {
