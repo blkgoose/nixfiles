@@ -2,12 +2,12 @@
   description = "My NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/release-25.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -34,6 +34,10 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+
+        config.permittedInsecurePackages = [
+            "beekeeper-studio-5.1.5" # Electron version 31 is EOL
+        ];
 
         overlays = [
           inputs.suite_py.overlays.default
