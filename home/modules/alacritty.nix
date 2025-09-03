@@ -4,10 +4,9 @@
     settings = {
       font = {
         normal = {
-          family = "RobotoMono Nerd Font";
+          family = "monospace";
           style = "Regular";
         };
-        size = 11.0;
       };
       terminal.shell.program = "${pkgs.fish}/bin/fish";
     };

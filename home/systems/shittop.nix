@@ -9,5 +9,7 @@
   xsession.enable = true;
 
   fonts.fontconfig.enable = true;
-  home.packages = with pkgs; [ nerd-fonts.hack nerd-fonts.roboto-mono docker (nixGL google-chrome) ];
+  home.packages = with pkgs; [
+      docker (nixGL google-chrome)
+  ];
 }
