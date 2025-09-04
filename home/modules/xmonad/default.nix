@@ -7,7 +7,6 @@
     autorandr
     pwvucontrol
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
-    (alias "lock" "${slock}/bin/slock")
   ];
 
   services.batsignal.enable = true;
