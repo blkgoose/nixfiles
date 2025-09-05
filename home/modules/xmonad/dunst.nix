@@ -43,6 +43,10 @@ let
         exit 0
       fi
 
+      if [[ "$appname" == "youtube" ]]; then
+        urgency="normal"
+      fi
+
       # slack
       if [[ "$appname" == "slack" ]]; then
         if [[ "$summary" =~ "New message from".* ]]; then
