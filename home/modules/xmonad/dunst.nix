@@ -27,6 +27,9 @@ let
       if [[ -z "$icon" ]]; then
         icon="$icon_default"
       fi
+      if [[ ! -f $icon ]]; then
+        icon="dialog-warning-symbolic"
+      fi
 
       if [[ "$body" == "This site has been updated in the background." ]]; then
         exit 0
@@ -75,6 +78,10 @@ let
         "$body"
     '';
 in {
+  home.packages = with pkgs; [
+    papirus-icon-theme
+  ];
+
   services.dunst = {
     enable = true;
     settings = {
@@ -114,7 +121,7 @@ in {
         show_indicators = "yes";
         icon_position = "left";
         enable_recursive_icon_lookup = true;
-        # icon_theme = "Papirus, hicolor";
+        icon_theme = "Papirus, hicolor";
         min_icon_size = 48;
         max_icon_size = 60;
         sticky_history = "yes";
