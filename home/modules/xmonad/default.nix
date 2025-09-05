@@ -7,7 +7,10 @@
     autorandr
     pwvucontrol
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
+    nerd-fonts.roboto-mono
   ];
+
+  fonts.fontconfig.enable = true;
 
   services.batsignal.enable = true;
 

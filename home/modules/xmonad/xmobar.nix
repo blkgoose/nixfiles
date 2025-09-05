@@ -5,7 +5,7 @@
       Config { template = "    %XMonadLog% } %time% {%battery% [%cpu% %thermal0%] %memory%    "
              , bgColor = "#212121"
              , fgColor = "#F5F5F5"
-             , font = "xft:monospace:size=10"
+             , font = "RobotoMono Nerd Font"
              , position = TopHM 40 10 10 10 0
              , commands = [ Run Cpu [ "--template", " <total>%"
                                     , "-L", "3"

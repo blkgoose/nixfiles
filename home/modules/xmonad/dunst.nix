@@ -87,7 +87,7 @@ in {
         width = 800;
         origin = "top-center";
         offset = "0x60";
-        font = "monospace 11";
+        font = "RobotoMono Nerd Font 11";
         gap_size = 5;
         padding = 16;
         horizontal_padding = 16;
