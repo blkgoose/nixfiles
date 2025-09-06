@@ -19,5 +19,4 @@
       PartOf = "graphical-session.target";
     };
   };
-
 }

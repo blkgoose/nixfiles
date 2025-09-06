@@ -11,7 +11,8 @@
     pkg-config
     openssl
     fh
-    (alias "gemini-cli" "${(gemini-cli)}/bin/gemini --model gemini-2.5-flash --yolo")
+    (alias "gemini-cli"
+      "${(gemini-cli)}/bin/gemini --model gemini-2.5-flash --yolo")
   ];
 
   programs.direnv = {

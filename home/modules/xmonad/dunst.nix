@@ -79,9 +79,7 @@ let
         "$body"
     '';
 in {
-  home.packages = with pkgs; [
-    papirus-icon-theme
-  ];
+  home.packages = with pkgs; [ papirus-icon-theme ];
 
   services.dunst = {
     enable = true;
