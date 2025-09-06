@@ -16,7 +16,5 @@
 
   programs.steam.enable = true;
 
-  fonts.packages = with pkgs; [
-    font-awesome
-  ];
+  fonts.packages = with pkgs; [ font-awesome ];
 }

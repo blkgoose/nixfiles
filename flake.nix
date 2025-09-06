@@ -36,7 +36,7 @@
         config.allowUnfree = true;
 
         config.permittedInsecurePackages = [
-            "beekeeper-studio-5.1.5" # Electron version 31 is EOL
+          "beekeeper-studio-5.1.5" # Electron version 31 is EOL
         ];
 
         overlays = [
