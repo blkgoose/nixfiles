@@ -27,9 +27,6 @@ let
       if [[ -z "$icon" ]]; then
         icon="$icon_default"
       fi
-      if [[ ! -f $icon ]]; then
-        icon="dialog-warning-symbolic"
-      fi
 
       if [[ "$body" == "This site has been updated in the background." ]]; then
         exit 0
