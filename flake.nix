@@ -21,6 +21,8 @@
     suite_py.url = "suite_py";
     prima-nix.url = "prima-nix";
 
+    osd.url = "github:blkgoose/osd-rs/master";
+
     secret_dots = {
       url = "git+file:secret_dotfiles?shallow=1";
       flake = false;
