@@ -1,6 +1,12 @@
 { pkgs, ... }: {
-  imports =
-    [ ./xmonad.nix ./xmobar.nix ./picom.nix ./dunst.nix ./wallpaper.nix ];
+  imports = [
+    ./xmonad.nix
+    ./xmobar.nix
+    ./picom.nix
+    ./dunst.nix
+    ./wallpaper.nix
+    ./osd.nix
+  ];
 
   home.packages = with pkgs; [
     feh
