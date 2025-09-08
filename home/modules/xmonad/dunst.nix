@@ -44,6 +44,10 @@ let
         urgency="normal"
       fi
 
+      if [[ "$appname" == "netflix" ]]; then
+        urgency="normal"
+      fi
+
       # slack
       if [[ "$appname" == "slack" ]]; then
         if [[ "$summary" =~ "New message from".* ]]; then
