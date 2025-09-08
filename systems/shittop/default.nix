@@ -41,6 +41,7 @@ in {
         if [[ ! -f $swapfile ]]; then
           ${pkgs.coreutils}/bin/dd if=/dev/zero of=$swapfile bs=1024 count=32GB
           ${pkgs.util-linux}/bin/mkswap $swapfile
+          ${pkgs.coreutils}/bin/chmod 600 $swapfile
         fi
         ${pkgs.util-linux}/bin/swapon $swapfile
       ''}";
