@@ -6,7 +6,9 @@ let
       summary="$2"
       body="$3"
       icon="$4"
-      urgency="$5"
+      # set urgency to default for every website as most abuse the system to
+      # make their notifications stay longer than needed
+      urgency="normal"
 
       declare -A icon_mapping
       icon_mapping["reddit"]="web-reddit"
@@ -38,14 +40,6 @@ let
 
       if [[ "$appname" == "whatsapp" ]] && [[ "$body" == "Sincronizzazione dei messaggi in background in corso…" ]]; then
         exit 0
-      fi
-
-      if [[ "$appname" == "youtube" ]]; then
-        urgency="normal"
-      fi
-
-      if [[ "$appname" == "netflix" ]]; then
-        urgency="normal"
       fi
 
       # slack
