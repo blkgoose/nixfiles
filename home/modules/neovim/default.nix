@@ -10,5 +10,16 @@
     vimAlias = true;
   };
 
-  home.packages = with pkgs; [ lua-language-server nil ];
+  home.packages = with pkgs; [
+    lua-language-server
+    nil
+    taplo
+    biome
+    elixir-ls
+    elmPackages.elm-language-server
+    stylua
+    tailwindcss
+    python313Packages.python-lsp-server
+    python313Packages.python-lsp-black
+  ];
 }
