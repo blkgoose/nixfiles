@@ -39,7 +39,7 @@ in {
       ExecStart = "${pkgs.writeShellScript "bigswap" ''
         swapfile="/bigswap"
         if [[ ! -f $swapfile ]]; then
-          ${pkgs.coreutils}/bin/dd if=/dev/zero of=$swapfile bs=1024 count=32GB
+          ${pkgs.coreutils}/bin/dd if=/dev/zero of=$swapfile bs=1024 count=64GB
           ${pkgs.util-linux}/bin/mkswap $swapfile
           ${pkgs.coreutils}/bin/chmod 600 $swapfile
         fi
