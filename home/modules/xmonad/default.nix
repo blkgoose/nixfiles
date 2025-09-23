@@ -23,6 +23,9 @@
   systemd.user.services."dock-settings" = {
     Service = {
       ExecStart = pkgs.writers.writeBash "dock-set" ''
+        ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option compose:ralt
+        ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:none
+
         udevadm monitor --environment --udev | while read -r line; do
           if echo "$line" | grep -q "change"; then
             while read -r detail; do
