@@ -31,7 +31,7 @@ let
     "calendar".url = "https://calendar.google.com/calendar";
     "chatGPT" = {
       url = "https://chatgpt.com/";
-      wrapper = chromeWrapper personal;
+      wrapper = chromeWrapper work;
     };
     "chess".url = "https://www.chess.com";
     "codescene" = {
