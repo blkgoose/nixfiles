@@ -20,6 +20,16 @@
 
   services.batsignal.enable = true;
 
+  services.redshift = {
+    enable = true;
+    latitude = 42.5;
+    longitude = 12.5;
+    temperature = {
+      day = 6500;
+      night = 4500;
+    };
+  };
+
   systemd.user.services."dock-settings" = {
     Service = {
       ExecStart = pkgs.writers.writeBash "dock-set" ''
