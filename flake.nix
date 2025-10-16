@@ -18,8 +18,8 @@
 
     nixgl.url = "github:nix-community/nixGL";
 
-    suite_py.url = "suite_py";
-    prima-nix.url = "prima-nix";
+    suite_py.url = "git+ssh://git@github.com/primait/suite_py";
+    prima-nix.url = "git+ssh://git@github.com/primait/prima.nix";
 
     osd.url = "github:blkgoose/osd-rs/master";
 
