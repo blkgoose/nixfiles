@@ -25,6 +25,7 @@ return {
                     useParameterNames = true,
                 },
             },
+            numThreads = 4,
         },
     },
     root_markers = {
