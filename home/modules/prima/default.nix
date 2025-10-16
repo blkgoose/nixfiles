@@ -1,11 +1,15 @@
-{ pkgs, prima-nix, secret_dots, ... }: {
+{ pkgs, prima-nix, secret_dots, ... }:
+let
+  vault_addr = builtins.head (builtins.split "\n"
+    (builtins.readFile "${secret_dots}/vault/prima_address"));
+in {
   imports = [ prima-nix.homeManagerModules.gitleaks ];
 
   home.packages = with pkgs; [
     suite_py
     cloudflare-warp
     cloudflared
-    vault
+    (alias "vault" "VAULT_ADDR=${vault_addr} ${(vault)}/bin/vault")
     unstable.bruno
     awscli2
   ];
