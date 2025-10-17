@@ -61,9 +61,15 @@ in {
     enable = true;
     serviceConfig = {
       Type = "oneshot";
+      Restart = "on-failure";
+      RestartSec = 5;
       ExecStart = "${pkgs.writeShellScript "brightness-permission" ''
-        chgrp video /sys/class/backlight/*/brightness
-        chmod g+w /sys/class/backlight/*/brightness
+        inotifywait -e create /sys/class/backlight
+
+        for file in /sys/class/backlight/*/brightness; do
+          chgrp video $file
+          chmod g+w $file
+        done
       ''}";
     };
     description = "Sets permissions for xbacklight";
