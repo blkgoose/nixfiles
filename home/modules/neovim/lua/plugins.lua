@@ -37,15 +37,6 @@ require("lazy").setup({
     },
 
     {
-        "MysticalDevil/inlay-hints.nvim",
-        event = "LspAttach",
-        dependencies = { "neovim/nvim-lspconfig" },
-        config = function()
-            require("inlay-hints").setup()
-        end,
-    },
-
-    {
         "danielefongo/microscope",
         dependencies = {
             { "danielefongo/microscope-files", dev = false },

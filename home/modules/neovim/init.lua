@@ -66,6 +66,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end
 
+        vim.lsp.inlay_hint.enable()
+
         -- Keymaps
         local bufopts = { buffer = args.buf, noremap = true, silent = true }
         local opts = { buffer = args.buf }
