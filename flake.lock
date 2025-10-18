@@ -397,11 +397,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1760539118,
-        "narHash": "sha256-9xXIY4przJaH/7Ot+H4ncFdlwER6+QfaNrEJQVqQ0Fw=",
+        "lastModified": 1760712218,
+        "narHash": "sha256-eUBnNVXA72P6WVddmFL6qAs0Rf/mGhxiOs7xh63Jq3Y=",
         "ref": "refs/heads/master",
-        "rev": "e3f0ad76bc45e02418293397d9b5e082ee11792c",
-        "revCount": 750,
+        "rev": "8f56c21c286ea78a8b75b276409504112e01164d",
+        "revCount": 751,
         "type": "git",
         "url": "ssh://git@github.com/primait/suite_py"
       },
