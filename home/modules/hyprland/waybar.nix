@@ -82,6 +82,10 @@ let
   '';
 
   style = pkgs.writeText "waybar" ''
+    * {
+        font-family: "RobotoMono Nerd Font", monospace;
+    }
+
     window > box {
       background: rgba(75, 75, 75, 0.3);
 
