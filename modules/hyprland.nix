@@ -13,6 +13,8 @@
 
   xdg.portal.enable = true;
 
+  fonts.packages = with pkgs; [ fira-code ];
+
   security.pam.services.swaylock = {
     text = ''
       auth include login

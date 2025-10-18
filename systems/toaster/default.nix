@@ -17,6 +17,7 @@
   programs.command-not-found.enable = false;
 
   environment.systemPackages = with pkgs; [ git vim wget ];
+  fonts.fontconfig.enable = true;
 
   networking.hostName = "toaster";
 
