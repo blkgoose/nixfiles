@@ -6,6 +6,7 @@
       useOSProber = true;
       efiSupport = true;
     };
+    timeout = null;
     efi.canTouchEfiVariables = true;
   };
 
