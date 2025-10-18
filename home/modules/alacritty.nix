@@ -12,4 +12,6 @@
       terminal.shell.program = "${pkgs.fish}/bin/fish";
     };
   };
+
+  home.packages = with pkgs; [ nerd-fonts.roboto-mono ];
 }
