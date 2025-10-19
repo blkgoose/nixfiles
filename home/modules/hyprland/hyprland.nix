@@ -8,6 +8,8 @@
 
       monitor = ",preferred,auto,1";
 
+      ecosystem.no_update_news = true;
+
       exec-once = [
         "hyprpaper &"
         "swayidle -w"
