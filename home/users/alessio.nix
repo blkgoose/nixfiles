@@ -10,7 +10,7 @@
     ../modules/saint-peter.nix
     ../modules/chromeapps.nix
     ../modules/hyprland
-    ../modules/tmux.nix
+    ../modules/tmux
   ];
 
   programs.home-manager.enable = true;

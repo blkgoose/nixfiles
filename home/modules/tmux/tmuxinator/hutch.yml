@@ -1,0 +1,11 @@
+---
+name: hutch
+project_root: "/home/alessiobiancone/proj/hutch"
+startup_pane: 2
+windows:
+  - fish:
+      layout: cee5,175x55,0,0{53x55,0,0[53x27,0,0,7,53x27,0,28,9],121x55,54,0,8}
+      panes:
+        - pnpm watch
+        - git s
+        - vim src/Main.elm

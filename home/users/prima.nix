@@ -10,7 +10,7 @@
     ../modules/prima
     ../modules/saint-peter.nix
     ../modules/chromeapps.nix
-    ../modules/tmux.nix
+    ../modules/tmux
     ../modules/xmonad
     ../modules/game.nix
   ];

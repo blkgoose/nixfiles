@@ -1,0 +1,8 @@
+---
+name: tmuxinator
+project_root: "/home/alessiobiancone/.config/tmuxinator"
+windows:
+  - fish:
+      layout: c603,187x36,0,0,6
+      panes:
+        - vim

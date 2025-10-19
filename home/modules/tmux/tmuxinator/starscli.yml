@@ -1,0 +1,10 @@
+---
+name: starscli
+project_root: "/home/alessiobiancone/proj/starscli"
+windows:
+- ruby:
+    layout: 5209,341x58,0,0{74x58,0,0[74x29,0,0,4,74x28,0,30,5],266x58,75,0,6}
+    panes:
+    - cd /home/alessiobiancone/proj/starscli
+    - cd /home/alessiobiancone/proj/starscli
+    - cd /home/alessiobiancone/proj/starscli

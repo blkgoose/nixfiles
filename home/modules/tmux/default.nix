@@ -1,6 +1,10 @@
 { pkgs, config, ... }: {
   home.packages = with pkgs; [ fzf unstable.sesh zoxide tmuxinator ];
 
+  # TODO: make this user scoped
+  xdg.configFile."tmuxinator".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.xdg.configHome}/nix/home/modules/tmux/tmuxinator";
+
   programs.tmux = {
     enable = true;
 

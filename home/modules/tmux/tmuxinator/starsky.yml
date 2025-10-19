@@ -1,0 +1,9 @@
+---
+name: starsky
+project_root: "/home/alessiobiancone/proj/starsky"
+windows:
+- rust:
+    layout: ebf4,341x58,0,0{97x58,0,0,2,243x58,98,0,4}
+    panes:
+    - docker compose up -d
+    - vim starsky/src/lib.rs
