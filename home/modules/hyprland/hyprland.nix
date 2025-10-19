@@ -145,8 +145,8 @@
         "SHIFT, xf86AudioRaiseVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+"
         "SHIFT, xf86AudioLowerVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-"
 
-        "$mainMod, e, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
-        "$mainMod, w, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest"
+        "$mainMod, m, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
+        "$mainMod SHIFT, m, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest"
 
         ", xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+"
         ", xf86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-"
