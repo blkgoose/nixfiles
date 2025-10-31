@@ -9,5 +9,7 @@
     (alias "discord" "${(nixGL legcord)}/bin/legcord")
   ];
 
+  services.kdeconnect.enable = true;
+
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 }
