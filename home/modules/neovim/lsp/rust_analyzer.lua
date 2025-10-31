@@ -26,6 +26,18 @@ return {
                 },
             },
             numThreads = 4,
+            files = {
+                excludeDirs = {
+                    "target",
+                    ".git",
+                    ".direnv",
+                    "node_modules",
+                    "vendor",
+                    "out",
+                    "build"
+                },
+                watcher = "client"
+            }
         },
     },
     root_markers = {
