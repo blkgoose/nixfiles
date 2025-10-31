@@ -60,16 +60,15 @@ in {
   systemd.services.brightness-permission = {
     enable = true;
     serviceConfig = {
-      Type = "oneshot";
+      Type = "simple";
       Restart = "on-failure";
       RestartSec = 5;
       ExecStart = "${pkgs.writeShellScript "brightness-permission" ''
-        inotifywait -e create /sys/class/backlight
+        file="/sys/class/backlight/intel_backlight/brightness"
+        ${pkgs.inotify-tools}/bin/inotifywait -e create "$file"
 
-        for file in /sys/class/backlight/*/brightness; do
-          chgrp video $file
-          chmod g+w $file
-        done
+        chgrp video "$file"
+        chmod g+w "$file"
       ''}";
     };
     description = "Sets permissions for xbacklight";
