@@ -108,6 +108,7 @@ in {
         progress_bar_min_width = 150;
         progress_bar_max_width = 350;
 
+        action = true;
         notification_limit = 3;
         alignment = "left";
         vertical_alignment = "center";
@@ -123,7 +124,8 @@ in {
         max_icon_size = 60;
         sticky_history = "yes";
         history_length = 100;
-        dmenu = "/usr/local/bin/dmenu -p dunst:";
+        dmenu =
+          ''${pkgs.rofi}/bin/rofi -dmenu -i -p "Notification action:" -l 10'';
         browser = "chrome --new-window";
         mouse_left_click = "none";
         mouse_middle_click = "none";
