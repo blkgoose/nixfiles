@@ -9,6 +9,7 @@
     pkg-config
     openssl
     fh
+    (alias "nh" ''sudo "$(which "${pkgs.nh}/bin/nh")"'')
     gh
     (alias "gemini-cli"
       "${(gemini-cli)}/bin/gemini --model gemini-2.5-flash --yolo")
