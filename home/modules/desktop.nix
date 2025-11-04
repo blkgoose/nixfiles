@@ -7,6 +7,7 @@
     zoom
     (alias "chrome" "${(nixGL google-chrome)}/bin/google-chrome-stable")
     (alias "discord" "${(nixGL legcord)}/bin/legcord")
+    pwvucontrol
   ];
 
   services.kdeconnect.enable = true;

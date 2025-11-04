@@ -6,12 +6,12 @@
     ./dunst.nix
     ./wallpaper.nix
     ./osd.nix
+    ./clipboard.nix
   ];
 
   home.packages = with pkgs; [
     feh
     autorandr
-    pwvucontrol
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
     nerd-fonts.roboto-mono
   ];
