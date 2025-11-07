@@ -62,10 +62,13 @@ in {
     serviceConfig = {
       Type = "simple";
       Restart = "on-failure";
-      RestartSec = 5;
+      RestartSec = 30;
       ExecStart = "${pkgs.writeShellScript "brightness-permission" ''
         file="/sys/class/backlight/intel_backlight/brightness"
-        ${pkgs.inotify-tools}/bin/inotifywait -e create "$file"
+
+        if [[ ! -e $file ]]; then
+          ${pkgs.inotify-tools}/bin/inotifywait -e create "$file"
+        fi
 
         chgrp video "$file"
         chmod g+w "$file"
