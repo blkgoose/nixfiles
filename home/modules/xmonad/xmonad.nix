@@ -56,6 +56,7 @@
                   , ((mod4Mask, xK_Tab), toggleWS)
                   , ((mod4Mask, xK_p), spawn "${pkgs.rofi}/bin/rofi -show run")
                   , ((mod4Mask .|. shiftMask, xK_i), spawn "${pkgs.slock}/bin/slock")
+                  , ((mod4Mask .|. shiftMask, xK_y), spawn "${pkgs.copyq}/bin/copyq toggle")
 
                   , ((mod4Mask, xK_s), namedScratchpadAction scratchpads "slack")
                   , ((mod4Mask, xK_y), namedScratchpadAction scratchpads "youtrack")
