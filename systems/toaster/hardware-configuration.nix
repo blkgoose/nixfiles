@@ -22,7 +22,10 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ ];
+  swapDevices = [{
+    device = "/swap";
+    size = 16 * 1024;
+  }];
 
   networking.useDHCP = lib.mkDefault true;
 
