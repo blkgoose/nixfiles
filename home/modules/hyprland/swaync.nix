@@ -107,7 +107,7 @@ in {
       Type = "dbus";
       BusName = "org.freedesktop.Notifications";
       ExecStart = "${pkgs.swaynotificationcenter}/bin/swaync";
-      ExecReload = ''
+      ExecReload = pkgs.writers.writeBashBin "sway-reload" ''
         ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-config;
         ${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css;
       '';
