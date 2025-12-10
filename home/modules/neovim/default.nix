@@ -21,5 +21,7 @@
     tailwindcss
     python313Packages.python-lsp-server
     python313Packages.python-lsp-black
+    haskellPackages.haskell-language-server
+    ormolu
   ];
 }
