@@ -375,10 +375,11 @@
     "secret_dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1761917541,
-        "narHash": "sha256-6FfR7LrmyRokYD6rzaQz1MvhdveMSWqsh0kmC28F/8c=",
-        "rev": "2466ec66f49c1be0985da7d5239e59734a518e9e",
-        "revCount": 32,
+        "lastModified": 1765440733,
+        "narHash": "sha256-+Qe4vipjLKoSYddO+qIZApX2iz4TfB/pLhuS+rpIciE=",
+        "ref": "refs/heads/master",
+        "rev": "1a8f024a5741a3cbb2d07cd0d551a2255f69ef6b",
+        "revCount": 34,
         "shallow": true,
         "type": "git",
         "url": "file:secret_dotfiles"
@@ -396,11 +397,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1760712218,
-        "narHash": "sha256-eUBnNVXA72P6WVddmFL6qAs0Rf/mGhxiOs7xh63Jq3Y=",
+        "lastModified": 1764855854,
+        "narHash": "sha256-qsDf3ILptHiw8O/OycxXqsBQXt7975t9FOgIo3bhxdU=",
         "ref": "refs/heads/master",
-        "rev": "8f56c21c286ea78a8b75b276409504112e01164d",
-        "revCount": 751,
+        "rev": "5ec968e16c2c5165f0f4f58ae47ade524a5bae2d",
+        "revCount": 760,
         "type": "git",
         "url": "ssh://git@github.com/primait/suite_py"
       },
