@@ -283,11 +283,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1757286600,
-        "narHash": "sha256-A7265DtPcMoTzDo2fgwtmv23NnezjAm3LUDKpAj+STw=",
+        "lastModified": 1767035530,
+        "narHash": "sha256-JK324mg4OmSnjUTBsrgsdPxq5EMdCOBuF5KcVuWPV3o=",
         "owner": "blkgoose",
         "repo": "osd-rs",
-        "rev": "db6dfb0fce29c4e40389c600ce7bf6cfedb76465",
+        "rev": "e28cec42c98f497aad545d2e835ae08aacfd3d7b",
         "type": "github"
       },
       "original": {
