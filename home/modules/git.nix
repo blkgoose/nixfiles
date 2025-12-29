@@ -14,26 +14,24 @@
         fap = "fetch --all --prune";
       };
 
-      extraConfig = {
-        user = {
-          name = "blkgoose";
-          email = "alessio.biancone@gmail.com";
-        };
-        init = { defaultBranch = "master"; };
-        credential.helper = "store";
-        core = {
-          editor = "vim";
-          autocrlf = "input";
-          filemode = false;
-        };
-        push = {
-          followTags = true;
-          autoSetupRemote = true;
-        };
-        diff.tool = "vim -d";
-        difftool.prompt = false;
-        merge.tool = "vim -d";
+      user = {
+        name = "blkgoose";
+        email = "alessio.biancone@gmail.com";
       };
+      init = { defaultBranch = "master"; };
+      credential.helper = "store";
+      core = {
+        editor = "vim";
+        autocrlf = "input";
+        filemode = false;
+      };
+      push = {
+        followTags = true;
+        autoSetupRemote = true;
+      };
+      diff.tool = "vim -d";
+      difftool.prompt = false;
+      merge.tool = "vim -d";
     };
   };
 }
