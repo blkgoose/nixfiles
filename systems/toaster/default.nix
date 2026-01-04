@@ -9,6 +9,7 @@
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/virtualization.nix
+    ../../modules/entertainment.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix

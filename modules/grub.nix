@@ -15,7 +15,5 @@
 
   environment.systemPackages = with pkgs; [ htop ];
 
-  programs.steam.enable = true;
-
   fonts.packages = with pkgs; [ font-awesome ];
 }
