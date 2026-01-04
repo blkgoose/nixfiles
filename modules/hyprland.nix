@@ -6,10 +6,8 @@
   };
   environment.systemPackages = with pkgs; [ hyprpaper wl-clipboard ];
 
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-  };
+  services.xserver.enable = true;
+  services.displayManager.gdm.enable = true;
 
   xdg.portal.enable = true;
 

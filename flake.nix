@@ -41,6 +41,7 @@
 
         config.permittedInsecurePackages = [
           "beekeeper-studio-5.3.4" # Electron version 31 is EOL
+          "qtwebengine-5.15.19"
         ];
 
         overlays = [
