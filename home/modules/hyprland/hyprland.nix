@@ -80,8 +80,6 @@
 
       master = { new_status = "master"; };
 
-      gestures = { workspace_swipe = "off"; };
-
       misc = {
         force_default_wallpaper = 0;
         disable_hyprland_logo = true;
