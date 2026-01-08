@@ -1,6 +1,6 @@
 ---
 name: stacey
-project_root: "/home/alessiobiancone/proj/stacey"
+project_root: "/home/alessio-biancone/proj/stacey"
 windows:
 - fish:
     layout: 1901,224x58,0,0{48x58,0,0[48x29,0,0,34,48x28,0,30,35],175x58,49,0,36}

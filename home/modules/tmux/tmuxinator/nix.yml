@@ -1,6 +1,6 @@
 ---
 name: nix
-project_root: "/home/alessiobiancone/.config/nix"
+project_root: "/home/alessio-biancone/.config/nix"
 windows:
 - nix:
     layout: ebf4,341x58,0,0{97x58,0,0,2,243x58,98,0,4}

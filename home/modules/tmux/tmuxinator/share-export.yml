@@ -1,6 +1,6 @@
 ---
 name: share-export
-project_root: "/home/alessiobiancone/proj/intermediaries-share-export"
+project_root: "/home/alessio-biancone/proj/intermediaries-share-export"
 windows:
 - ruby:
     layout: 0e64,341x58,0,0{114x58,0,0,0,226x58,115,0,1}

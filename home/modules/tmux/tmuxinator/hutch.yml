@@ -1,6 +1,6 @@
 ---
 name: hutch
-project_root: "/home/alessiobiancone/proj/hutch"
+project_root: "/home/alessio-biancone/proj/hutch"
 startup_pane: 2
 windows:
   - fish:

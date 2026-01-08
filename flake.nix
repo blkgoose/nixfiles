@@ -93,7 +93,7 @@
       };
 
       homeConfigurations = {
-        "alessiobiancone" = home-manager.lib.homeManagerConfiguration {
+        "alessio-biancone" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           extraSpecialArgs = inputs // { inherit system; };

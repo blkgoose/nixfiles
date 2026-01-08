@@ -1,6 +1,6 @@
 ---
 name: cad
-project_root: "/home/alessiobiancone/proj/cad_projects"
+project_root: "/home/alessio-biancone/proj/cad_projects"
 windows:
 - ruby:
     layout: 4faf,169x58,0,0[169x52,0,0,4,169x5,0,53,5]

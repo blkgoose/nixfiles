@@ -1,6 +1,6 @@
 ---
 name: tmuxinator
-project_root: "/home/alessiobiancone/.config/tmuxinator"
+project_root: "/home/alessio-biancone/.config/tmuxinator"
 windows:
   - fish:
       layout: c603,187x36,0,0,6

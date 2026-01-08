@@ -15,8 +15,8 @@
     ../modules/game.nix
   ];
 
-  home.username = "alessiobiancone";
-  home.homeDirectory = "/home/alessiobiancone";
+  home.username = "alessio-biancone";
+  home.homeDirectory = "/home/alessio-biancone";
 
   programs.home-manager.enable = true;
 

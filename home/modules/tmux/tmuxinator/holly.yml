@@ -1,6 +1,6 @@
 ---
 name: holly
-project_root: "/home/alessiobiancone/proj/holly"
+project_root: "/home/alessio-biancone/proj/holly"
 windows:
 - ruby:
     layout: 6c03,341x58,0,0{97x58,0,0,8,243x58,98,0,9}
