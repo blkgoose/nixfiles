@@ -9,7 +9,8 @@ let
 
   chromeWrapper = opts: url:
     let
-      chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
+      chrome = with pkgs;
+        "${(nixGL google-chrome)}/bin/google-chrome-stable --no-sandbox";
       spacedOpts = lib.strings.concatStringsSep " " opts;
     in ''
       ${chrome} --app='${url}' --new-window ${spacedOpts}
