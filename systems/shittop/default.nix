@@ -46,14 +46,14 @@ in {
       ExecStart = "${pkgs.writeShellScript "bigswap" ''
         swapfile="/bigswap"
         if [[ ! -f $swapfile ]]; then
-          ${pkgs.coreutils}/bin/dd if=/dev/zero of=$swapfile bs=1024 count=64GB
+          ${pkgs.util-linux}/bin/fallocate -l 64G $swapfile
           ${pkgs.util-linux}/bin/mkswap $swapfile
           ${pkgs.coreutils}/bin/chmod 600 $swapfile
         fi
         ${pkgs.util-linux}/bin/swapon $swapfile
       ''}";
     };
-    description = "Ensures 32GB swap file is created and enabled";
+    description = "Ensures swap file is created and enabled";
     wantedBy = [ "multi-user.target" ];
   };
 
