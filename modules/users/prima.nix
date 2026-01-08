@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   users.users.prima = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "networkmanager" ];
+    extraGroups = [ "wheel" "docker" "networkmanager" "video" ];
     shell = pkgs.fish;
   };
 
