@@ -9,6 +9,7 @@
       "${(nixGL google-chrome)}/bin/google-chrome-stable --no-sandbox")
     (alias "discord" "${(nixGL legcord)}/bin/legcord")
     pwvucontrol
+    htop
   ];
 
   services.kdeconnect.enable = true;
