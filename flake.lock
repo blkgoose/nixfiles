@@ -401,11 +401,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1767035530,
-        "narHash": "sha256-JK324mg4OmSnjUTBsrgsdPxq5EMdCOBuF5KcVuWPV3o=",
+        "lastModified": 1767976217,
+        "narHash": "sha256-YXL2Y9MEa8m/05EzqDM+u1jnmY2AcJ+9mcBVgky658E=",
         "owner": "blkgoose",
         "repo": "osd-rs",
-        "rev": "e28cec42c98f497aad545d2e835ae08aacfd3d7b",
+        "rev": "fb3dd6d862e522391a4f3c9394f1ceb63b350b41",
         "type": "github"
       },
       "original": {

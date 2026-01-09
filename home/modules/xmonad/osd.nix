@@ -1,4 +1,12 @@
-{ pkgs, osd, ... }: {
+{ pkgs, osd, ... }:
+let
+  stdbuf = "${pkgs.coreutils}/bin/stdbuf";
+  pactl = "${pkgs.pulseaudio}/bin/pactl";
+  grep = "${pkgs.gnugrep}/bin/grep";
+  tr = "${pkgs.coreutils}/bin/tr";
+  awk = "${pkgs.gawk}/bin/awk";
+  dbus = "${pkgs.dbus}/bin/dbus-monitor";
+in {
   imports = [ osd.homeManagerModules.osd ];
 
   osd = {
@@ -9,31 +17,26 @@
         path = "/sys/class/backlight/intel_backlight/brightness";
         max = 19393;
       };
-      # "volume" = {
-      #   source = "poll";
-      #   command = ''
-      #     ${pkgs.wireplumber}/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@ |
-      #     ${pkgs.coreutils}/bin/cut -d ':' -f2 |
-      #     ${pkgs.findutils}/bin/xargs |
-      #     ${pkgs.coreutils}/bin/tr -d '\n' |
-      #     ${pkgs.coreutils}/bin/tr -d '.'
-      #   '';
-      # };
-      # "volume:spotify" = {
-      #   source = "poll";
-      #   command = ''
-      #     ${pkgs.wireplumber}/bin/wpctl get-volume $(
-      #       ${pkgs.wireplumber}/bin/wpctl status |
-      #       ${pkgs.gnugrep}/bin/grep 'Streams' -A 10 |
-      #       ${pkgs.gnugrep}/bin/grep 'spotify' |
-      #       ${pkgs.coreutils}/bin/cut -d'.' -f1
-      #     ) |
-      #     ${pkgs.coreutils}/bin/cut -d ':' -f2 |
-      #     ${pkgs.findutils}/bin/xargs |
-      #     ${pkgs.coreutils}/bin/tr -d '\n' |
-      #     ${pkgs.coreutils}/bin/tr -d '.'
-      #   '';
-      # };
+      "volume" = {
+        source = "pipe";
+        command = ''
+          ${stdbuf} -oL ${pactl} subscribe | ${grep} --line-buffered "'change' on sink #" | while read -r line; do
+              SINK_IDX=$(echo "$line" | ${grep} -oP 'sink #\K\d+')
+              SINK_INFO=$(${pactl} list sinks | ${grep} -A 20 "Sink #$SINK_IDX" | ${awk} '/Volume:/ {print $5; exit}')
+              echo "$SINK_INFO" | ${tr} -d '%'
+          done
+        '';
+      };
+      "volume:spotify" = {
+        source = "pipe";
+        command = ''
+          ${dbus} "sender='org.mpris.MediaPlayer2.spotify'" \
+              | ${stdbuf} -oL ${grep} 'string "Volume"' -A1 \
+              | ${stdbuf} -oL ${awk} '/double/ { print $3 }'
+        '';
+        min = 0;
+        max = 1;
+      };
     };
   };
 }
