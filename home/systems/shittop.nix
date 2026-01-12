@@ -10,4 +10,9 @@
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [ docker (nixGL google-chrome) ];
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
 }
