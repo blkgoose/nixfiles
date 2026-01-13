@@ -11,6 +11,7 @@
   };
 
   home.packages = with pkgs; [
+    xclip
     lua-language-server
     nil
     taplo
