@@ -515,11 +515,11 @@
     "secret_dots": {
       "flake": false,
       "locked": {
-        "lastModified": 1765465503,
-        "narHash": "sha256-f7OPmn8796j0AVo0j2aEjyoDIbp6twOjdnhQYgo6dkE=",
+        "lastModified": 1768231238,
+        "narHash": "sha256-rKy8mrJkaDjmzy6B4Dcy5HZzZju8l/MDrki/YoGbUMw=",
         "ref": "refs/heads/master",
-        "rev": "e8a3ee3a55a0457ff755e7cc3fbc7be09a81e5c6",
-        "revCount": 35,
+        "rev": "8a4bc0ed729a3239f7671b8565f0f949227e7e51",
+        "revCount": 36,
         "shallow": true,
         "type": "git",
         "url": "file:secret_dotfiles"

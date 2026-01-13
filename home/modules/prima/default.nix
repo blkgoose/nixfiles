@@ -25,6 +25,8 @@ in {
       config.lib.file.mkOutOfStoreSymlink "${secrets}/suite_py/config.yml";
     ".config/starscli/config.yaml".source =
       config.lib.file.mkOutOfStoreSymlink "${secrets}/starscli/config.yaml";
+    ".aws/config".source =
+      config.lib.file.mkOutOfStoreSymlink "${secrets}/aws/config";
   };
 
   prima.gitleaks.enable = true;
