@@ -25,7 +25,7 @@ return {
                     useParameterNames = true,
                 },
             },
-            numThreads = 4,
+            numThreads = 1,
             files = {
                 excludeDirs = {
                     "target",
