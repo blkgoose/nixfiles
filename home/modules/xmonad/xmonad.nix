@@ -9,7 +9,6 @@
       import XMonad.Hooks.EwmhDesktops
       import XMonad.Actions.UpdatePointer (updatePointer)
       import XMonad.Util.Run
-      import XMonad.Util.SpawnOnce (spawnOnce)
       import Graphics.X11.ExtraTypes.XF86
 
       import XMonad.Layout.Dwindle
@@ -50,7 +49,6 @@
                    , normalBorderColor = "#F5F5F5"
                    , modMask = mod4Mask
                    , manageHook = namedScratchpadManageHook scratchpads
-                   , startupHook = notifySystemdGraphicalSession
                    }
                   `additionalKeys`
                   [ ((mod4Mask .|. controlMask, xK_c), spawn "${pkgs.autorandr}/bin/autorandr -c || ${pkgs.autorandr}/bin/autorandr clone-largest")
@@ -121,10 +119,6 @@
       purpleColor, offwhiteColor :: String
       purpleColor = "#B388FF"
       offwhiteColor = "#F5F5F5"
-
-      notifySystemdGraphicalSession = do
-        spawnOnce "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY"
-        spawnOnce "systemctl --user start graphical-session.target"
 
       main :: IO ()
       main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp' $ myConf
