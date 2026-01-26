@@ -52,7 +52,7 @@
       bind j choose-window 'join-pane -s "%%"'
 
       #sesh
-      bind -n 'M-s' display-popup -E -w 40% "sesh connect \"$( sesh list -i | fzf --ansi )\""
+      bind -n 'M-s' display-popup -E -w 40% "sesh connect -T \"$( sesh list -i | fzf --ansi )\""
       bind -n 'M-S' run-shell 'sesh last'
     '';
   };
