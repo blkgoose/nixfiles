@@ -14,24 +14,44 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     { "github/copilot.vim" },
     {
-        "yetone/avante.nvim",
-        event = "VeryLazy",
-        version = false,
-        opts = { provider = "copilot" },
-        build = "make",
+        "olimorris/codecompanion.nvim",
         dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "stevearc/dressing.nvim",
             "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "github/copilot.vim",
-            {
-                'MeanderingProgrammer/render-markdown.nvim',
-                opts = {
-                    file_types = { "markdown", "Avante" },
+            "nvim-treesitter/nvim-treesitter",
+            "zbirenbaum/copilot.lua",
+            "folke/snacks.nvim",
+        },
+        opts = {
+            interactions = {
+                chat = {
+                    adapter = {
+                        name = "copilot",
+                        model = "claude-sonnet-4.5",
+                    },
                 },
-                ft = { "markdown", "Avante" },
+                inline = {
+                    adapter = {
+                        name = "copilot",
+                        model = "claude-sonnet-4.5",
+                    },
+                },
+            },
+        },
+        keys = {
+            { "<leader>ac", function() require("codecompanion").chat({}) end },
+            { "<leader>aa", function() require("codecompanion").chat({ params = { adapter = "opencode" } }) end },
+            { "<leader>aA", function() require("codecompanion").actions({}) end },
+            {
+                "<leader>ae",
+                function()
+                    local companion = require("codecompanion")
+                    local input = vim.fn.input("Prompt: ")
+                    if input == "" then
+                        return
+                    end
+                    companion.inline({ message = input })
+                end,
+                mode = { "n", "v" }
             },
         },
     },
