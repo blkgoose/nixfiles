@@ -1,9 +1,10 @@
-{ pkgs, nixos-hardware, ... }: {
+{ nixos-hardware, ... }: {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-gpu-amd
     nixos-hardware.nixosModules.common-cpu-amd
 
+    ../../modules/base.nix
     ../../modules/grub.nix
     ../../modules/hyprland.nix
     ../../modules/network
@@ -15,20 +16,9 @@
     ../../modules/users/alessio.nix
   ];
 
-  programs.command-not-found.enable = false;
-
-  environment.systemPackages = with pkgs; [ git vim wget ];
-  fonts.fontconfig.enable = true;
-
   networking.hostName = "toaster";
 
   services.hardware.bolt.enable = true;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 15d";
-  };
 
   system.stateVersion = "25.11";
 }

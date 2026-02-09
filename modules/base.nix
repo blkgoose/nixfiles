@@ -1,15 +1,17 @@
 { pkgs, ... }: {
-  boot.loader = {
-    efi = { canTouchEfiVariables = false; };
-    systemd-boot.enable = true;
-  };
-
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  environment.systemPackages = with pkgs; [ htop ];
+  environment.systemPackages = with pkgs; [ git vim wget htop ];
+  fonts.fontconfig.enable = true;
 
-  programs.steam.enable = true;
+  programs.command-not-found.enable = false;
 
-  fonts.packages = with pkgs; [ font-awesome ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 15d";
+  };
+
+  system.stateVersion = "25.11";
 }
