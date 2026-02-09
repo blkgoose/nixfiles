@@ -12,6 +12,8 @@
         unstage = "reset HEAD --";
         yolo = "push --force-with-lease";
         fap = "fetch --all --prune";
+        reset-author = ''
+          !git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" GIT_AUTHOR_DATE="%aD" git commit --amend --no-edit --reset-author' rebase -f'';
       };
 
       user = {
