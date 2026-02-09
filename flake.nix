@@ -91,6 +91,13 @@
           specialArgs = inputs;
           modules = [ ./systems/toaster homeManager ];
         };
+
+        nas = lib.nixosSystem {
+          inherit system pkgs;
+
+          specialArgs = inputs;
+          modules = [ ./systems/nas ];
+        };
       };
 
       homeConfigurations = {
