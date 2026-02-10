@@ -18,7 +18,7 @@
   networking = {
     hostName = "nas";
     interfaces.enp1s0.ipv4.addresses = [{
-      address = "192.168.1.100";
+      address = "192.168.1.101";
       prefixLength = 24;
     }];
     firewall.allowedTCPPorts = [ 22 ];
