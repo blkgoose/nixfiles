@@ -207,12 +207,12 @@ let
       url = "https://web.telegram.org/k/";
       wrapper = chromeWrapper (personal ++ no_plugins);
     };
-    "trello" = {
-      url = "https://www.trello.com";
+    "trakt" = {
+      url = "https://app.trakt.tv/";
       wrapper = chromeWrapper personal;
     };
-    "tvshowtime" = {
-      url = "https://app.tvtime.com/shows/watchlist";
+    "trello" = {
+      url = "https://www.trello.com";
       wrapper = chromeWrapper personal;
     };
     "udemy" = {
