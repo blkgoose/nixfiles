@@ -1,4 +1,4 @@
-{ secret_dots, ... }:
+{ ... }:
 let
   dropContext = builtins.unsafeDiscardStringContext;
 
@@ -9,13 +9,13 @@ let
     in {
       name = fileName';
       value = {
-        source = "${secret_dots}/network-manager/${fileName}";
+        source = "${../../secrets}/network-manager/${fileName}";
         mode = "0600";
       };
     };
 
   nmConfigs =
-    builtins.attrNames (builtins.readDir "${secret_dots}/network-manager/");
+    builtins.attrNames (builtins.readDir "${../../secrets}/network-manager/");
 in {
   environment.etc = builtins.listToAttrs (builtins.map toNetConf nmConfigs);
 }

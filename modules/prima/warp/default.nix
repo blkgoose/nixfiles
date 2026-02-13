@@ -1,5 +1,5 @@
-{ pkgs, secret_dots, ... }:
-let cloudflare-ca = "${secret_dots}/warp/cloudflare-ca.crt";
+{ pkgs, ... }:
+let cloudflare-ca = "${../../../secrets}/warp/cloudflare-ca.crt";
 in {
   environment.systemPackages = with pkgs; [ cloudflare-warp ];
   systemd.packages = with pkgs; [ cloudflare-warp ];

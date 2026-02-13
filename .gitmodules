@@ -1,6 +1,3 @@
 [submodule "dotfiles"]
 	path = dotfiles
 	url = git@github.com:blkgoose/dotfiles
-[submodule "secret_dotfiles"]
-	path = secret_dotfiles
-	url = git@github.com:blkgoose/secret_dotfiles

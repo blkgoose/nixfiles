@@ -503,7 +503,6 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "osd": "osd",
         "prima-nix": "prima-nix",
-        "secret_dots": "secret_dots",
         "suite_py": "suite_py",
         "system-manager": "system-manager"
       }
@@ -527,24 +526,6 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
-      }
-    },
-    "secret_dots": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1770628582,
-        "narHash": "sha256-jTdQoHEowTKRYfim6j0Mng4MIri1DglPhnurkaoT+50=",
-        "ref": "refs/heads/master",
-        "rev": "c55411fc344e15c5e75f460415252416ea482ab0",
-        "revCount": 39,
-        "shallow": true,
-        "type": "git",
-        "url": "file:secret_dotfiles"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "file:secret_dotfiles"
       }
     },
     "suite_py": {
