@@ -23,6 +23,7 @@
     '';
 
     preStop = ''
+      cd /etc/arr
       ${pkgs.docker-compose}/bin/docker-compose down
     '';
   };
