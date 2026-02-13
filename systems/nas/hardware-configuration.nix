@@ -1,6 +1,4 @@
-{ config, lib, modulesPath, ... }:
-
-{
+{ pkgs, config, lib, modulesPath, ... }: {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
@@ -14,10 +12,17 @@
     fsType = "ext4";
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/47F4-25B3";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+  fileSystems = {
+    "/boot" = {
+      device = "/dev/disk/by-uuid/47F4-25B3";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+    "mnt/data" = {
+      device = "/dev/disk/by-uuid/aab2362b-6171-4012-a2c8-76d64cbfb2e6";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" ];
+    };
   };
 
   swapDevices =
@@ -26,4 +31,15 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+      libva-vdpau-driver
+      libvdpau-va-gl
+      intel-compute-runtime
+    ];
+  };
 }

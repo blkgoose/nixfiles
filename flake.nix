@@ -68,6 +68,10 @@
                   ${command} "$@"
                 '';
               };
+
+            readSecret = path:
+              builtins.head
+              (builtins.split "\n" (builtins.readFile "${secrets}/${path}"));
           })
         ];
       };
