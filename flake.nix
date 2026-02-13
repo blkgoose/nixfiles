@@ -25,11 +25,6 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     osd.url = "github:blkgoose/osd-rs/master";
-
-    secret_dots = {
-      url = "git+file:secret_dotfiles?shallow=1";
-      flake = false;
-    };
   };
 
   outputs = { nixpkgs, home-manager, system-manager, ... }@inputs:

@@ -1,8 +1,8 @@
-{ prima-nix, secret_dots, ... }: {
+{ prima-nix, ... }: {
   imports = [ ./warp prima-nix.nixosModules.default ];
 
   prima.crowdstrike-falcon = {
     enable = true;
-    cid = (builtins.readFile "${secret_dots}/crowdstrike_cid");
+    cid = (builtins.readFile "${../../secrets}/crowdstrike_cid");
   };
 }
