@@ -5,6 +5,8 @@
 
     ../../modules/base.nix
     ../../modules/systemd-boot.nix
+    ../../modules/dashboard-common.nix
+    ../../modules/home-assistant
     ../../modules/media-server
   ];
 
