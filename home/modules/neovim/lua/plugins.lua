@@ -13,48 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     { "github/copilot.vim" },
-    {
-        "olimorris/codecompanion.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "zbirenbaum/copilot.lua",
-            "folke/snacks.nvim",
-        },
-        opts = {
-            interactions = {
-                chat = {
-                    adapter = {
-                        name = "copilot",
-                        model = "claude-sonnet-4.5",
-                    },
-                },
-                inline = {
-                    adapter = {
-                        name = "copilot",
-                        model = "claude-sonnet-4.5",
-                    },
-                },
-            },
-        },
-        keys = {
-            { "<leader>ac", function() require("codecompanion").chat({}) end },
-            { "<leader>aa", function() require("codecompanion").chat({ params = { adapter = "opencode" } }) end },
-            { "<leader>aA", function() require("codecompanion").actions({}) end },
-            {
-                "<leader>ae",
-                function()
-                    local companion = require("codecompanion")
-                    local input = vim.fn.input("Prompt: ")
-                    if input == "" then
-                        return
-                    end
-                    companion.inline({ message = input })
-                end,
-                mode = { "n", "v" }
-            },
-        },
-    },
 
     {
         "danielefongo/microscope",
