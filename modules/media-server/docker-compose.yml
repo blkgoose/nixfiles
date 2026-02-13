@@ -1,0 +1,136 @@
+services:
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    ports:
+      - "5055:5055"
+    environment:
+      - LOG_LEVEL=info
+      - TZ=Europe/Rome
+    volumes:
+      - ./config/jellyseerr:/app/config
+    restart: unless-stopped
+
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=openvpn
+      - OPENVPN_USER=${NORDVPN_USER}
+      - OPENVPN_PASSWORD=${NORDVPN_PASS}
+      - SERVER_COUNTRIES=Italy
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.0.0/16,10.0.0.0/8
+      - LOG_LEVEL=info
+    ports:
+      - "8080:8080"     # qBittorrent WebUI
+      - "6881:6881"     # torrent TCP
+      - "6881:6881/udp" # torrent UDP
+    volumes:
+      - ./config/gluetun:/gluetun
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+      - WEBUI_PORT=8080
+    volumes:
+      - ./config/qbittorrent:/config
+      - /mnt/data/media:/data
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - "9696:9696"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+      - DOTNET_SYSTEM_NET_DISABLEIPV6=1
+    volumes:
+      - ./config/prowlarr:/config
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - "8989:8989"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+    volumes:
+      - ./config/sonarr:/config
+      - /mnt/data/media:/data
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - "7878:7878"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+    volumes:
+      - ./config/radarr:/config
+      - /mnt/data/media:/data
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    # networks:
+    #   - proxied
+    ports:
+      - "8096:8096"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel # OpenCL support for Intel GPUs
+    volumes:
+      - ./config/jellyfin:/config
+      - /mnt/data/media:/data
+    group_add:
+      - "107" # nixOS render group
+    devices:
+      - /dev/dri/card0:/dev/dri/card0
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    restart: unless-stopped
+
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx-proxy
+  #   restart: unless-stopped
+  #   ports:
+  #     - '8088:80'
+  #     - '4443:443'
+  #   volumes:
+  #     - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
+  #     - ./config/nginx/certs:/etc/nginx/certs:ro
+  #   networks:
+  #     - proxied
+
+networks:
+  proxied:
+    driver: bridge
+
