@@ -12,6 +12,10 @@
 
   environment.systemPackages = with pkgs; [ btrfs-progs ];
 
+  programs.fish.enable = true;
+
+  users.users.root.shell = pkgs.fish;
+
   networking = {
     hostName = "nas";
     defaultGateway = "192.168.1.1";
