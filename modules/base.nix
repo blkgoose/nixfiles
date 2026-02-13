@@ -2,7 +2,7 @@
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  environment.systemPackages = with pkgs; [ git vim wget htop ];
+  environment.systemPackages = with pkgs; [ git vim wget htop git-crypt ];
   fonts.fontconfig.enable = true;
 
   programs.command-not-found.enable = false;
