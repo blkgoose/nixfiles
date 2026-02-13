@@ -6,7 +6,6 @@
     ../modules/dev.nix
     ../modules/git.nix
     ../modules/neovim
-    ../modules/opencode.nix
     ../modules/fish
     ../modules/prima
     ../modules/saint-peter.nix
