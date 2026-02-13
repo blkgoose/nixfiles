@@ -72,6 +72,8 @@
         ];
       };
 
+      secrets = ./secrets;
+
       lib = nixpkgs.lib;
       homeManager = {
         home-manager.extraSpecialArgs = inputs // { inherit system; };
@@ -83,14 +85,14 @@
         toaster = lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = inputs;
+          specialArgs = inputs // { inherit secrets; };
           modules = [ ./systems/toaster homeManager ];
         };
 
         nas = lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = inputs;
+          specialArgs = inputs // { inherit secrets; };
           modules = [ ./systems/nas ];
         };
       };
@@ -99,7 +101,7 @@
         "alessio-biancone" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
-          extraSpecialArgs = inputs // { inherit system; };
+          extraSpecialArgs = inputs // { inherit system secrets; };
 
           modules = [ ./home/systems/shittop.nix ];
         };
@@ -110,6 +112,7 @@
           extraSpecialArgs = inputs // {
             inherit system;
             inherit pkgs;
+            inherit secrets;
           };
           modules = [ ./systems/shittop ];
         };

@@ -1,6 +1,6 @@
-{ ... }: {
+{ secrets, ... }: {
   xdg.configFile = {
-    "saint-peter.json".source = "${../../secrets}/saint-peter/saint-peter.json";
+    "saint-peter.json".source = "${secrets}/saint-peter/saint-peter.json";
   };
 
   # hack to make the config file available for devcontainer that doesn't have access to symlink
