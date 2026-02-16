@@ -16,11 +16,7 @@
 
   users.users.root.shell = pkgs.fish;
 
-  networking = {
-    hostName = "nas";
-    defaultGateway = "192.168.1.1";
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
-  };
+  networking.hostName = "nas";
 
   services.openssh = {
     enable = true;
