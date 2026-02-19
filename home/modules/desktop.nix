@@ -7,6 +7,8 @@
     zoom
     (alias "chrome" "${(nixGL google-chrome)}/bin/google-chrome-stable")
     (alias "discord" "${(nixGL legcord)}/bin/legcord")
+    (alias "jellyfin-desktop"
+      "${(nixGL jellyfin-desktop)}/bin/jellyfin-desktop")
     pwvucontrol
     htop
   ];
