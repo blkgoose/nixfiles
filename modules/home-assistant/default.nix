@@ -24,6 +24,27 @@
     };
   };
 
+  systemd.services.hacs = {
+    description = "HACS";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    path = with pkgs; [ wget bash unzip git ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      WorkingDirectory = "/mnt/data/config/homeassistant";
+      ExecStart = pkgs.writeShellScript "install-hacs" ''
+        if [ ! -d "custom_components/hacs" ]; then
+          echo "HACS not found. Installing..."
+          ${pkgs.wget}/bin/wget -q -O - https://install.hacs.xyz | ${pkgs.bash}/bin/bash -
+        else
+          echo "HACS already installed."
+        fi
+      '';
+    };
+  };
+
   services.avahi = {
     enable = true;
     nssmdns4 = true;
