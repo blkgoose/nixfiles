@@ -117,6 +117,33 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
     restart: unless-stopped
 
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    ports:
+      - "6767:6767"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+    volumes:
+      - ./config/bazarr:/config
+      - /mnt/data/media:/data
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    ports:
+      - "8191:8191"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+    volumes:
+      - ./config/flaresolverr:/config
+    restart: unless-stopped
+
   # nginx:
   #   image: nginx:latest
   #   container_name: nginx-proxy
