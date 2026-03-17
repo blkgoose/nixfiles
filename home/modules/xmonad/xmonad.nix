@@ -1,4 +1,35 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  grep = "${pkgs.gnugrep}/bin/grep";
+  awk = "${pkgs.gawk}/bin/awk";
+  xrandr = "${pkgs.xrandr}/bin/xrandr";
+
+  monitor-force-connect = pkgs.writeShellScript "monitor-force-connect" ''
+    #!/bin/sh
+    CONNECTED_MONITORS=$(${xrandr} | ${grep} " connected" | ${awk} '{print $1}')
+
+    # 2. Inizializza il comando xrandr
+    CMD="${xrandr}"
+    PREVIOUS=""
+
+    for MONITOR in $CONNECTED_MONITORS; do
+      if [ -z "$PREVIOUS" ]; then
+        CMD="$CMD --output $MONITOR --auto"
+      else
+        CMD="$CMD --output $MONITOR --auto --right-of $PREVIOUS"
+      fi
+      PREVIOUS=$MONITOR
+    done
+
+    DISCONNECTED_MONITORS=$(${xrandr} | ${grep} " disconnected" | ${awk} '{print $1}')
+    for MONITOR in $DISCONNECTED_MONITORS; do
+      CMD="$CMD --output $MONITOR --off"
+    done
+
+    echo "Running: $CMD"
+    eval $CMD
+  '';
+in {
   xsession.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;
@@ -51,7 +82,7 @@
                    , manageHook = namedScratchpadManageHook scratchpads
                    }
                   `additionalKeys`
-                  [ ((mod4Mask .|. controlMask, xK_c), spawn "${pkgs.autorandr}/bin/autorandr -c || ${pkgs.autorandr}/bin/autorandr clone-largest")
+                  [ ((mod4Mask .|. controlMask, xK_c), spawn "${monitor-force-connect}")
                   , ((mod4Mask, xK_i), spawn "systemctl suspend")
                   , ((mod4Mask, xK_Tab), toggleWS)
                   , ((mod4Mask, xK_p), spawn "${pkgs.rofi}/bin/rofi -show run")
