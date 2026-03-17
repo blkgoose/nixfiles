@@ -16,18 +16,6 @@
               href = "http://${ip}:5055";
             };
           }
-          {
-            "Bazarr" = {
-              icon = "bazarr.png";
-              href = "http://${ip}:6767";
-            };
-          }
-          {
-            "Prowlarr" = {
-              icon = "prowlarr.png";
-              href = "http://${ip}:9696";
-            };
-          }
         ];
       }
       {
@@ -48,6 +36,18 @@
             "Sonarr" = {
               icon = "sonarr.png";
               href = "http://${ip}:8989";
+            };
+          }
+          {
+            "Bazarr" = {
+              icon = "bazarr.png";
+              href = "http://${ip}:6767";
+            };
+          }
+          {
+            "Prowlarr" = {
+              icon = "prowlarr.png";
+              href = "http://${ip}:9696";
             };
           }
         ];
