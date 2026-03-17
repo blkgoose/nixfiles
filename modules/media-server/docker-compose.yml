@@ -144,6 +144,19 @@ services:
       - ./config/flaresolverr:/config
     restart: unless-stopped
 
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
+    ports:
+      - 11011:11011
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+    volumes:
+      - ./config/cleanuparr:/config
+    restart: unless-stopped
+
   # nginx:
   #   image: nginx:latest
   #   container_name: nginx-proxy
