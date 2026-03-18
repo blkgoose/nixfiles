@@ -1,5 +1,7 @@
 { lib, pkgs, config, ... }:
 let
+  house_ip = pkgs.secret "house_local_ip";
+
   personal = [ "--profile-directory='Default'" ];
   work = [ "--profile-directory='Profile 1'" ];
   unsafe = [
@@ -82,6 +84,10 @@ let
     "gmail".url = "https://mail.google.com";
     "hackernews" = {
       url = "https://hckrnews.com/";
+      wrapper = chromeWrapper personal;
+    };
+    "home-assistant" = {
+      url = "http://${house_ip}:8123";
       wrapper = chromeWrapper personal;
     };
     "hutch-localhost" = {
