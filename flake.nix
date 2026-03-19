@@ -80,7 +80,7 @@
 
       lib = nixpkgs.lib;
       homeManager = {
-        home-manager.extraSpecialArgs = inputs // { inherit system; };
+        home-manager.extraSpecialArgs = inputs // { inherit system secrets; };
       };
 
       fmt = nixpkgs.legacyPackages.${system}.nixfmt-classic;
