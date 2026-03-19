@@ -11,6 +11,7 @@
     ../modules/chromeapps.nix
     ../modules/hyprland
     ../modules/tmux
+    ../modules/remote-build-server.nix
   ];
 
   programs.home-manager.enable = true;
