@@ -18,6 +18,8 @@
 
   networking.hostName = "nas";
 
+  services.tailscale.enable = true;
+
   services.openssh = {
     enable = true;
     settings = {
