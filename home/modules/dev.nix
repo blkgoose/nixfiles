@@ -19,4 +19,60 @@
     enable = true;
     nix-direnv.enable = true;
   };
+
+  programs.opencode = {
+    enable = true;
+    settings = {
+      "$schema" = "https://opencode.ai/config.json";
+      "autoupdate" = true;
+      "permission" = { # https://opencode.ai/docs/permissions
+        "*" = "ask";
+        "read" = {
+          "*" = "allow";
+          "*.yaml" = "deny";
+          "*.env" = "deny";
+          "*.env.*" = "deny";
+          "*.env.example" = "allow";
+        };
+        "edit" = {
+          "*" = "ask";
+          "*.rs" = "allow";
+          "*.py" = "allow";
+          "*.ts" = "allow";
+          "Cargo.toml" = "allow";
+        };
+        "glob" = "allow";
+        "grep" = "allow";
+        "list" = "allow";
+        "bash" = {
+          "*" = "ask";
+          "git*" = "allow";
+          "git push*" = "ask";
+          "gh pr create*" = "ask";
+          "gh api*" = "allow";
+          "gh auth*" = "allow";
+          "cargo*" = "allow";
+          "grep*" = "allow";
+          "ls*" = "allow";
+          "which*" = "allow";
+          "echo*" = "allow";
+          "cat*" = "allow";
+          "npm*" = "allow";
+          "nix*" = "allow";
+          "node*" = "allow";
+          "pnpm*" = "allow";
+          "yarn*" = "allow";
+          "head*" = "allow";
+          "rm *" = "deny";
+        };
+        "skill" = {
+          "*" = "ask";
+          "caveman" = "allow";
+        };
+        "lsp" = "allow";
+        "question" = "allow";
+        "todowrite" = "allow";
+      };
+    };
+  };
 }
