@@ -13,6 +13,16 @@
     htop
   ];
 
+  # enabled on release-26.05
+  # services.keynav = {
+  #   enable = true;
+  #   extraConfig = {
+  #     "alt+space" = "doubleclick";
+  #     "alt+k" = "click 4";
+  #     "alt+j" = "click 5";
+  #   };
+  # };
+
   services.kdeconnect.enable = true;
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
