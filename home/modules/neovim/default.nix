@@ -3,7 +3,7 @@
     "${config.xdg.configHome}/nix/home/modules/neovim";
 
   programs.neovim = {
-    package = pkgs.unstable.neovim-unwrapped;
+    package = pkgs.neovim-unwrapped;
     enable = true;
     defaultEditor = true;
     viAlias = true;
