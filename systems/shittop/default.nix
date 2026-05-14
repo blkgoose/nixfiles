@@ -77,4 +77,26 @@ in {
     description = "Sets permissions for xbacklight";
     wantedBy = [ "multi-user.target" ];
   };
+
+  # requires to run this code before it works:
+  # sudo mkdir -p /root/.config/luks/
+  # sudo dd if=/dev/urandom of=/root/.config/luks/luks.key bs=64 count=1
+  # sudo chmod 600 /root/.config/luks/luks.key
+  # sudo cryptsetup luksAddKey /dev/nvme0n1 /root/.config/luks/luks.key
+  systemd.services.secondary-disk = {
+    enable = true;
+    description = "Open secondary disk and mount /media/data";
+    after = [ "systemd-udev-settle.service" ];
+    wantedBy = [ "multi-user.target" ];
+    unitConfig.ConditionPathExists = [ "!/dev/mapper/data" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "secondary-disk-mount" ''
+        mkdir -p /media/data
+        ${pkgs.cryptsetup}/bin/cryptsetup open /dev/nvme0n1 data --key-file=/root/.config/luks/luks.key
+        ${pkgs.util-linux}/bin/mount /dev/mapper/data /media/data
+      '';
+    };
+  };
 }
