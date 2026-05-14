@@ -24,7 +24,7 @@
     chaotic.url = "github:chaotic-cx/nyx";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
-    osd.url = "github:blkgoose/osd-rs/master";
+    osd.url = "github:blkgoose/osd-rs/feat/restart-on-failure";
   };
 
   outputs = { nixpkgs, home-manager, system-manager, ... }@inputs:
@@ -97,7 +97,19 @@
           inherit system pkgs;
 
           specialArgs = inputs // { inherit secrets; };
-          modules = [ ./systems/nas ];
+          modules = [
+            ./systems/nas
+
+            "${inputs.nixpkgs-unstable}/nixos/modules/services/home-automation/openthread-border-router.nix"
+            ({ pkgs, ... }: {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  openthread-border-router =
+                    inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.openthread-border-router;
+                })
+              ];
+            })
+          ];
         };
       };
 
