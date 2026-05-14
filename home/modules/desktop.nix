@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     spotify
     gimp
-    (alias "bambu-studio" "${(nixGL unstable.bambu-studio)}/bin/bambu-studio")
+    (alias "orca-slicer" "${(nixGL unstable.orca-slicer)}/bin/orca-slicer")
     beekeeper-studio
     zoom
     (alias "chrome" "${(nixGL google-chrome)}/bin/google-chrome-stable")
