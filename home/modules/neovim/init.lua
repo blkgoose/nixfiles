@@ -28,6 +28,7 @@ opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
 opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+g.mapleader = " "
 
 opt.mouse = ""
 
@@ -74,8 +75,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         vim.keymap.set("n", "<leader>h", vim.lsp.buf.signature_help, bufopts)
         vim.keymap.set("n", "<leader>R", vim.lsp.buf.rename, bufopts)
-        vim.keymap.set("n", "<space>j", vim.diagnostic.goto_next, bufopts)
-        vim.keymap.set("n", "<space>k", vim.diagnostic.goto_prev, bufopts)
+        vim.keymap.set("n", "<leader>j", vim.diagnostic.goto_next, bufopts)
+        vim.keymap.set("n", "<leader>k", vim.diagnostic.goto_prev, bufopts)
         vim.keymap.set({ "n", "v" }, "<leader>c", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "<leader>cf", function()
             vim.lsp.buf.format({ async = true })
