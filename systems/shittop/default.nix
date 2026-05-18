@@ -82,7 +82,7 @@ in {
   # sudo mkdir -p /root/.config/luks/
   # sudo dd if=/dev/urandom of=/root/.config/luks/luks.key bs=64 count=1
   # sudo chmod 600 /root/.config/luks/luks.key
-  # sudo cryptsetup luksAddKey /dev/nvme0n1 /root/.config/luks/luks.key
+  # sudo cryptsetup luksAddKey /dev/nvme1n1 /root/.config/luks/luks.key
   systemd.services.secondary-disk = {
     enable = true;
     description = "Open secondary disk and mount /media/data";
@@ -94,7 +94,7 @@ in {
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "secondary-disk-mount" ''
         mkdir -p /media/data
-        ${pkgs.cryptsetup}/bin/cryptsetup open /dev/nvme0n1 data --key-file=/root/.config/luks/luks.key
+        ${pkgs.cryptsetup}/bin/cryptsetup open /dev/nvme1n1 data --key-file=/root/.config/luks/luks.key
         ${pkgs.util-linux}/bin/mount /dev/mapper/data /media/data
       '';
     };
