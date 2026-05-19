@@ -94,7 +94,7 @@ in {
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "secondary-disk-mount" ''
         mkdir -p /media/data
-        ${pkgs.cryptsetup}/bin/cryptsetup open /dev/nvme1n1 data --key-file=/root/.config/luks/luks.key
+        ${pkgs.cryptsetup}/bin/cryptsetup open /dev/disk/by-uuid/7c5e767d-6ebf-4ea6-8805-544edd1b1d46 data --key-file=/root/.config/luks/luks.key
         ${pkgs.util-linux}/bin/mount /dev/mapper/data /media/data
       '';
     };
