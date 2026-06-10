@@ -35,7 +35,10 @@ let
       url = "https://chatgpt.com/";
       wrapper = chromeWrapper work;
     };
-    "chess".url = "https://www.chess.com";
+    "chess" = {
+      url = "https://www.chess.com";
+      wrapper = chromeWrapper personal;
+    };
     "codescene" = {
       url =
         "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
