@@ -27,13 +27,7 @@
       "autoupdate" = true;
       "permission" = { # https://opencode.ai/docs/permissions
         "*" = "ask";
-        "read" = {
-          "*" = "allow";
-          "*.yaml" = "deny";
-          "*.env" = "deny";
-          "*.env.*" = "deny";
-          "*.env.example" = "allow";
-        };
+        "read" = { "*" = "allow"; };
         "edit" = {
           "*" = "ask";
           "*.rs" = "allow";
