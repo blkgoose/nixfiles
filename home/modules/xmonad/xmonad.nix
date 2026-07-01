@@ -115,8 +115,8 @@ in {
           , ((0, xF86XK_AudioPlay), spawn "${pkgs.playerctl}/bin/playerctl play-pause")
           , ((0, xF86XK_AudioNext), spawn "${pkgs.playerctl}/bin/playerctl next")
           , ((0, xF86XK_AudioPrev), spawn "${pkgs.playerctl}/bin/playerctl previous")
-          , ((0, xF86XK_MonBrightnessUp), spawn "${pkgs.light}/bin/light -A 10")
-          , ((0, xF86XK_MonBrightnessDown), spawn "${pkgs.light}/bin/light -U 10")
+          , ((0, xF86XK_MonBrightnessUp), spawn "${pkgs.brightnessctl}/bin/brightnessctl set 10%+")
+          , ((0, xF86XK_MonBrightnessDown), spawn "${pkgs.brightnessctl}/bin/brightnessctl set 10%-")
           ]
 
       movement =

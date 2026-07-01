@@ -8,6 +8,9 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    withRuby = false;
+    withPython3 = false;
+    sideloadInitLua = true;
   };
 
   home.packages = with pkgs; [
