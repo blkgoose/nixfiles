@@ -1,0 +1,88 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+template:
+  - switch:
+      - name: "Living room shutter up"
+        unique_id: "living_room_shutter_up"
+        state: "{{ is_state_attr('cover.living_room_shutter', 'is_opening', true) }}"
+        turn_on:
+          - action: cover.open_cover
+            target:
+              entity_id: cover.living_room_shutter
+        turn_off:
+          - action: cover.stop_cover
+            target:
+              entity_id: cover.living_room_shutter
+
+      - name: "Living room shutter down"
+        unique_id: "living_room_shutter_down"
+        state: "{{ is_state_attr('cover.living_room_shutter', 'is_closing', true) }}"
+        turn_on:
+          - action: cover.close_cover
+            target:
+              entity_id: cover.living_room_shutter
+        turn_off:
+          - action: cover.stop_cover
+            target:
+              entity_id: cover.living_room_shutter
+
+cover:
+  - platform: cover_time_based_synced
+    devices:
+      living_room_shutter:
+        name: "Living room shutter"
+        travelling_time_up: 19
+        travelling_time_down: 19
+        open_switch_entity_id: switch.living_room_shutter_up
+        close_switch_entity_id: switch.living_room_shutter_down
+        send_stop_at_ends: True
+        source_entity_id: cover.living_room_shutter
+
+automation:
+  - id: dual_button_up
+    alias: "Dual button: up toggle"
+    triggers:
+      - trigger: state
+        entity_id: event.bilresa_dual_button_button_1
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: cover.living_room_shutter_smart
+                state: "opening"
+            sequence:
+              - action: cover.stop_cover
+                target:
+                  entity_id: cover.living_room_shutter_smart
+        default:
+          - action: cover.open_cover
+            target:
+              entity_id: cover.living_room_shutter_smart
+
+  - id: dual_button_down
+    alias: "Dual button: down toggle"
+    triggers:
+      - trigger: state
+        entity_id: event.bilresa_dual_button_button_2
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: cover.living_room_shutter_smart
+                state: "closing"
+            sequence:
+              - action: cover.stop_cover
+                target:
+                  entity_id: cover.living_room_shutter_smart
+        default:
+          - action: cover.close_cover
+            target:
+              entity_id: cover.living_room_shutter_smart
