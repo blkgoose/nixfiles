@@ -98,16 +98,6 @@
           specialArgs = inputs // { inherit secrets; };
           modules = [
             ./systems/nas
-
-            "${inputs.nixpkgs-unstable}/nixos/modules/services/home-automation/openthread-border-router.nix"
-            ({ pkgs, ... }: {
-              nixpkgs.overlays = [
-                (final: prev: {
-                  openthread-border-router =
-                    inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.openthread-border-router;
-                })
-              ];
-            })
           ];
         };
       };
