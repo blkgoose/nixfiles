@@ -68,26 +68,14 @@
     };
   };
 
-  systemd.services.hacs = {
-    description = "HACS";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    path = with pkgs; [ wget bash unzip git ];
-
-    serviceConfig = {
-      Type = "oneshot";
-      WorkingDirectory = "/mnt/data/config/homeassistant";
-      ExecStart = pkgs.writeShellScript "install-hacs" ''
-        if [ ! -d "custom_components/hacs" ]; then
-          echo "HACS not found. Installing..."
-          ${pkgs.wget}/bin/wget -q -O - https://install.hacs.xyz | ${pkgs.bash}/bin/bash -
-        else
-          echo "HACS already installed."
-        fi
-      '';
-    };
-  };
+  system.activationScripts.home-assistant = ''
+    DEST="/mnt/data/config/homeassistant"
+    mkdir -p "$DEST/custom_components/cover_time_based_synced"
+    ${pkgs.rsync}/bin/rsync -av --checksum ${./custom-components/cover_time_based_synced}/ "$DEST/custom_components/cover_time_based_synced/"
+    ${pkgs.rsync}/bin/rsync -av --checksum ${./ha-config}/ "$DEST/"
+    chown -R root:root "$DEST/custom_components"
+    PATH="/run/current-system/sw/bin:$PATH" systemctl restart docker-homeassistant
+  '';
 
   services.avahi = {
     enable = true;
@@ -104,7 +92,6 @@
     };
     allowInterfaces = [ "enp2s0" ];
   };
-
 
   services.homepage-dashboard = {
     services = [{
