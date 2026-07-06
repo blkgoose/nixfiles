@@ -8,6 +8,15 @@ frontend:
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+input_number:
+  projector_blinds_previous_position:
+    name: "Blinds position before projector override"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+
 template:
   - switch:
       - name: "Living room shutter up"
@@ -45,6 +54,20 @@ cover:
         close_switch_entity_id: switch.living_room_shutter_down
         send_stop_at_ends: True
         source_entity_id: cover.living_room_shutter
+
+command_line:
+  - binary_sensor:
+      name: "Projector online"
+      scan_interval: 5
+      command: "sh /config/check_projector.sh"
+      payload_on: "ON"
+      payload_off: "OFF"
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.command_line: debug
+    homeassistant.components.automation: debug
 
 automation:
   - id: dual_button_up
@@ -86,3 +109,41 @@ automation:
           - action: cover.close_cover
             target:
               entity_id: cover.living_room_shutter_smart
+
+  - id: projector_on_close_blinds
+    alias: "Projector on: close blinds if sun is out"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.projector_online
+        to: "on"
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: "above_horizon"
+    actions:
+      - action: input_number.set_value
+        target:
+          entity_id: input_number.projector_blinds_previous_position
+        data:
+          value: "{{ state_attr('cover.living_room_shutter_smart', 'current_position') | int(0) }}"
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.living_room_shutter_smart
+        data:
+          position: 10
+
+  - id: projector_off_restore_blinds
+    alias: "Projector off: restore blinds position"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.projector_online
+        to: "off"
+    conditions:
+      - condition: template
+        value_template: "{{ states('input_number.projector_blinds_previous_position') | float(-1) >= 0 }}"
+    actions:
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.living_room_shutter_smart
+        data:
+          position: "{{ states('input_number.projector_blinds_previous_position') | int(0) }}"

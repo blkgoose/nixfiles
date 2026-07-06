@@ -68,6 +68,7 @@
       ./custom-components/cover_time_based_synced
     }/ "$DEST/custom_components/cover_time_based_synced/"
     ${pkgs.rsync}/bin/rsync -av --checksum ${./ha-config}/ "$DEST/"
+    chmod +x "$DEST/check_projector.sh"
     chown -R root:root "$DEST/custom_components"
     PATH="/run/current-system/sw/bin:$PATH" systemctl restart docker-homeassistant
   '';
