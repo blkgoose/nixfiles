@@ -31,7 +31,7 @@
       volumes =
         [ "/mnt/data/config/otbr:/var/lib/thread" "/run/dbus:/run/dbus:ro" ];
       devices = [
-        "/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_1CDBD45E7500-if00:/dev/ttyUSB0"
+        "/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_1CDBD45E7500-if00:/dev/ttyACM0"
       ];
       extraOptions = [
         "--network=host"
@@ -54,7 +54,7 @@
         "--name"
         "HA_Thread_Network"
         "--radio-url"
-        "spinel+hdlc+uart:///dev/ttyUSB0?uart-baudrate=460800&flow-control=0"
+        "spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=460800&flow-control=0"
         "--rest-listen-address"
         "0.0.0.0"
       ];
@@ -170,5 +170,6 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
     KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
+    KERNEL=="ttyACM*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
   '';
 }
