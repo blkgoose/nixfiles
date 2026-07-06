@@ -96,9 +96,7 @@
           inherit system pkgs;
 
           specialArgs = inputs // { inherit secrets; };
-          modules = [
-            ./systems/nas
-          ];
+          modules = [ ./systems/nas ];
         };
       };
 
