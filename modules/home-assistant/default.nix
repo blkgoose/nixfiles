@@ -64,10 +64,12 @@
   system.activationScripts.home-assistant = ''
     DEST="/mnt/data/config/homeassistant"
     mkdir -p "$DEST/custom_components/cover_time_based_synced"
+    mkdir -p "$DEST/dashboards"
     ${pkgs.rsync}/bin/rsync -av --checksum ${
       ./custom-components/cover_time_based_synced
     }/ "$DEST/custom_components/cover_time_based_synced/"
     ${pkgs.rsync}/bin/rsync -av --checksum ${./ha-config}/ "$DEST/"
+    ${pkgs.rsync}/bin/rsync -av --checksum ${./ha-config/dashboards}/ "$DEST/dashboards/"
     chmod +x "$DEST/check_projector.sh"
     chown -R root:root "$DEST/custom_components"
     PATH="/run/current-system/sw/bin:$PATH" systemctl restart docker-homeassistant
@@ -171,5 +173,7 @@
     SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
     KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
     KERNEL=="ttyACM*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
+    KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0666", GROUP="dialout"
+    KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", MODE="0666", GROUP="dialout"
   '';
 }
