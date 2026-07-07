@@ -5,6 +5,16 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
+lovelace:
+  mode: storage
+  dashboards:
+    casa-dash:
+      mode: yaml
+      title: Casa
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: dashboards/casa.yaml
+
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
@@ -24,7 +34,69 @@ input_number:
     unit_of_measurement: "%"
     mode: box
 
+input_boolean:
+  plant_sensor_1_critical:
+    name: "Plant sensor 1 critical"
+    icon: mdi:alert-circle
+
+input_datetime:
+  plant_sensor_1_last_low_humidity:
+    name: "Plant sensor 1 last low humidity"
+    has_date: true
+    has_time: true
+
 template:
+  - binary_sensor:
+      - name: "Plant sensor 1 humidity out of range"
+        state: >-
+          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
+          {{ h < 35 or h > 55 }}
+        icon: mdi:water-alert
+
+  - sensor:
+      - name: "Plant sensor 1 plant status"
+        state: >-
+          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
+          {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
+          {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
+          {% set last_low_ts = as_timestamp(last_low, 0) %}
+          {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
+          {% if h >= 35 and h <= 55 %}good
+          {% elif h > 55 and hours_since_low < 48 %}good
+          {% elif critical %}critical
+          {% else %}warning
+          {% endif %}
+        icon: >-
+          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
+          {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
+          {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
+          {% set last_low_ts = as_timestamp(last_low, 0) %}
+          {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
+          {% if h >= 35 and h <= 55 %}mdi:flower
+          {% elif h > 55 and hours_since_low < 48 %}mdi:flower
+          {% elif critical %}mdi:alert-circle
+          {% else %}mdi:alert
+          {% endif %}
+        attributes:
+          humidity: "{{ states('sensor.plant_sensor_1_humidity') | float(0) }}"
+          temperature: "{{ states('sensor.plant_sensor_1_temperature') | float(0) }}"
+          ideal_humidity: 45
+          hours_since_watered: >-
+            {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
+            {% set last_low_ts = as_timestamp(last_low, 0) %}
+            {{ ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 'unknown' }}
+          color: >-
+            {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
+            {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
+            {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
+            {% set last_low_ts = as_timestamp(last_low, 0) %}
+            {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
+            {% if h >= 35 and h <= 55 %}green
+            {% elif h > 55 and hours_since_low < 48 %}green
+            {% elif critical %}red
+            {% else %}orange
+            {% endif %}
+
   - switch:
       - name: "Living room shutter up"
         unique_id: "living_room_shutter_up"
@@ -71,6 +143,49 @@ command_line:
       payload_off: "OFF"
 
 automation:
+  - id: plant_sensor_1_warning
+    alias: "Plant sensor 1: humidity warning"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.plant_sensor_1_humidity_out_of_range
+        to: "on"
+        for:
+          minutes: 30
+    actions:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.plant_sensor_1_critical
+      - action: notify.notify
+        data:
+          title: "Callo needs water!"
+          message: >-
+            Humidity is {{ states('sensor.plant_sensor_1_humidity') }}% (ideal: 45%).
+            Been out of range for 30 minutes.
+
+  - id: plant_sensor_1_ok
+    alias: "Plant sensor 1: humidity recovered"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.plant_sensor_1_humidity_out_of_range
+        to: "off"
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.plant_sensor_1_critical
+
+  - id: plant_sensor_1_track_low
+    alias: "Plant sensor 1: track last low humidity"
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.plant_sensor_1_humidity
+        below: 40
+    actions:
+      - action: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.plant_sensor_1_last_low_humidity
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
   - id: dual_button_up
     alias: "Dual button: up toggle"
     triggers:

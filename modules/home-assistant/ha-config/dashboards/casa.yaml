@@ -1,0 +1,50 @@
+views:
+  - title: Casa
+    path: casa
+    icon: mdi:home
+    sections:
+      - type: grid
+        cards:
+          # --- Plants ---
+          - type: heading
+            cards:
+              - type: heading
+                heading: Piante
+
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: sensor.plant_sensor_1_plant_status
+                name: "Callo I - Basilico"
+                icon: mdi:leaf
+                color: >-
+                  {% set s = states('sensor.plant_sensor_1_plant_status') %}
+                  {% if s == 'critical' %}red
+                  {% elif s == 'warning' %}orange
+                  {% else %}green
+                  {% endif %}
+                tap_action:
+                  action: more-info
+                  entity: sensor.plant_sensor_1_humidity
+
+          # --- Controls ---
+          - type: heading
+            cards:
+              - type: heading
+                heading: Controlli
+
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: cover.living_room_shutter_smart
+                name: Serranda
+                icon: mdi:blinds
+                features:
+                  - type: cover-position
+
+              - type: tile
+                entity: light.varmblixt_table_wall_lamp
+                name: Lampada
+                icon: mdi:lightbulb
+                features:
+                  - type: light-brightness
