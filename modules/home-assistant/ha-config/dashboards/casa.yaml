@@ -27,21 +27,36 @@ views:
                   action: more-info
                   entity: sensor.plant_sensor_1_humidity
 
-          # --- Controls ---
+          # --- Blinds ---
           - type: heading
             cards:
               - type: heading
-                heading: Controlli
+                heading: Serrande
 
           - type: horizontal-stack
             cards:
               - type: tile
                 entity: cover.living_room_shutter_smart
-                name: Serranda
+                name: Salone
                 icon: mdi:blinds
                 features:
                   - type: cover-position
 
+              - type: tile
+                entity: cover.bedroom_shutter
+                name: Camera
+                icon: mdi:blinds
+                features:
+                  - type: cover-position
+
+          # --- Lights ---
+          - type: heading
+            cards:
+              - type: heading
+                heading: Luci
+
+          - type: horizontal-stack
+            cards:
               - type: tile
                 entity: light.varmblixt_table_wall_lamp
                 name: Lampada
