@@ -296,8 +296,14 @@ automation:
           entity_id: input_number.projector_lamp_previous_brightness
         data:
           value: -1
-      - action: cover.set_cover_position
-        target:
-          entity_id: cover.living_room_shutter_smart
-        data:
-          position: "{{ states('input_number.projector_blinds_previous_position') | int(0) }}"
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: sun.sun
+                state: "above_horizon"
+            sequence:
+              - action: cover.set_cover_position
+                target:
+                  entity_id: cover.living_room_shutter_smart
+                data:
+                  position: "{{ states('input_number.projector_blinds_previous_position') | int(0) }}"
