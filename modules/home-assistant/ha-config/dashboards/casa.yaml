@@ -11,21 +11,47 @@ views:
               - type: heading
                 heading: Piante
 
-          - type: horizontal-stack
-            cards:
-              - type: tile
-                entity: sensor.plant_sensor_1_plant_status
-                name: "Callo I - Basilico"
-                icon: mdi:leaf
-                color: >-
-                  {% set s = states('sensor.plant_sensor_1_plant_status') %}
-                  {% if s == 'critical' %}red
-                  {% elif s == 'warning' %}orange
-                  {% else %}green
-                  {% endif %}
-                tap_action:
-                  action: more-info
-                  entity: sensor.plant_sensor_1_humidity
+          - type: conditional
+            conditions:
+              - entity: sensor.plant_sensor_1_color
+                state: green
+            card:
+              type: tile
+              entity: sensor.plant_sensor_1_plant_status
+              name: "Callo I - Basilico"
+              icon: mdi:leaf
+              color: green
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.plant_sensor_1_color
+                state: orange
+            card:
+              type: tile
+              entity: sensor.plant_sensor_1_plant_status
+              name: "Callo I - Basilico"
+              icon: mdi:leaf
+              color: orange
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.plant_sensor_1_color
+                state: red
+            card:
+              type: tile
+              entity: sensor.plant_sensor_1_plant_status
+              name: "Callo I - Basilico"
+              icon: mdi:leaf
+              color: red
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
 
           # --- Blinds ---
           - type: heading

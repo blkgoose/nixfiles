@@ -39,6 +39,12 @@ input_boolean:
     name: "Plant sensor 1 critical"
     icon: mdi:alert-circle
 
+input_text:
+  plant_sensor_1_name:
+    name: "Plant sensor 1 name"
+    initial: "Callo I - Basilico"
+    max: 50
+
 input_datetime:
   plant_sensor_1_last_low_humidity:
     name: "Plant sensor 1 last low humidity"
@@ -54,17 +60,32 @@ template:
         icon: mdi:water-alert
 
   - sensor:
-      - name: "Plant sensor 1 plant status"
+      - name: "Plant sensor 1 color"
         state: >-
           {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
           {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
           {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
           {% set last_low_ts = as_timestamp(last_low, 0) %}
           {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
-          {% if h >= 35 and h <= 55 %}good
-          {% elif h > 55 and hours_since_low < 48 %}good
-          {% elif critical %}critical
-          {% else %}warning
+          {% if h >= 35 and h <= 55 %}green
+          {% elif h > 55 and hours_since_low < 48 %}green
+          {% elif critical %}red
+          {% else %}orange
+          {% endif %}
+
+  - sensor:
+      - name: "Plant sensor 1 plant status"
+        state: >-
+          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
+          {% set t = states('sensor.plant_sensor_1_temperature') | float(0) | round(0) %}
+          {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
+          {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
+          {% set last_low_ts = as_timestamp(last_low, 0) %}
+          {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
+          {% if h >= 35 and h <= 55 %}{{ h | round(0) }}% · {{ t }}°C
+          {% elif h > 55 and hours_since_low < 48 %}{{ h | round(0) }}% · {{ t }}°C
+          {% elif critical %}{{ h | round(0) }}% · {{ t }}°C ⚠
+          {% else %}{{ h | round(0) }}% · {{ t }}°C ⚠
           {% endif %}
         icon: >-
           {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
@@ -78,6 +99,7 @@ template:
           {% else %}mdi:alert
           {% endif %}
         attributes:
+          name: "{{ states('input_text.plant_sensor_1_name') }}"
           humidity: "{{ states('sensor.plant_sensor_1_humidity') | float(0) }}"
           temperature: "{{ states('sensor.plant_sensor_1_temperature') | float(0) }}"
           ideal_humidity: 45
