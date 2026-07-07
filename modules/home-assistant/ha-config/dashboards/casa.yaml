@@ -18,7 +18,7 @@ views:
             card:
               type: tile
               entity: sensor.plant_sensor_1_plant_status
-              name: "Callo I - Basilico"
+              name: "Callo Basilio I - Basilico"
               icon: mdi:leaf
               color: green
               tap_action:
