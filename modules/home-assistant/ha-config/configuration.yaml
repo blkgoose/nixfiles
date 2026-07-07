@@ -122,6 +122,30 @@ template:
             target:
               entity_id: cover.living_room_shutter
 
+      - name: "Bedroom shutter up"
+        unique_id: "bedroom_shutter_up"
+        state: "{{ is_state_attr('cover.serranda_camera', 'is_opening', true) }}"
+        turn_on:
+          - action: cover.open_cover
+            target:
+              entity_id: cover.serranda_camera
+        turn_off:
+          - action: cover.stop_cover
+            target:
+              entity_id: cover.serranda_camera
+
+      - name: "Bedroom shutter down"
+        unique_id: "bedroom_shutter_down"
+        state: "{{ is_state_attr('cover.serranda_camera', 'is_closing', true) }}"
+        turn_on:
+          - action: cover.close_cover
+            target:
+              entity_id: cover.serranda_camera
+        turn_off:
+          - action: cover.stop_cover
+            target:
+              entity_id: cover.serranda_camera
+
 cover:
   - platform: cover_time_based_synced
     devices:
@@ -133,6 +157,14 @@ cover:
         close_switch_entity_id: switch.living_room_shutter_down
         send_stop_at_ends: True
         source_entity_id: cover.living_room_shutter
+      bedroom_shutter:
+        name: "Bedroom shutter"
+        travelling_time_up: 27
+        travelling_time_down: 27
+        open_switch_entity_id: switch.bedroom_shutter_up
+        close_switch_entity_id: switch.bedroom_shutter_down
+        send_stop_at_ends: True
+        source_entity_id: cover.serranda_camera
 
 command_line:
   - binary_sensor:
