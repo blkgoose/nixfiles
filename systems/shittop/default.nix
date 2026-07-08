@@ -12,6 +12,10 @@ in {
   environment.etc."ssl/certs/cloudflare.crt".source = cloudflare-ca;
   environment.etc."ssl/certs/cloudflare-old.crt".source = cloudflare-ca-old;
 
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+  '';
+
   # remember to add user to docker group
   systemd.services.dockerd = {
     enable = true;
