@@ -38,6 +38,9 @@ input_boolean:
   plant_sensor_1_critical:
     name: "Plant sensor 1 critical"
     icon: mdi:alert-circle
+  bus_waiting:
+    name: "Waiting for bus"
+    icon: mdi:bus
 
 input_text:
   plant_sensor_1_name:
@@ -74,6 +77,17 @@ template:
           {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
           {{ h < 35 or h > 55 }}
         icon: mdi:water-alert
+
+  - sensor:
+      - name: "Bus 51 minutes"
+        state: >-
+          {% set w = states('sensor.bus_51_niguarda_wait') | lower %}
+          {% if 'in arrivo' in w or 'arrivo' in w %}0
+          {% elif w | regex_replace('[^0-9]', '') | int(0) > 0 %}{{ w | regex_replace('[^0-9]', '') | int(0) }}
+          {% else %}-1
+          {% endif %}
+        unit_of_measurement: "min"
+        icon: mdi:bus-clock
 
   - sensor:
       - name: "Plant sensor 1 color"
@@ -387,3 +401,37 @@ automation:
                   entity_id: cover.living_room_shutter_smart
                 data:
                   position: "{{ states('input_number.projector_blinds_previous_position') | int(0) }}"
+
+  - id: bus_51_enabled
+    alias: "Bus 51: notify when waiting enabled"
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.bus_waiting
+        to: "on"
+    actions:
+      - action: notify.notify
+        data:
+          title: "Bus 51"
+          message: "Ti avviso quando il bus è in arrivo"
+
+  - id: bus_51_notification
+    alias: "Bus 51: notify when approaching"
+    triggers:
+      - trigger: state
+        entity_id: sensor.bus_51_minutes
+    conditions:
+      - condition: state
+        entity_id: input_boolean.bus_waiting
+        state: "on"
+      - condition: numeric_state
+        entity_id: sensor.bus_51_minutes
+        below: 10
+    actions:
+      - action: notify.notify
+        data:
+          title: "Bus 51 in arrivo"
+          message: >-
+            {% set m = states('sensor.bus_51_minutes') | int(-1) %}
+            {% if m == 0 %}Il bus 51 è in arrivo!
+            {% else %}Il bus 51 per Niguarda arriva tra {{ m }} minuti
+            {% endif %}

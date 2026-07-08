@@ -5,6 +5,26 @@ views:
     sections:
       - type: grid
         cards:
+          # --- Toggles ---
+          - type: heading
+            cards:
+              - type: heading
+                heading: Controlli
+
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: input_boolean.movie_mode
+                name: Movie
+                icon: mdi:movie-open
+                color: amber
+
+              - type: tile
+                entity: input_boolean.bus_waiting
+                name: Autobus
+                icon: mdi:bus
+                color: cyan
+
           # --- Plants ---
           - type: heading
             cards:
