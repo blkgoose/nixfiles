@@ -41,6 +41,9 @@ input_boolean:
   bus_waiting:
     name: "Waiting for bus"
     icon: mdi:bus
+  movie_mode:
+    name: "Movie mode"
+    icon: mdi:movie-open
 
 input_text:
   plant_sensor_1_name:
@@ -320,16 +323,34 @@ automation:
         target:
           entity_id: cover.living_room_shutter_smart
 
-  - id: projector_on_close_blinds
-    alias: "Projector on: close blinds if sun is out"
+  - id: projector_on_movie_mode
+    alias: "Projector on: enable movie mode"
     triggers:
       - trigger: state
         entity_id: binary_sensor.projector_online
         to: "on"
-    conditions:
-      - condition: state
-        entity_id: sun.sun
-        state: "above_horizon"
+    actions:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.movie_mode
+
+  - id: projector_off_movie_mode
+    alias: "Projector off: disable movie mode"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.projector_online
+        to: "off"
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.movie_mode
+
+  - id: movie_mode_on
+    alias: "Movie mode: dim lights and close blinds"
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.movie_mode
+        to: "on"
     actions:
       - action: input_number.set_value
         target:
@@ -341,34 +362,31 @@ automation:
           entity_id: cover.living_room_shutter_smart
         data:
           position: 10
-
-  - id: projector_on_dim_lamp
-    alias: "Projector on: save and dim Varmblixt to 20% if on"
-    triggers:
-      - trigger: state
-        entity_id: binary_sensor.projector_online
-        to: "on"
-    conditions:
-      - condition: state
-        entity_id: light.varmblixt_table_wall_lamp
-        state: "on"
-    actions:
       - action: input_number.set_value
         target:
           entity_id: input_number.projector_lamp_previous_brightness
         data:
-          value: "{{ (state_attr('light.varmblixt_table_wall_lamp', 'brightness') | int(0) / 255 * 100) | round(0) }}"
-      - action: light.turn_on
-        target:
-          entity_id: light.varmblixt_table_wall_lamp
-        data:
-          brightness_pct: 20
+          value: >-
+            {% if is_state('light.varmblixt_table_wall_lamp', 'on') %}
+              {{ (state_attr('light.varmblixt_table_wall_lamp', 'brightness') | int(0) / 255 * 100) | round(0) }}
+            {% else %}-1{% endif %}
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: light.varmblixt_table_wall_lamp
+                state: "on"
+            sequence:
+              - action: light.turn_on
+                target:
+                  entity_id: light.varmblixt_table_wall_lamp
+                data:
+                  brightness_pct: 20
 
-  - id: projector_off_restore_blinds
-    alias: "Projector off: restore blinds and lamp"
+  - id: movie_mode_off
+    alias: "Movie mode: restore lights and blinds"
     triggers:
       - trigger: state
-        entity_id: binary_sensor.projector_online
+        entity_id: input_boolean.movie_mode
         to: "off"
     actions:
       - choose:
@@ -390,17 +408,11 @@ automation:
           entity_id: input_number.projector_lamp_previous_brightness
         data:
           value: -1
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: sun.sun
-                state: "above_horizon"
-            sequence:
-              - action: cover.set_cover_position
-                target:
-                  entity_id: cover.living_room_shutter_smart
-                data:
-                  position: "{{ states('input_number.projector_blinds_previous_position') | int(0) }}"
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.living_room_shutter_smart
+        data:
+          position: "{{ states('input_number.projector_blinds_previous_position') | int(0) }}"
 
   - id: bus_51_enabled
     alias: "Bus 51: notify when waiting enabled"
