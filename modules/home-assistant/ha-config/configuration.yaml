@@ -51,6 +51,22 @@ input_datetime:
     has_date: true
     has_time: true
 
+rest:
+  - resource: "https://giromilano.atm.it/proxy.tpportal/api/tpPortal/geodata/pois/stops/11661"
+    headers:
+      Accept: "application/json, text/plain, */*"
+      User-Agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
+      sec-ch-ua: '"Google Chrome";v="149", "Chromium";v="149", "Not)A;Brand";v="24"'
+      sec-fetch-dest: empty
+      sec-fetch-mode: cors
+      sec-fetch-site: same-origin
+    scan_interval: 60
+    sensor:
+      - name: "Bus 51 Niguarda wait"
+        value_template: >-
+          {{ value_json.Lines | selectattr('Line.LineId', 'equalto', '51') | selectattr('Direction', 'equalto', '1') | map(attribute='WaitMessage') | first }}
+        icon: mdi:bus
+
 template:
   - binary_sensor:
       - name: "Plant sensor 1 humidity out of range"
