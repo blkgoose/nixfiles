@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   users.users.alessio = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "networkmanager" "nordvpn" ];
+    extraGroups = [ "wheel" "docker" "networkmanager" "nordvpn" "plugdev" ];
     shell = pkgs.fish;
   };
 

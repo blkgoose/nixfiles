@@ -11,6 +11,7 @@
       "${(nixGL jellyfin-desktop)}/bin/jellyfin-desktop")
     pwvucontrol
     htop
+    vial
   ];
 
   services.keynav = {
