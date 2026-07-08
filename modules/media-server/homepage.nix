@@ -11,8 +11,8 @@
             };
           }
           {
-            "Jellyseerr" = {
-              icon = "jellyseerr.png";
+            "Seerr" = {
+              icon = "seerr.png";
               href = "http://${ip}:5055";
             };
           }
@@ -48,6 +48,12 @@
             "Prowlarr" = {
               icon = "prowlarr.png";
               href = "http://${ip}:9696";
+            };
+          }
+          {
+            "Cleanuparr" = {
+              icon = "cleanuparr.png";
+              href = "http://${ip}:11011";
             };
           }
         ];
