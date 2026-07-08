@@ -240,11 +240,11 @@ automation:
         data:
           datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
 
-  - id: dual_button_up
-    alias: "Dual button: up toggle"
+  - id: scroll_wheel_up
+    alias: "Scroll wheel: up toggle"
     triggers:
       - trigger: state
-        entity_id: event.bilresa_dual_button_button_1
+        entity_id: event.bilresa_scroll_wheel_button_1
     actions:
       - choose:
           - conditions:
@@ -260,11 +260,11 @@ automation:
             target:
               entity_id: cover.living_room_shutter_smart
 
-  - id: dual_button_down
-    alias: "Dual button: down toggle"
+  - id: scroll_wheel_down
+    alias: "Scroll wheel: down toggle"
     triggers:
       - trigger: state
-        entity_id: event.bilresa_dual_button_button_2
+        entity_id: event.bilresa_scroll_wheel_button_2
     actions:
       - choose:
           - conditions:
@@ -279,6 +279,16 @@ automation:
           - action: cover.close_cover
             target:
               entity_id: cover.living_room_shutter_smart
+
+  - id: scroll_wheel_stop
+    alias: "Scroll wheel: stop"
+    triggers:
+      - trigger: state
+        entity_id: event.bilresa_scroll_wheel_button_3
+    actions:
+      - action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_shutter_smart
 
   - id: projector_on_close_blinds
     alias: "Projector on: close blinds if sun is out"
