@@ -1,6 +1,19 @@
 # Loads default set of integrations. Do not remove.
 default_config:
 
+plant_monitor:
+  plants:
+    basil:
+      name: "Callo I - Basilico"
+      sensor: "sensor.plant_sensor_1_humidity"
+      min_humidity: 40
+      max_humidity: 80
+      max_time_above: 48
+      max_time_below: 4
+
+sensor:
+  - platform: plant_monitor
+
 # Load frontend themes from the themes folder
 frontend:
   themes: !include_dir_merge_named themes
@@ -33,29 +46,56 @@ input_number:
     step: 1
     unit_of_measurement: "%"
     mode: box
+  plant_basil_min_humidity:
+    name: "Basil min humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 40
+  plant_basil_max_humidity:
+    name: "Basil max humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 80
+  plant_basil_max_time_above:
+    name: "Basil max time above (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 48
+  plant_basil_max_time_below:
+    name: "Basil max time below (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 4
+
+input_datetime:
+  plant_basil_last_above_max:
+    name: "Basil last above max"
+    has_date: true
+    has_time: true
+  plant_basil_last_below_min:
+    name: "Basil last below min"
+    has_date: true
+    has_time: true
 
 input_boolean:
-  plant_sensor_1_critical:
-    name: "Plant sensor 1 critical"
-    icon: mdi:alert-circle
   bus_waiting:
     name: "Waiting for bus"
     icon: mdi:bus
   movie_mode:
     name: "Movie mode"
     icon: mdi:movie-open
-
-input_text:
-  plant_sensor_1_name:
-    name: "Plant sensor 1 name"
-    initial: "Callo I - Basilico"
-    max: 50
-
-input_datetime:
-  plant_sensor_1_last_low_humidity:
-    name: "Plant sensor 1 last low humidity"
-    has_date: true
-    has_time: true
 
 rest:
   - resource: "https://giromilano.atm.it/proxy.tpportal/api/tpPortal/geodata/pois/stops/11661"
@@ -74,13 +114,6 @@ rest:
         icon: mdi:bus
 
 template:
-  - binary_sensor:
-      - name: "Plant sensor 1 humidity out of range"
-        state: >-
-          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
-          {{ h < 35 or h > 55 }}
-        icon: mdi:water-alert
-
   - sensor:
       - name: "Bus 51 minutes"
         state: >-
@@ -91,66 +124,6 @@ template:
           {% endif %}
         unit_of_measurement: "min"
         icon: mdi:bus-clock
-
-  - sensor:
-      - name: "Plant sensor 1 color"
-        state: >-
-          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
-          {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
-          {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
-          {% set last_low_ts = as_timestamp(last_low, 0) %}
-          {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
-          {% if h >= 35 and h <= 55 %}green
-          {% elif h > 55 and hours_since_low < 48 %}green
-          {% elif critical %}red
-          {% else %}orange
-          {% endif %}
-
-  - sensor:
-      - name: "Plant sensor 1 plant status"
-        state: >-
-          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
-          {% set t = states('sensor.plant_sensor_1_temperature') | float(0) | round(0) %}
-          {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
-          {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
-          {% set last_low_ts = as_timestamp(last_low, 0) %}
-          {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
-          {% if h >= 35 and h <= 55 %}{{ h | round(0) }}% · {{ t }}°C
-          {% elif h > 55 and hours_since_low < 48 %}{{ h | round(0) }}% · {{ t }}°C
-          {% elif critical %}{{ h | round(0) }}% · {{ t }}°C ⚠
-          {% else %}{{ h | round(0) }}% · {{ t }}°C ⚠
-          {% endif %}
-        icon: >-
-          {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
-          {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
-          {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
-          {% set last_low_ts = as_timestamp(last_low, 0) %}
-          {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
-          {% if h >= 35 and h <= 55 %}mdi:flower
-          {% elif h > 55 and hours_since_low < 48 %}mdi:flower
-          {% elif critical %}mdi:alert-circle
-          {% else %}mdi:alert
-          {% endif %}
-        attributes:
-          name: "{{ states('input_text.plant_sensor_1_name') }}"
-          humidity: "{{ states('sensor.plant_sensor_1_humidity') | float(0) }}"
-          temperature: "{{ states('sensor.plant_sensor_1_temperature') | float(0) }}"
-          ideal_humidity: 45
-          hours_since_watered: >-
-            {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
-            {% set last_low_ts = as_timestamp(last_low, 0) %}
-            {{ ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 'unknown' }}
-          color: >-
-            {% set h = states('sensor.plant_sensor_1_humidity') | float(45) %}
-            {% set critical = is_state('input_boolean.plant_sensor_1_critical', 'on') %}
-            {% set last_low = states('input_datetime.plant_sensor_1_last_low_humidity') %}
-            {% set last_low_ts = as_timestamp(last_low, 0) %}
-            {% set hours_since_low = ((now().timestamp() - last_low_ts) / 3600) | round(1) if last_low_ts > 0 else 999 %}
-            {% if h >= 35 and h <= 55 %}green
-            {% elif h > 55 and hours_since_low < 48 %}green
-            {% elif critical %}red
-            {% else %}orange
-            {% endif %}
 
   - switch:
       - name: "Living room shutter up"
@@ -230,49 +203,6 @@ command_line:
       payload_off: "OFF"
 
 automation:
-  - id: plant_sensor_1_warning
-    alias: "Plant sensor 1: humidity warning"
-    triggers:
-      - trigger: state
-        entity_id: binary_sensor.plant_sensor_1_humidity_out_of_range
-        to: "on"
-        for:
-          minutes: 30
-    actions:
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.plant_sensor_1_critical
-      - action: notify.notify
-        data:
-          title: "Callo needs water!"
-          message: >-
-            Humidity is {{ states('sensor.plant_sensor_1_humidity') }}% (ideal: 45%).
-            Been out of range for 30 minutes.
-
-  - id: plant_sensor_1_ok
-    alias: "Plant sensor 1: humidity recovered"
-    triggers:
-      - trigger: state
-        entity_id: binary_sensor.plant_sensor_1_humidity_out_of_range
-        to: "off"
-    actions:
-      - action: input_boolean.turn_off
-        target:
-          entity_id: input_boolean.plant_sensor_1_critical
-
-  - id: plant_sensor_1_track_low
-    alias: "Plant sensor 1: track last low humidity"
-    triggers:
-      - trigger: numeric_state
-        entity_id: sensor.plant_sensor_1_humidity
-        below: 40
-    actions:
-      - action: input_datetime.set_datetime
-        target:
-          entity_id: input_datetime.plant_sensor_1_last_low_humidity
-        data:
-          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-
   - id: scroll_wheel_up
     alias: "Scroll wheel: up toggle"
     triggers:

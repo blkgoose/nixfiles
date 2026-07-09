@@ -33,12 +33,12 @@ views:
 
           - type: conditional
             conditions:
-              - entity: sensor.plant_sensor_1_color
+              - entity: sensor.callo_i_basilico_color
                 state: green
             card:
               type: tile
-              entity: sensor.plant_sensor_1_plant_status
-              name: "Callo Basilio I - Basilico"
+              entity: sensor.callo_i_basilico
+              name: "Callo I - Basilico"
               icon: mdi:leaf
               color: green
               tap_action:
@@ -47,11 +47,11 @@ views:
 
           - type: conditional
             conditions:
-              - entity: sensor.plant_sensor_1_color
+              - entity: sensor.callo_i_basilico_color
                 state: orange
             card:
               type: tile
-              entity: sensor.plant_sensor_1_plant_status
+              entity: sensor.callo_i_basilico
               name: "Callo I - Basilico"
               icon: mdi:leaf
               color: orange
@@ -61,11 +61,11 @@ views:
 
           - type: conditional
             conditions:
-              - entity: sensor.plant_sensor_1_color
+              - entity: sensor.callo_i_basilico_color
                 state: red
             card:
               type: tile
-              entity: sensor.plant_sensor_1_plant_status
+              entity: sensor.callo_i_basilico
               name: "Callo I - Basilico"
               icon: mdi:leaf
               color: red

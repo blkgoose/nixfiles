@@ -1,0 +1,10 @@
+{
+  "domain": "plant_monitor",
+  "name": "Plant Monitor",
+  "codeowners": [],
+  "dependencies": [],
+  "documentation": null,
+  "iot_class": "calculated",
+  "requirements": [],
+  "version": "1.0.0"
+}
