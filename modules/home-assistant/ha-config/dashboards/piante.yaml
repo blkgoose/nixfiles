@@ -5,223 +5,73 @@ views:
     icon: mdi:flower
     cards:
       # --- Callo Basilio I ---
-      - type: heading
-        cards:
-          - type: heading
-            heading: Callo Basilio I - Basilico
-
-      - type: horizontal-stack
-        cards:
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: green
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              icon: mdi:leaf
-              color: green
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: orange
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              icon: mdi:leaf
-              color: orange
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: red
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              icon: mdi:leaf
-              color: red
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: gray
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              icon: mdi:leaf
-              color: gray
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
-
-          - type: sensor
-            entity: sensor.plant_sensor_1_humidity
-            graph: line
-            hours_to_show: 168
-            name: "Umidita"
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.plant_sensor_1_humidity
+            name: "Callo Basilio I - Basilico"
+        hours_to_show: 168
+        color_thresholds:
+          - value: 35
+            color: "#e57373"
+          - value: 40
+            color: "#ffb74d"
+          - value: 45
+            color: "#81c784"
+          - value: 75
+            color: "#81c784"
+          - value: 80
+            color: "#ffb74d"
+          - value: 85
+            color: "#e57373"
+        show:
+          fill: false
+        show_icon: true
+        icon: mdi:leaf
 
       # --- Ariel ---
-      - type: heading
-        cards:
-          - type: heading
-            heading: Ariel - Edera Variegata
-
-      - type: horizontal-stack
-        cards:
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: green
-            card:
-              type: tile
-              entity: sensor.ariel
-              icon: mdi:leaf
-              color: green
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: orange
-            card:
-              type: tile
-              entity: sensor.ariel
-              icon: mdi:leaf
-              color: orange
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: red
-            card:
-              type: tile
-              entity: sensor.ariel
-              icon: mdi:leaf
-              color: red
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: gray
-            card:
-              type: tile
-              entity: sensor.ariel
-              icon: mdi:leaf
-              color: gray
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: sensor
-            entity: sensor.plant_sensor_2_humidity
-            graph: line
-            hours_to_show: 168
-            name: "Umidita"
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.plant_sensor_2_humidity
+            name: "Ariel - Edera Variegata"
+        hours_to_show: 168
+        color_thresholds:
+          - value: 20
+            color: "#e57373"
+          - value: 25
+            color: "#ffb74d"
+          - value: 30
+            color: "#81c784"
+          - value: 65
+            color: "#81c784"
+          - value: 70
+            color: "#ffb74d"
+          - value: 75
+            color: "#e57373"
+        show:
+          fill: false
+        show_icon: true
+        icon: mdi:leaf
 
       # --- Babybel ---
-      - type: heading
-        cards:
-          - type: heading
-            heading: Babybel - Garofanino
-
-      - type: horizontal-stack
-        cards:
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: green
-            card:
-              type: tile
-              entity: sensor.babybel
-              icon: mdi:leaf
-              color: green
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: orange
-            card:
-              type: tile
-              entity: sensor.babybel
-              icon: mdi:leaf
-              color: orange
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: red
-            card:
-              type: tile
-              entity: sensor.babybel
-              icon: mdi:leaf
-              color: red
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: gray
-            card:
-              type: tile
-              entity: sensor.babybel
-              icon: mdi:leaf
-              color: gray
-              show_state: false
-              show_name: false
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: sensor
-            entity: sensor.plant_sensor_3_humidity
-            graph: line
-            hours_to_show: 168
-            name: "Umidita"
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.plant_sensor_3_humidity
+            name: "Babybel - Garofanino"
+        hours_to_show: 168
+        color_thresholds:
+          - value: 10
+            color: "#e57373"
+          - value: 15
+            color: "#ffb74d"
+          - value: 20
+            color: "#81c784"
+          - value: 55
+            color: "#81c784"
+          - value: 60
+            color: "#ffb74d"
+          - value: 65
+            color: "#e57373"
+        show:
+          fill: false
+        show_icon: true
+        icon: mdi:leaf
