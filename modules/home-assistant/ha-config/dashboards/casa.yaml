@@ -73,6 +73,20 @@ views:
                 action: more-info
                 entity: sensor.plant_sensor_1_humidity
 
+          - type: conditional
+            conditions:
+              - entity: sensor.callo_i_basilico_color
+                state: gray
+            card:
+              type: tile
+              entity: sensor.callo_i_basilico
+              name: "Callo I - Basilico"
+              icon: mdi:leaf
+              color: gray
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
           # --- Blinds ---
           - type: heading
             cards:
