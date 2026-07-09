@@ -75,28 +75,32 @@ class PlantStatusSensor(SensorEntity):
         self._attr_native_value = None
         self._attr_extra_state_attributes = {}
 
-    def _get_humidity(self) -> float:
+    def _get_humidity(self) -> float | None:
         """Get current humidity from the source sensor."""
         sensor_id = self._config[CONF_SENSOR]
         state = self._hass.states.get(sensor_id)
-        if state and state.state != STATE_UNKNOWN:
-            try:
-                return float(state.state)
-            except (ValueError, TypeError):
-                pass
-        return 0.0
+        if state is None:
+            return None
+        if state.state in (STATE_UNKNOWN, "unavailable", "unknown"):
+            return None
+        try:
+            return float(state.state)
+        except (ValueError, TypeError):
+            return None
 
-    def _get_temperature(self) -> float:
+    def _get_temperature(self) -> float | None:
         """Get temperature from the plant sensor."""
         sensor_id = self._config[CONF_SENSOR]
         temp_sensor = sensor_id.replace("_humidity", "_temperature")
         state = self._hass.states.get(temp_sensor)
-        if state and state.state != STATE_UNKNOWN:
-            try:
-                return float(state.state)
-            except (ValueError, TypeError):
-                pass
-        return 0.0
+        if state is None:
+            return None
+        if state.state in (STATE_UNKNOWN, "unavailable", "unknown"):
+            return None
+        try:
+            return float(state.state)
+        except (ValueError, TypeError):
+            return None
 
     def _get_threshold(self, key: str) -> float:
         """Get threshold value from input_number helper."""
@@ -131,6 +135,11 @@ class PlantStatusSensor(SensorEntity):
     def _get_status(self) -> tuple[str, str]:
         """Get plant status and icon."""
         humidity = self._get_humidity()
+
+        # Handle missing/unavailable sensor
+        if humidity is None:
+            return "Offline", "mdi:help-circle"
+
         min_h = self._get_threshold(CONF_MIN_HUMIDITY)
         max_h = self._get_threshold(CONF_MAX_HUMIDITY)
         max_time_above = self._get_threshold(CONF_MAX_TIME_ABOVE)
@@ -199,16 +208,18 @@ class PlantColorSensor(SensorEntity):
         self._attr_icon = "mdi:palette"
         self._attr_native_value = "green"
 
-    def _get_humidity(self) -> float:
+    def _get_humidity(self) -> float | None:
         """Get current humidity from the source sensor."""
         sensor_id = self._config[CONF_SENSOR]
         state = self._hass.states.get(sensor_id)
-        if state and state.state != STATE_UNKNOWN:
-            try:
-                return float(state.state)
-            except (ValueError, TypeError):
-                pass
-        return 0.0
+        if state is None:
+            return None
+        if state.state in (STATE_UNKNOWN, "unavailable", "unknown"):
+            return None
+        try:
+            return float(state.state)
+        except (ValueError, TypeError):
+            return None
 
     def _get_threshold(self, key: str) -> float:
         """Get threshold value from input_number helper."""
@@ -235,6 +246,11 @@ class PlantColorSensor(SensorEntity):
     def _get_color(self) -> str:
         """Get plant color based on status."""
         humidity = self._get_humidity()
+
+        # Handle missing/unavailable sensor
+        if humidity is None:
+            return "gray"
+
         min_h = self._get_threshold(CONF_MIN_HUMIDITY)
         max_h = self._get_threshold(CONF_MAX_HUMIDITY)
         max_time_above = self._get_threshold(CONF_MAX_TIME_ABOVE)
