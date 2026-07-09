@@ -63,11 +63,9 @@
 
   system.activationScripts.home-assistant = ''
     DEST="/mnt/data/config/homeassistant"
-    mkdir -p "$DEST/custom_components/cover_time_based_synced"
+    mkdir -p "$DEST/custom_components"
     mkdir -p "$DEST/dashboards"
-    ${pkgs.rsync}/bin/rsync -av --checksum ${
-      ./custom-components/cover_time_based_synced
-    }/ "$DEST/custom_components/cover_time_based_synced/"
+    ${pkgs.rsync}/bin/rsync -av --checksum ${./custom-components}/ "$DEST/custom_components/"
     ${pkgs.rsync}/bin/rsync -av --checksum ${./ha-config}/ "$DEST/"
     ${pkgs.rsync}/bin/rsync -av --checksum ${./ha-config/dashboards}/ "$DEST/dashboards/"
     chmod +x "$DEST/check_projector.sh"
