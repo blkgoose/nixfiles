@@ -3,60 +3,64 @@ views:
   - title: Casa
     path: home
     icon: mdi:home
-    cards:
-      # --- Controls ---
-      - type: heading
+    sections:
+      - type: grid
         cards:
+          # --- Controls ---
           - type: heading
-            heading: Controlli
+            cards:
+              - type: heading
+                heading: Controlli
 
-      - type: horizontal-stack
-        cards:
-          - type: tile
-            entity: input_boolean.movie_mode
-            name: "Movie mode"
-            icon: mdi:movie-open
-            features:
-              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: input_boolean.movie_mode
+                name: "Movie mode"
+                icon: mdi:movie-open
+                color: amber
+                features:
+                  - type: light-brightness
 
-          - type: tile
-            entity: input_boolean.bus_waiting
-            name: "Autobus"
-            icon: mdi:bus
+              - type: tile
+                entity: input_boolean.bus_waiting
+                name: "Autobus"
+                icon: mdi:bus
+                color: cyan
 
-      # --- Blinds ---
-      - type: heading
-        cards:
+          # --- Blinds ---
           - type: heading
-            heading: Serrande
+            cards:
+              - type: heading
+                heading: Serrande
 
-      - type: horizontal-stack
-        cards:
-          - type: tile
-            entity: cover.living_room_shutter_smart
-            name: Salone
-            icon: mdi:blinds
-            features:
-              - type: cover-position
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: cover.living_room_shutter_smart
+                name: Salone
+                icon: mdi:blinds
+                features:
+                  - type: cover-position
 
-          - type: tile
-            entity: cover.bedroom_shutter
-            name: Camera
-            icon: mdi:blinds
-            features:
-              - type: cover-position
+              - type: tile
+                entity: cover.bedroom_shutter
+                name: Camera
+                icon: mdi:blinds
+                features:
+                  - type: cover-position
 
-      # --- Lights ---
-      - type: heading
-        cards:
+          # --- Lights ---
           - type: heading
-            heading: Luci
+            cards:
+              - type: heading
+                heading: Luci
 
-      - type: horizontal-stack
-        cards:
-          - type: tile
-            entity: light.varmblixt_table_wall_lamp
-            name: Lampada
-            icon: mdi:lightbulb
-            features:
-              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.varmblixt_table_wall_lamp
+                name: Lampada
+                icon: mdi:lightbulb
+                features:
+                  - type: light-brightness
