@@ -9,7 +9,7 @@ views:
         entities:
           - entity: sensor.plant_sensor_1_humidity
             name: "Callo Basilio I - Basilico"
-        hours_to_show: 168
+        hours_to_show: 24
         color_thresholds:
           - value: 35
             color: "#e57373"
@@ -33,7 +33,7 @@ views:
         entities:
           - entity: sensor.plant_sensor_2_humidity
             name: "Ariel - Edera Variegata"
-        hours_to_show: 168
+        hours_to_show: 24
         color_thresholds:
           - value: 20
             color: "#e57373"
@@ -57,7 +57,7 @@ views:
         entities:
           - entity: sensor.plant_sensor_3_humidity
             name: "Babybel - Garofanino"
-        hours_to_show: 168
+        hours_to_show: 24
         color_thresholds:
           - value: 10
             color: "#e57373"
