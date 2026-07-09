@@ -4,12 +4,26 @@ default_config:
 plant_monitor:
   plants:
     basil:
-      name: "Callo I - Basilico"
+      name: "Callo Basilio I"
       sensor: "sensor.plant_sensor_1_humidity"
       min_humidity: 40
       max_humidity: 80
       max_time_above: 48
       max_time_below: 4
+    variegated_ivy:
+      name: "Ariel"
+      sensor: "sensor.plant_sensor_2_humidity"
+      min_humidity: 25
+      max_humidity: 70
+      max_time_above: 72
+      max_time_below: 24
+    dianthus:
+      name: "Babybel"
+      sensor: "sensor.plant_sensor_3_humidity"
+      min_humidity: 15
+      max_humidity: 60
+      max_time_above: 24
+      max_time_below: 48
 
 sensor:
   - platform: plant_monitor
@@ -78,6 +92,70 @@ input_number:
     unit_of_measurement: "h"
     mode: box
     initial: 4
+  plant_variegated_ivy_min_humidity:
+    name: "Ariel min humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 25
+  plant_variegated_ivy_max_humidity:
+    name: "Ariel max humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 70
+  plant_variegated_ivy_max_time_above:
+    name: "Ariel max time above (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 72
+  plant_variegated_ivy_max_time_below:
+    name: "Ariel max time below (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 24
+  plant_dianthus_min_humidity:
+    name: "Babybel min humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 15
+  plant_dianthus_max_humidity:
+    name: "Babybel max humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 60
+  plant_dianthus_max_time_above:
+    name: "Babybel max time above (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 24
+  plant_dianthus_max_time_below:
+    name: "Babybel max time below (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 48
 
 input_datetime:
   plant_basil_last_above_max:
@@ -86,6 +164,22 @@ input_datetime:
     has_time: true
   plant_basil_last_below_min:
     name: "Basil last below min"
+    has_date: true
+    has_time: true
+  plant_variegated_ivy_last_above_max:
+    name: "Ariel last above max"
+    has_date: true
+    has_time: true
+  plant_variegated_ivy_last_below_min:
+    name: "Ariel last below min"
+    has_date: true
+    has_time: true
+  plant_dianthus_last_above_max:
+    name: "Babybel last above max"
+    has_date: true
+    has_time: true
+  plant_dianthus_last_below_min:
+    name: "Babybel last below min"
     has_date: true
     has_time: true
 

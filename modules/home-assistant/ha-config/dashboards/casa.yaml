@@ -38,7 +38,7 @@ views:
             card:
               type: tile
               entity: sensor.callo_i_basilico
-              name: "Callo I - Basilico"
+              name: "Callo Basilio I - Basilico"
               icon: mdi:leaf
               color: green
               tap_action:
@@ -52,7 +52,7 @@ views:
             card:
               type: tile
               entity: sensor.callo_i_basilico
-              name: "Callo I - Basilico"
+              name: "Callo Basilio I - Basilico"
               icon: mdi:leaf
               color: orange
               tap_action:
@@ -66,7 +66,7 @@ views:
             card:
               type: tile
               entity: sensor.callo_i_basilico
-              name: "Callo I - Basilico"
+              name: "Callo Basilio I - Basilico"
               icon: mdi:leaf
               color: red
               tap_action:
@@ -80,12 +80,124 @@ views:
             card:
               type: tile
               entity: sensor.callo_i_basilico
-              name: "Callo I - Basilico"
+              name: "Callo Basilio I - Basilico"
               icon: mdi:leaf
               color: gray
               tap_action:
                 action: more-info
                 entity: sensor.plant_sensor_1_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: green
+            card:
+              type: tile
+              entity: sensor.ariel
+              name: "Ariel - Edera Variegata"
+              icon: mdi:leaf
+              color: green
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: orange
+            card:
+              type: tile
+              entity: sensor.ariel
+              name: "Ariel - Edera Variegata"
+              icon: mdi:leaf
+              color: orange
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: red
+            card:
+              type: tile
+              entity: sensor.ariel
+              name: "Ariel - Edera Variegata"
+              icon: mdi:leaf
+              color: red
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: gray
+            card:
+              type: tile
+              entity: sensor.ariel
+              name: "Ariel - Edera Variegata"
+              icon: mdi:leaf
+              color: gray
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: green
+            card:
+              type: tile
+              entity: sensor.babybel
+              name: "Babybel - Garofanino"
+              icon: mdi:leaf
+              color: green
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: orange
+            card:
+              type: tile
+              entity: sensor.babybel
+              name: "Babybel - Garofanino"
+              icon: mdi:leaf
+              color: orange
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: red
+            card:
+              type: tile
+              entity: sensor.babybel
+              name: "Babybel - Garofanino"
+              icon: mdi:leaf
+              color: red
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: gray
+            card:
+              type: tile
+              entity: sensor.babybel
+              name: "Babybel - Garofanino"
+              icon: mdi:leaf
+              color: gray
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
 
           # --- Blinds ---
           - type: heading
