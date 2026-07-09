@@ -1,0 +1,227 @@
+title: Piante
+views:
+  - title: Piante
+    path: piante-dash
+    icon: mdi:flower
+    cards:
+      # --- Callo Basilio I ---
+      - type: heading
+        cards:
+          - type: heading
+            heading: Callo Basilio I - Basilico
+
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.callo_i_basilico_color
+                state: green
+            card:
+              type: tile
+              entity: sensor.callo_i_basilico
+              icon: mdi:leaf
+              color: green
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.callo_i_basilico_color
+                state: orange
+            card:
+              type: tile
+              entity: sensor.callo_i_basilico
+              icon: mdi:leaf
+              color: orange
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.callo_i_basilico_color
+                state: red
+            card:
+              type: tile
+              entity: sensor.callo_i_basilico
+              icon: mdi:leaf
+              color: red
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.callo_i_basilico_color
+                state: gray
+            card:
+              type: tile
+              entity: sensor.callo_i_basilico
+              icon: mdi:leaf
+              color: gray
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_1_humidity
+
+          - type: sensor
+            entity: sensor.plant_sensor_1_humidity
+            graph: line
+            hours_to_show: 168
+            name: "Umidita"
+
+      # --- Ariel ---
+      - type: heading
+        cards:
+          - type: heading
+            heading: Ariel - Edera Variegata
+
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: green
+            card:
+              type: tile
+              entity: sensor.ariel
+              icon: mdi:leaf
+              color: green
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: orange
+            card:
+              type: tile
+              entity: sensor.ariel
+              icon: mdi:leaf
+              color: orange
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: red
+            card:
+              type: tile
+              entity: sensor.ariel
+              icon: mdi:leaf
+              color: red
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.ariel_color
+                state: gray
+            card:
+              type: tile
+              entity: sensor.ariel
+              icon: mdi:leaf
+              color: gray
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_2_humidity
+
+          - type: sensor
+            entity: sensor.plant_sensor_2_humidity
+            graph: line
+            hours_to_show: 168
+            name: "Umidita"
+
+      # --- Babybel ---
+      - type: heading
+        cards:
+          - type: heading
+            heading: Babybel - Garofanino
+
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: green
+            card:
+              type: tile
+              entity: sensor.babybel
+              icon: mdi:leaf
+              color: green
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: orange
+            card:
+              type: tile
+              entity: sensor.babybel
+              icon: mdi:leaf
+              color: orange
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: red
+            card:
+              type: tile
+              entity: sensor.babybel
+              icon: mdi:leaf
+              color: red
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: conditional
+            conditions:
+              - entity: sensor.babybel_color
+                state: gray
+            card:
+              type: tile
+              entity: sensor.babybel
+              icon: mdi:leaf
+              color: gray
+              show_state: false
+              show_name: false
+              tap_action:
+                action: more-info
+                entity: sensor.plant_sensor_3_humidity
+
+          - type: sensor
+            entity: sensor.plant_sensor_3_humidity
+            graph: line
+            hours_to_show: 168
+            name: "Umidita"
