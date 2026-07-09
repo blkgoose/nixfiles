@@ -41,6 +41,12 @@ lovelace:
       icon: mdi:home
       show_in_sidebar: true
       filename: dashboards/casa.yaml
+    piante-dash:
+      mode: yaml
+      title: Piante
+      icon: mdi:flower
+      show_in_sidebar: true
+      filename: dashboards/piante.yaml
 
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -209,6 +215,30 @@ rest:
 
 template:
   - sensor:
+      - name: "Piante"
+        unique_id: "sensor_piante_overall"
+        state: >-
+          {% set colors = [
+            states('sensor.callo_i_basilico_color'),
+            states('sensor.ariel_color'),
+            states('sensor.babybel_color')
+          ] %}
+          {% if 'red' in colors %}red
+          {% elif 'orange' in colors %}orange
+          {% elif 'green' in colors %}green
+          {% else %}gray
+          {% endif %}
+        icon: >-
+          {% set colors = [
+            states('sensor.callo_i_basilico_color'),
+            states('sensor.ariel_color'),
+            states('sensor.babybel_color')
+          ] %}
+          {% if 'red' in colors %}mdi:alert-circle
+          {% elif 'orange' in colors %}mdi:alert
+          {% elif 'green' in colors %}mdi:flower
+          {% else %}mdi:help-circle
+          {% endif %}
       - name: "Bus 51 minutes"
         state: >-
           {% set w = states('sensor.bus_51_niguarda_wait') | lower %}

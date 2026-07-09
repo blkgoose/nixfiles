@@ -283,6 +283,47 @@ class PlantColorSensor(SensorEntity):
         self._attr_native_value = self._get_color()
 
 
+class PlantOverallStatusSensor(SensorEntity):
+    """Sensor showing overall plant status across all plants."""
+
+    def __init__(self, hass: HomeAssistant):
+        """Initialize the sensor."""
+        super().__init__()
+        self._hass = hass
+        self._attr_name = "Piante"
+        self._attr_unique_id = "plant_monitor_overall_status"
+        self._attr_icon = "mdi:flower"
+        self._attr_native_value = "loading"
+        self._attr_extra_state_attributes = {}
+
+    def _get_color(self) -> str:
+        """Get worst color across all plants."""
+        if DOMAIN not in self._hass.data:
+            return "gray"
+
+        priority = {"red": 3, "orange": 2, "green": 1, "gray": 0}
+        worst = "gray"
+        worst_priority = 0
+        plant_colors = {}
+
+        for plant_id in self._hass.data[DOMAIN]:
+            color_sensor_id = f"sensor.{plant_id}_color"
+            state = self._hass.states.get(color_sensor_id)
+            if state and state.state in priority:
+                color = state.state
+                plant_colors[plant_id] = color
+                if priority[color] > worst_priority:
+                    worst = color
+                    worst_priority = priority[color]
+
+        self._attr_extra_state_attributes = {"plants": plant_colors}
+        return worst
+
+    async def async_update(self):
+        """Update the sensor."""
+        self._attr_native_value = self._get_color()
+
+
 async def async_setup_platform(
     hass: HomeAssistant,
     config: ConfigType,
@@ -298,4 +339,4 @@ async def async_setup_platform(
         entities.append(PlantStatusSensor(hass, plant_id, plant_config))
         entities.append(PlantColorSensor(hass, plant_id, plant_config))
 
-    async_add_entities(entities, update_before_add=True)
+    async_add_entities(entities)

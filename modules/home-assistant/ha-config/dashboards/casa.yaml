@@ -1,237 +1,62 @@
+title: Casa
 views:
   - title: Casa
-    path: casa
+    path: home
     icon: mdi:home
-    sections:
-      - type: grid
+    cards:
+      # --- Controls ---
+      - type: heading
         cards:
-          # --- Toggles ---
           - type: heading
-            cards:
-              - type: heading
-                heading: Controlli
+            heading: Controlli
 
-          - type: horizontal-stack
-            cards:
-              - type: tile
-                entity: input_boolean.movie_mode
-                name: Movie
-                icon: mdi:movie-open
-                color: amber
+      - type: horizontal-stack
+        cards:
+          - type: tile
+            entity: input_boolean.movie_mode
+            name: "Movie mode"
+            icon: mdi:movie-open
+            features:
+              - type: light-brightness
 
-              - type: tile
-                entity: input_boolean.bus_waiting
-                name: Autobus
-                icon: mdi:bus
-                color: cyan
+          - type: tile
+            entity: input_boolean.bus_waiting
+            name: "Autobus"
+            icon: mdi:bus
 
-          # --- Plants ---
+      # --- Blinds ---
+      - type: heading
+        cards:
           - type: heading
-            cards:
-              - type: heading
-                heading: Piante
+            heading: Serrande
 
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: green
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              name: "Callo Basilio I - Basilico"
-              icon: mdi:leaf
-              color: green
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
+      - type: horizontal-stack
+        cards:
+          - type: tile
+            entity: cover.living_room_shutter_smart
+            name: Salone
+            icon: mdi:blinds
+            features:
+              - type: cover-position
 
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: orange
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              name: "Callo Basilio I - Basilico"
-              icon: mdi:leaf
-              color: orange
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
+          - type: tile
+            entity: cover.bedroom_shutter
+            name: Camera
+            icon: mdi:blinds
+            features:
+              - type: cover-position
 
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: red
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              name: "Callo Basilio I - Basilico"
-              icon: mdi:leaf
-              color: red
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.callo_i_basilico_color
-                state: gray
-            card:
-              type: tile
-              entity: sensor.callo_i_basilico
-              name: "Callo Basilio I - Basilico"
-              icon: mdi:leaf
-              color: gray
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_1_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: green
-            card:
-              type: tile
-              entity: sensor.ariel
-              name: "Ariel - Edera Variegata"
-              icon: mdi:leaf
-              color: green
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: orange
-            card:
-              type: tile
-              entity: sensor.ariel
-              name: "Ariel - Edera Variegata"
-              icon: mdi:leaf
-              color: orange
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: red
-            card:
-              type: tile
-              entity: sensor.ariel
-              name: "Ariel - Edera Variegata"
-              icon: mdi:leaf
-              color: red
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.ariel_color
-                state: gray
-            card:
-              type: tile
-              entity: sensor.ariel
-              name: "Ariel - Edera Variegata"
-              icon: mdi:leaf
-              color: gray
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_2_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: green
-            card:
-              type: tile
-              entity: sensor.babybel
-              name: "Babybel - Garofanino"
-              icon: mdi:leaf
-              color: green
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: orange
-            card:
-              type: tile
-              entity: sensor.babybel
-              name: "Babybel - Garofanino"
-              icon: mdi:leaf
-              color: orange
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: red
-            card:
-              type: tile
-              entity: sensor.babybel
-              name: "Babybel - Garofanino"
-              icon: mdi:leaf
-              color: red
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          - type: conditional
-            conditions:
-              - entity: sensor.babybel_color
-                state: gray
-            card:
-              type: tile
-              entity: sensor.babybel
-              name: "Babybel - Garofanino"
-              icon: mdi:leaf
-              color: gray
-              tap_action:
-                action: more-info
-                entity: sensor.plant_sensor_3_humidity
-
-          # --- Blinds ---
+      # --- Lights ---
+      - type: heading
+        cards:
           - type: heading
-            cards:
-              - type: heading
-                heading: Serrande
+            heading: Luci
 
-          - type: horizontal-stack
-            cards:
-              - type: tile
-                entity: cover.living_room_shutter_smart
-                name: Salone
-                icon: mdi:blinds
-                features:
-                  - type: cover-position
-
-              - type: tile
-                entity: cover.bedroom_shutter
-                name: Camera
-                icon: mdi:blinds
-                features:
-                  - type: cover-position
-
-          # --- Lights ---
-          - type: heading
-            cards:
-              - type: heading
-                heading: Luci
-
-          - type: horizontal-stack
-            cards:
-              - type: tile
-                entity: light.varmblixt_table_wall_lamp
-                name: Lampada
-                icon: mdi:lightbulb
-                features:
-                  - type: light-brightness
+      - type: horizontal-stack
+        cards:
+          - type: tile
+            entity: light.varmblixt_table_wall_lamp
+            name: Lampada
+            icon: mdi:lightbulb
+            features:
+              - type: light-brightness
