@@ -1,5 +1,8 @@
-{ name, token }:
-{ pkgs, ... }: {
+{ name, subdomains ? [], token }:
+{ pkgs, ... }:
+let
+  allDomains = pkgs.lib.concatStringsSep "," ([ name ] ++ subdomains);
+in {
   systemd.services.dns-update = {
     description = "updates dns record";
     after = [ "network-online.target" ];
@@ -8,7 +11,7 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = ''
-        ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${name}&token=${token}&ip="'';
+        ${pkgs.curl}/bin/curl -k "https://www.duckdns.org/update?domains=${allDomains}&token=${token}&ip="'';
     };
   };
 

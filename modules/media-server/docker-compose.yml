@@ -164,18 +164,19 @@ services:
       - ./config/cleanuparr:/config
     restart: unless-stopped
 
-  # nginx:
-  #   image: nginx:latest
-  #   container_name: nginx-proxy
-  #   restart: unless-stopped
-  #   ports:
-  #     - '8088:80'
-  #     - '4443:443'
-  #   volumes:
-  #     - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
-  #     - ./config/nginx/certs:/etc/nginx/certs:ro
-  #   networks:
-  #     - proxied
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./config/caddy/data:/data
+      - ./config/caddy/config:/config
+    network_mode: "host"
 
 networks:
   proxied:
