@@ -42,11 +42,10 @@ in {
       import XMonad.Util.Run
       import Graphics.X11.ExtraTypes.XF86
 
-      import XMonad.Layout.Dwindle
       import XMonad.Layout.Spacing
-      import XMonad.Layout.WindowNavigation
-      import XMonad.Layout.WindowArranger
       import XMonad.Layout.NoBorders
+      import XMonad.Layout.BinarySpacePartition (emptyBSP, ResizeDirectional(ExpandTowards, ShrinkFrom))
+      import XMonad.Actions.Navigation2D
 
       import XMonad.Util.Loggers
       import XMonad.Hooks.DynamicLog
@@ -74,7 +73,7 @@ in {
               q ~? x = fmap (x `isInfixOf`) q
 
       myConf = def { terminal = "alacritty"
-                   , layoutHook = lessBorders OnlyFloat $ navigation $ (spacing' 10 $ Dwindle R CW 1 1.1)
+                   , layoutHook = lessBorders OnlyFloat $ spacing' 10 $ emptyBSP
                    , borderWidth = 4
                    , focusedBorderColor = "#B388FF"
                    , normalBorderColor = "#F5F5F5"
@@ -98,8 +97,6 @@ in {
                   ++ mediaKeys
                   ++ notifications
 
-      navigation = configurableNavigation (navigateBrightness 0)
-
       notifications =
           [ ((mod4Mask, xK_m), spawn "${pkgs.dunst}/bin/dunstctl history-pop")
           , ((mod4Mask .|. shiftMask, xK_m), spawn "${pkgs.dunst}/bin/dunstctl close")
@@ -120,16 +117,16 @@ in {
           ]
 
       movement =
-          [ ((mod4Mask, xK_h), sendMessage $ Go L)
-          , ((mod4Mask, xK_j), sendMessage $ Go D)
-          , ((mod4Mask, xK_k), sendMessage $ Go U)
-          , ((mod4Mask, xK_l), sendMessage $ Go R)
-          , ((mod4Mask .|. shiftMask, xK_h), sendMessage $ Swap L)
-          , ((mod4Mask .|. shiftMask, xK_j), sendMessage $ Swap D)
-          , ((mod4Mask .|. shiftMask, xK_k), sendMessage $ Swap U)
-          , ((mod4Mask .|. shiftMask, xK_l), sendMessage $ Swap R)
-          , ((mod4Mask .|. controlMask, xK_l), sendMessage Expand)
-          , ((mod4Mask .|. controlMask, xK_h), sendMessage Shrink)
+          [ ((mod4Mask, xK_h), windowGo L False)
+          , ((mod4Mask, xK_j), windowGo D False)
+          , ((mod4Mask, xK_k), windowGo U False)
+          , ((mod4Mask, xK_l), windowGo R False)
+          , ((mod4Mask .|. shiftMask, xK_h), windowSwap L False)
+          , ((mod4Mask .|. shiftMask, xK_j), windowSwap D False)
+          , ((mod4Mask .|. shiftMask, xK_k), windowSwap U False)
+          , ((mod4Mask .|. shiftMask, xK_l), windowSwap R False)
+          , ((mod4Mask .|. controlMask, xK_l), sendMessage $ ExpandTowards R)
+          , ((mod4Mask .|. controlMask, xK_h), sendMessage $ ShrinkFrom L)
           ]
 
       xmobarProp' config =
