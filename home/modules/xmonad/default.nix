@@ -13,6 +13,8 @@
     feh
     autorandr
     (alias "screenshot" "${escrotum}/bin/escrotum --select --clipboard")
+    (alias "suspend" "systemctl suspend")
+    (alias "lock" "${pkgs.slock}/bin/slock")
     nerd-fonts.roboto-mono
   ];
 
