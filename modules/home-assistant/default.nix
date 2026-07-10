@@ -48,6 +48,8 @@
         OTBR_MDNS = "none";
         BACKBONE_INTERFACE = "enp2s0";
         OTBR_REST_LISTEN_ADDR = "0.0.0.0";
+        OTBR_WEB_LISTEN_ADDR = "0.0.0.0";
+        OTBR_WEB_PORT = "8083";
       };
 
       cmd = [
