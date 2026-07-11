@@ -274,18 +274,7 @@ template:
           {% if 'red' in colors %}red
           {% elif 'orange' in colors %}orange
           {% elif 'green' in colors %}green
-          {% else %}gray
-          {% endif %}
-        icon: >-
-          {% set colors = [
-            states('sensor.callo_i_basilico_color'),
-            states('sensor.ariel_color'),
-            states('sensor.babybel_color')
-          ] %}
-          {% if 'red' in colors %}mdi:alert-circle
-          {% elif 'orange' in colors %}mdi:alert
-          {% elif 'green' in colors %}mdi:flower
-          {% else %}mdi:help-circle
+          {% else %}grey
           {% endif %}
       - name: "Bus 51 minutes"
         state: >-
