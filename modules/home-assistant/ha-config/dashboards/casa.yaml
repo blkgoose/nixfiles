@@ -34,18 +34,20 @@ views:
               - type: heading
                 heading: Piante
 
-          - type: custom:mushroom-template-card
-            primary: "Piante"
-            secondary: ""
-            icon: mdi:flower
-            tap_action:
-              action: navigate
-              navigation_path: /piante-dash
-            icon_color: >-
-              {% if is_state('sensor.piante', 'green') %}#81c784
-              {% elif is_state('sensor.piante', 'orange') %}#ffb74d
-              {% elif is_state('sensor.piante', 'red') %}#e57373
-              {% else %}gray{% endif %}
+          - type: custom:card-templater
+            card:
+              type: tile
+              entity: sensor.piante
+              name: "Piante"
+              icon: mdi:flower
+              tap_action:
+                action: navigate
+                navigation_path: /piante-dash
+              state_content: "last_updated"
+              color_template: >-
+                {{ states('sensor.piante') }}
+            entities:
+              - sensor.piante
 
           # --- Blinds ---
           - type: heading
