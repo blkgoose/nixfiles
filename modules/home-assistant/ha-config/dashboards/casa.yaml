@@ -34,20 +34,27 @@ views:
               - type: heading
                 heading: Piante
 
-          - type: custom:card-templater
-            card:
-              type: tile
-              entity: sensor.piante
-              name: "Piante"
-              icon: mdi:flower
-              tap_action:
-                action: navigate
-                navigation_path: /piante-dash
-              state_content: "last_updated"
-              color_template: >-
-                {{ states('sensor.piante') }}
-            entities:
-              - sensor.piante
+          - type: horizontal-stack
+            cards:
+              - type: custom:card-templater
+                card:
+                  type: tile
+                  entity: sensor.piante
+                  name: "Piante"
+                  icon: mdi:flower
+                  tap_action:
+                    action: navigate
+                    navigation_path: /piante-dash
+                  state_content: "last_updated"
+                  color_template: >-
+                    {{ states('sensor.piante') }}
+                entities:
+                  - sensor.piante
+              - type: tile
+                entity: sensor.piante_temperatura_media
+                name: "Temp. piante"
+                icon: mdi:thermometer
+                color: blue
 
           # --- Blinds ---
           - type: heading
