@@ -24,6 +24,13 @@ plant_monitor:
       max_humidity: 60
       max_time_above: 24
       max_time_below: 48
+    sedum:
+      name: "Dory"
+      sensor: "sensor.plant_sensor_4_humidity"
+      min_humidity: 10
+      max_humidity: 40
+      max_time_above: 12
+      max_time_below: 72
 
 sensor:
   - platform: plant_monitor
@@ -162,6 +169,38 @@ input_number:
     unit_of_measurement: "h"
     mode: box
     initial: 48
+  plant_sedum_min_humidity:
+    name: "Dory min humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 10
+  plant_sedum_max_humidity:
+    name: "Dory max humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: box
+    initial: 40
+  plant_sedum_max_time_above:
+    name: "Dory max time above (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 12
+  plant_sedum_max_time_below:
+    name: "Dory max time below (h)"
+    min: 1
+    max: 168
+    step: 1
+    unit_of_measurement: "h"
+    mode: box
+    initial: 72
 
 input_datetime:
   plant_basil_last_above_max:
@@ -186,6 +225,14 @@ input_datetime:
     has_time: true
   plant_dianthus_last_below_min:
     name: "Babybel last below min"
+    has_date: true
+    has_time: true
+  plant_sedum_last_above_max:
+    name: "Dory last above max"
+    has_date: true
+    has_time: true
+  plant_sedum_last_below_min:
+    name: "Dory last below min"
     has_date: true
     has_time: true
 
@@ -221,7 +268,8 @@ template:
           {% set colors = [
             states('sensor.callo_i_basilico_color'),
             states('sensor.ariel_color'),
-            states('sensor.babybel_color')
+            states('sensor.babybel_color'),
+            states('sensor.dory_color')
           ] %}
           {% if 'red' in colors %}red
           {% elif 'orange' in colors %}orange

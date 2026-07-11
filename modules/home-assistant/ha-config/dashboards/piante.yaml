@@ -75,3 +75,27 @@ views:
           fill: false
         show_icon: true
         icon: mdi:leaf
+
+      # --- Dory ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.plant_sensor_4_humidity
+            name: "Dory - Portulaca umbraticola"
+        hours_to_show: 24
+        color_thresholds:
+          - value: 5
+            color: "#e57373"
+          - value: 10
+            color: "#ffb74d"
+          - value: 15
+            color: "#81c784"
+          - value: 35
+            color: "#81c784"
+          - value: 40
+            color: "#ffb74d"
+          - value: 45
+            color: "#e57373"
+        show:
+          fill: false
+        show_icon: true
+        icon: mdi:leaf
