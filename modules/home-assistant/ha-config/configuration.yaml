@@ -28,7 +28,7 @@ plant_monitor:
       name: "Dory"
       sensor: "sensor.plant_sensor_4_humidity"
       min_humidity: 10
-      max_humidity: 40
+      max_humidity: 50
       max_time_above: 12
       max_time_below: 72
 
@@ -184,7 +184,7 @@ input_number:
     step: 1
     unit_of_measurement: "%"
     mode: box
-    initial: 40
+    initial: 50
   plant_sedum_max_time_above:
     name: "Dory max time above (h)"
     min: 1
@@ -262,7 +262,7 @@ rest:
 
 template:
   - sensor:
-      - name: "Piante"
+      - name: "Plants"
         unique_id: "sensor_piante_overall"
         state: >-
           {% set colors = [
@@ -276,6 +276,17 @@ template:
           {% elif 'green' in colors %}green
           {% else %}grey
           {% endif %}
+      - name: "Plants average temperature"
+        unique_id: "sensor_piante_avg_temp"
+        state: >-
+          {% set temps = [states('sensor.plant_sensor_1_temperature') | float(0),
+              states('sensor.plant_sensor_2_temperature') | float(0),
+              states('sensor.plant_sensor_3_temperature') | float(0),
+              states('sensor.plant_sensor_4_temperature') | float(0)] | select('>', 0) | list %}
+          {% if temps | count > 0 %}{{ (temps | sum / temps | count) | round(1) }}
+          {% else %}unknown{% endif %}
+        unit_of_measurement: "°C"
+        icon: mdi:thermometer
       - name: "Bus 51 minutes"
         state: >-
           {% set w = states('sensor.bus_51_niguarda_wait') | lower %}
