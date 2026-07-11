@@ -10,7 +10,8 @@ views:
           type: custom:mini-graph-card
           entities:
             - entity: sensor.plant_sensor_1_humidity
-              name: "Callo Basilio I - Basilico"
+              name_template: >-
+                Callo Basilio I - Basilico ({{ states('input_number.plant_basil_min_humidity') | int }}-{{ states('input_number.plant_basil_max_humidity') | int }}%)
           hours_to_show: 24
           color_thresholds_template: >
             {% set min = states('input_number.plant_basil_min_humidity') | float %}
@@ -37,7 +38,8 @@ views:
           type: custom:mini-graph-card
           entities:
             - entity: sensor.plant_sensor_2_humidity
-              name: "Ariel - Edera Variegata"
+              name_template: >-
+                Ariel - Edera Variegata ({{ states('input_number.plant_variegated_ivy_min_humidity') | int }}-{{ states('input_number.plant_variegated_ivy_max_humidity') | int }}%)
           hours_to_show: 24
           color_thresholds_template: >
             {% set min = states('input_number.plant_variegated_ivy_min_humidity') | float %}
@@ -64,7 +66,8 @@ views:
           type: custom:mini-graph-card
           entities:
             - entity: sensor.plant_sensor_3_humidity
-              name: "Babybel - Garofanino"
+              name_template: >-
+                Babybel - Garofanino ({{ states('input_number.plant_dianthus_min_humidity') | int }}-{{ states('input_number.plant_dianthus_max_humidity') | int }}%)
           hours_to_show: 24
           color_thresholds_template: >
             {% set min = states('input_number.plant_dianthus_min_humidity') | float %}
@@ -91,7 +94,8 @@ views:
           type: custom:mini-graph-card
           entities:
             - entity: sensor.plant_sensor_4_humidity
-              name: "Dory - Portulaca umbraticola"
+              name_template: >-
+                Dory - Portulaca umbraticola ({{ states('input_number.plant_sedum_min_humidity') | int }}-{{ states('input_number.plant_sedum_max_humidity') | int }}%)
           hours_to_show: 24
           color_thresholds_template: >
             {% set min = states('input_number.plant_sedum_min_humidity') | float %}
