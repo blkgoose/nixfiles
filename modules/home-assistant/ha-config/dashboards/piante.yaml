@@ -5,97 +5,109 @@ views:
     icon: mdi:flower
     cards:
       # --- Callo Basilio I ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities:
+            - entity: sensor.plant_sensor_1_humidity
+              name: "Callo Basilio I - Basilico"
+          hours_to_show: 24
+          color_thresholds_template: >
+            {% set min = states('input_number.plant_basil_min_humidity') | float %}
+            {% set max = states('input_number.plant_basil_max_humidity') | float %}
+            [
+              {"value": {{ min - 5 }}, "color": "#e57373"},
+              {"value": {{ min }}, "color": "#ffb74d"},
+              {"value": {{ min + 5 }}, "color": "#81c784"},
+              {"value": {{ max - 5 }}, "color": "#81c784"},
+              {"value": {{ max }}, "color": "#ffb74d"},
+              {"value": {{ max + 5 }}, "color": "#e57373"}
+            ]
+          show:
+            fill: false
+          show_icon: true
+          icon: mdi:leaf
         entities:
-          - entity: sensor.plant_sensor_1_humidity
-            name: "Callo Basilio I - Basilico"
-        hours_to_show: 24
-        color_thresholds:
-          - value: 35
-            color: "#e57373"
-          - value: 40
-            color: "#ffb74d"
-          - value: 45
-            color: "#81c784"
-          - value: 75
-            color: "#81c784"
-          - value: 80
-            color: "#ffb74d"
-          - value: 85
-            color: "#e57373"
-        show:
-          fill: false
-        show_icon: true
-        icon: mdi:leaf
+          - input_number.plant_basil_min_humidity
+          - input_number.plant_basil_max_humidity
 
       # --- Ariel ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities:
+            - entity: sensor.plant_sensor_2_humidity
+              name: "Ariel - Edera Variegata"
+          hours_to_show: 24
+          color_thresholds_template: >
+            {% set min = states('input_number.plant_variegated_ivy_min_humidity') | float %}
+            {% set max = states('input_number.plant_variegated_ivy_max_humidity') | float %}
+            [
+              {"value": {{ min - 5 }}, "color": "#e57373"},
+              {"value": {{ min }}, "color": "#ffb74d"},
+              {"value": {{ min + 5 }}, "color": "#81c784"},
+              {"value": {{ max - 5 }}, "color": "#81c784"},
+              {"value": {{ max }}, "color": "#ffb74d"},
+              {"value": {{ max + 5 }}, "color": "#e57373"}
+            ]
+          show:
+            fill: false
+          show_icon: true
+          icon: mdi:leaf
         entities:
-          - entity: sensor.plant_sensor_2_humidity
-            name: "Ariel - Edera Variegata"
-        hours_to_show: 24
-        color_thresholds:
-          - value: 20
-            color: "#e57373"
-          - value: 25
-            color: "#ffb74d"
-          - value: 30
-            color: "#81c784"
-          - value: 65
-            color: "#81c784"
-          - value: 70
-            color: "#ffb74d"
-          - value: 75
-            color: "#e57373"
-        show:
-          fill: false
-        show_icon: true
-        icon: mdi:leaf
+          - input_number.plant_variegated_ivy_min_humidity
+          - input_number.plant_variegated_ivy_max_humidity
 
       # --- Babybel ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities:
+            - entity: sensor.plant_sensor_3_humidity
+              name: "Babybel - Garofanino"
+          hours_to_show: 24
+          color_thresholds_template: >
+            {% set min = states('input_number.plant_dianthus_min_humidity') | float %}
+            {% set max = states('input_number.plant_dianthus_max_humidity') | float %}
+            [
+              {"value": {{ min - 5 }}, "color": "#e57373"},
+              {"value": {{ min }}, "color": "#ffb74d"},
+              {"value": {{ min + 5 }}, "color": "#81c784"},
+              {"value": {{ max - 5 }}, "color": "#81c784"},
+              {"value": {{ max }}, "color": "#ffb74d"},
+              {"value": {{ max + 5 }}, "color": "#e57373"}
+            ]
+          show:
+            fill: false
+          show_icon: true
+          icon: mdi:leaf
         entities:
-          - entity: sensor.plant_sensor_3_humidity
-            name: "Babybel - Garofanino"
-        hours_to_show: 24
-        color_thresholds:
-          - value: 10
-            color: "#e57373"
-          - value: 15
-            color: "#ffb74d"
-          - value: 20
-            color: "#81c784"
-          - value: 55
-            color: "#81c784"
-          - value: 60
-            color: "#ffb74d"
-          - value: 65
-            color: "#e57373"
-        show:
-          fill: false
-        show_icon: true
-        icon: mdi:leaf
+          - input_number.plant_dianthus_min_humidity
+          - input_number.plant_dianthus_max_humidity
 
       # --- Dory ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities:
+            - entity: sensor.plant_sensor_4_humidity
+              name: "Dory - Portulaca umbraticola"
+          hours_to_show: 24
+          color_thresholds_template: >
+            {% set min = states('input_number.plant_sedum_min_humidity') | float %}
+            {% set max = states('input_number.plant_sedum_max_humidity') | float %}
+            [
+              {"value": {{ min - 5 }}, "color": "#e57373"},
+              {"value": {{ min }}, "color": "#ffb74d"},
+              {"value": {{ min + 5 }}, "color": "#81c784"},
+              {"value": {{ max - 5 }}, "color": "#81c784"},
+              {"value": {{ max }}, "color": "#ffb74d"},
+              {"value": {{ max + 5 }}, "color": "#e57373"}
+            ]
+          show:
+            fill: false
+          show_icon: true
+          icon: mdi:leaf
         entities:
-          - entity: sensor.plant_sensor_4_humidity
-            name: "Dory - Portulaca umbraticola"
-        hours_to_show: 24
-        color_thresholds:
-          - value: 5
-            color: "#e57373"
-          - value: 10
-            color: "#ffb74d"
-          - value: 15
-            color: "#81c784"
-          - value: 35
-            color: "#81c784"
-          - value: 40
-            color: "#ffb74d"
-          - value: 45
-            color: "#e57373"
-        show:
-          fill: false
-        show_icon: true
-        icon: mdi:leaf
+          - input_number.plant_sedum_min_humidity
+          - input_number.plant_sedum_max_humidity
