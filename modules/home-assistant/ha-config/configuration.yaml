@@ -208,6 +208,26 @@ input_number:
     mode: box
     initial: 72
 
+input_select:
+  body_scale_filter:
+    name: "Mostra"
+    options:
+      - "Entrambi"
+      - "Alessio"
+      - "Enrica"
+    initial: "Entrambi"
+    icon: mdi:account
+
+input_boolean:
+  scale_show_alessio:
+    name: "Show Alessio"
+    initial: true
+    icon: mdi:account
+  scale_show_enrica:
+    name: "Show Enrica"
+    initial: true
+    icon: mdi:account
+
 input_datetime:
   plant_basil_last_above_max:
     name: "Basil last above max"
@@ -249,6 +269,14 @@ input_boolean:
   movie_mode:
     name: "Movie mode"
     icon: mdi:movie-open
+  scale_show_alessio:
+    name: "Alessio"
+    initial: true
+    icon: mdi:account
+  scale_show_enrica:
+    name: "Enrica"
+    initial: true
+    icon: mdi:account
 
 rest:
   - resource: "https://giromilano.atm.it/proxy.tpportal/api/tpPortal/geodata/pois/stops/11661"

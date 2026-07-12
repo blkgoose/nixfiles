@@ -4,223 +4,319 @@ views:
     path: pesi-dash
     icon: mdi:scale-bathroom
     cards:
-      # --- Weight ---
-      - type: custom:mini-graph-card
+      - type: entities
         entities:
-          - entity: sensor.alessio_weight
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_weight
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:scale-bathroom
-        name: Peso
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
+
+      # --- Weight ---
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_weight", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_weight", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:scale-bathroom
+          name: Peso
+        entities:
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- BMI ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_bmi", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_bmi", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:human
+          name: BMI
         entities:
-          - entity: sensor.alessio_bmi
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_bmi
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:human
-        name: BMI
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Body Fat ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_body_fat", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_body_fat", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:percent
+          name: Grasso corporeo
         entities:
-          - entity: sensor.alessio_body_fat
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_body_fat
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:percent
-        name: Grasso corporeo
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Muscle Mass ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_muscle_mass", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_muscle_mass", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:arm-flex
+          name: Massa muscolare
         entities:
-          - entity: sensor.alessio_muscle_mass
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_muscle_mass
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:arm-flex
-        name: Massa muscolare
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Lean Body Mass ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_lean_body_mass", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_lean_body_mass", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:human-handsup
+          name: Massa magra
         entities:
-          - entity: sensor.alessio_lean_body_mass
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_lean_body_mass
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:human-handsup
-        name: Massa magra
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Bone Mass ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_bone_mass", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_bone_mass", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:bone
+          name: Massa ossea
         entities:
-          - entity: sensor.alessio_bone_mass
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_bone_mass
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:bone
-        name: Massa ossea
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Water ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_water", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_water", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:water
+          name: Acqua
         entities:
-          - entity: sensor.alessio_water
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_water
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:water
-        name: Acqua
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Protein ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_protein", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_protein", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:food-steak
+          name: Proteine
         entities:
-          - entity: sensor.alessio_protein
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_protein
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:food-steak
-        name: Proteine
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Visceral Fat ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_visceral_fat", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_visceral_fat", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:stomach
+          name: Grasso viscerale
         entities:
-          - entity: sensor.alessio_visceral_fat
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_visceral_fat
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:stomach
-        name: Grasso viscerale
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Basal Metabolism ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_basal_metabolism", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_basal_metabolism", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:fire
+          name: Metabolismo basale
         entities:
-          - entity: sensor.alessio_basal_metabolism
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_basal_metabolism
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:fire
-        name: Metabolismo basale
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Metabolic Age ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_metabolic_age", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_metabolic_age", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:calendar-clock
+          name: Età metabolica
         entities:
-          - entity: sensor.alessio_metabolic_age
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_metabolic_age
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:calendar-clock
-        name: Età metabolica
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Body Score ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_body_score", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_body_score", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:star
+          name: Body score
         entities:
-          - entity: sensor.alessio_body_score
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_body_score
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:star
-        name: Body score
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
 
       # --- Impedance ---
-      - type: custom:mini-graph-card
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities_template: >-
+            [
+              {% if is_state('input_boolean.scale_show_alessio', 'on') %}
+                {"entity": "sensor.alessio_impedance", "name": "Alessio", "color": "#fb8c00"},
+              {% endif %}
+              {% if is_state('input_boolean.scale_show_enrica', 'on') %}
+                {"entity": "sensor.enrica_impedance", "name": "Enrica", "color": "#00bcd4"},
+              {% endif %}
+            ]
+          hours_to_show: 1460
+          show:
+            fill: false
+            labels: true
+          show_icon: true
+          icon: mdi:flash
+          name: Impedenza
         entities:
-          - entity: sensor.alessio_impedance
-            name: Alessio
-            color: "#fb8c00"
-          - entity: sensor.enrica_impedance
-            name: Enrica
-            color: "#81d4fa"
-        hours_to_show: 1460
-        show:
-          fill: false
-          labels: true
-        show_icon: true
-        icon: mdi:flash
-        name: Impedenza
+          - input_boolean.scale_show_alessio
+          - input_boolean.scale_show_enrica
