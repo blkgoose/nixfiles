@@ -4,34 +4,6 @@ views:
     path: piante-dash
     icon: mdi:flower
     cards:
-      # --- Callo Basilio I ---
-      - type: custom:card-templater
-        card:
-          type: custom:mini-graph-card
-          entities:
-            - entity: sensor.plant_sensor_1_humidity
-              name_template: >-
-                Callo Basilio I - Basilico ({{ states('input_number.plant_basil_min_humidity') | int }}-{{ states('input_number.plant_basil_max_humidity') | int }}%)
-          hours_to_show: 24
-          color_thresholds_template: >
-            {% set min = states('input_number.plant_basil_min_humidity') | float %}
-            {% set max = states('input_number.plant_basil_max_humidity') | float %}
-            [
-              {"value": {{ min - 5 }}, "color": "#e57373"},
-              {"value": {{ min }}, "color": "#ffb74d"},
-              {"value": {{ min + 5 }}, "color": "#81c784"},
-              {"value": {{ max - 5 }}, "color": "#81c784"},
-              {"value": {{ max }}, "color": "#ffb74d"},
-              {"value": {{ max + 5 }}, "color": "#e57373"}
-            ]
-          show:
-            fill: false
-          show_icon: true
-          icon: mdi:leaf
-        entities:
-          - input_number.plant_basil_min_humidity
-          - input_number.plant_basil_max_humidity
-
       # --- Ariel ---
       - type: custom:card-templater
         card:
@@ -87,6 +59,34 @@ views:
         entities:
           - input_number.plant_dianthus_min_humidity
           - input_number.plant_dianthus_max_humidity
+
+      # --- Callo Basilio I ---
+      - type: custom:card-templater
+        card:
+          type: custom:mini-graph-card
+          entities:
+            - entity: sensor.plant_sensor_1_humidity
+              name_template: >-
+                Callo Basilio I - Basilico ({{ states('input_number.plant_basil_min_humidity') | int }}-{{ states('input_number.plant_basil_max_humidity') | int }}%)
+          hours_to_show: 24
+          color_thresholds_template: >
+            {% set min = states('input_number.plant_basil_min_humidity') | float %}
+            {% set max = states('input_number.plant_basil_max_humidity') | float %}
+            [
+              {"value": {{ min - 5 }}, "color": "#e57373"},
+              {"value": {{ min }}, "color": "#ffb74d"},
+              {"value": {{ min + 5 }}, "color": "#81c784"},
+              {"value": {{ max - 5 }}, "color": "#81c784"},
+              {"value": {{ max }}, "color": "#ffb74d"},
+              {"value": {{ max + 5 }}, "color": "#e57373"}
+            ]
+          show:
+            fill: false
+          show_icon: true
+          icon: mdi:leaf
+        entities:
+          - input_number.plant_basil_min_humidity
+          - input_number.plant_basil_max_humidity
 
       # --- Dory ---
       - type: custom:card-templater
