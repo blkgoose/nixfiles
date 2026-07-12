@@ -25,6 +25,8 @@
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
 
+  hardware.bluetooth.enable = true;
+
   services.tailscale.enable = true;
 
   services.openssh = {
