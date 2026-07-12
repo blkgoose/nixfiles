@@ -259,7 +259,7 @@ rest:
       sec-fetch-dest: empty
       sec-fetch-mode: cors
       sec-fetch-site: same-origin
-    scan_interval: 60
+    scan_interval: 600
     sensor:
       - name: "Bus 51 Niguarda wait"
         value_template: >-
@@ -555,3 +555,22 @@ automation:
             {% if m == 0 %}Il bus 51 è in arrivo!
             {% else %}Il bus 51 per Niguarda arriva tra {{ m }} minuti
             {% endif %}
+
+  - id: bus_51_poll
+    alias: "Bus 51: poll when waiting"
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.bus_waiting
+        to: "on"
+    actions:
+      - repeat:
+          while:
+            - condition: state
+              entity_id: input_boolean.bus_waiting
+              state: "on"
+          sequence:
+            - action: homeassistant.update_entity
+              target:
+                entity_id: sensor.bus_51_niguarda_wait
+            - delay:
+                seconds: 30
