@@ -1,0 +1,226 @@
+title: Pesi
+views:
+  - title: Pesi
+    path: pesi-dash
+    icon: mdi:scale-bathroom
+    cards:
+      # --- Weight ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_weight
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_weight
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:scale-bathroom
+        name: Peso
+
+      # --- BMI ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_bmi
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_bmi
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:human
+        name: BMI
+
+      # --- Body Fat ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_body_fat
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_body_fat
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:percent
+        name: Grasso corporeo
+
+      # --- Muscle Mass ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_muscle_mass
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_muscle_mass
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:arm-flex
+        name: Massa muscolare
+
+      # --- Lean Body Mass ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_lean_body_mass
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_lean_body_mass
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:human-handsup
+        name: Massa magra
+
+      # --- Bone Mass ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_bone_mass
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_bone_mass
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:bone
+        name: Massa ossea
+
+      # --- Water ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_water
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_water
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:water
+        name: Acqua
+
+      # --- Protein ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_protein
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_protein
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:food-steak
+        name: Proteine
+
+      # --- Visceral Fat ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_visceral_fat
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_visceral_fat
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:stomach
+        name: Grasso viscerale
+
+      # --- Basal Metabolism ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_basal_metabolism
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_basal_metabolism
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:fire
+        name: Metabolismo basale
+
+      # --- Metabolic Age ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_metabolic_age
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_metabolic_age
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:calendar-clock
+        name: Età metabolica
+
+      # --- Body Score ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_body_score
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_body_score
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:star
+        name: Body score
+
+      # --- Impedance ---
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.alessio_impedance
+            name: Alessio
+            color: "#fb8c00"
+          - entity: sensor.enrica_impedance
+            name: Enrica
+            color: "#81d4fa"
+        hours_to_show: 1460
+        show:
+          fill: false
+          labels: true
+        show_icon: true
+        icon: mdi:flash
+        name: Impedenza
