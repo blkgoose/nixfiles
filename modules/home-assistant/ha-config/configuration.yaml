@@ -13,8 +13,8 @@ plant_monitor:
     variegated_ivy:
       name: "Ariel"
       sensor: "sensor.plant_sensor_2_humidity"
-      min_humidity: 25
-      max_humidity: 70
+      min_humidity: 15
+      max_humidity: 50
       max_time_above: 72
       max_time_below: 24
     dianthus:
@@ -112,7 +112,7 @@ input_number:
     step: 1
     unit_of_measurement: "%"
     mode: box
-    initial: 25
+    initial: 15
   plant_variegated_ivy_max_humidity:
     name: "Ariel max humidity"
     min: 0
@@ -120,7 +120,7 @@ input_number:
     step: 1
     unit_of_measurement: "%"
     mode: box
-    initial: 70
+    initial: 50
   plant_variegated_ivy_max_time_above:
     name: "Ariel max time above (h)"
     min: 1

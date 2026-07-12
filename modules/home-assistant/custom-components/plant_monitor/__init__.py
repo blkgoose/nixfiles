@@ -39,6 +39,8 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_PLANTS): vol.Schema(
                     {cv.string: PLANT_SCHEMA}
                 ),
+                vol.Optional("stagnation_threshold", default=80): vol.Coerce(float),
+                vol.Optional("max_time_stagnant", default=24): vol.Coerce(int),
             }
         )
     },
@@ -53,6 +55,11 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
     hass.data.setdefault(DOMAIN, {})
     plants = config[DOMAIN][CONF_PLANTS]
+    stagnation_threshold = config[DOMAIN].get("stagnation_threshold", 80)
+    max_time_stagnant = config[DOMAIN].get("max_time_stagnant", 24)
+
+    hass.data[DOMAIN]["stagnation_threshold"] = stagnation_threshold
+    hass.data[DOMAIN]["max_time_stagnant"] = max_time_stagnant
 
     for plant_id, plant_config in plants.items():
         hass.data[DOMAIN][plant_id] = plant_config
@@ -173,9 +180,24 @@ class PlantStatusSensor(SensorEntity):
                 return f"{humidity:.0f}% ⚠", "mdi:alert-circle"
             return f"{humidity:.0f}% ▼", "mdi:arrow-down-bold"
 
-        # Within range - reset timers
+        # Within range - check stagnation, then reset timers
+        stagnation_threshold = self._hass.data[DOMAIN].get("stagnation_threshold", 80)
+        max_time_stagnant = self._hass.data[DOMAIN].get("max_time_stagnant", 24)
+        stagnation_level = max_h * stagnation_threshold / 100
+
+        if humidity >= stagnation_level:
+            last_stagnant = self._get_last_event_time("last_stagnant")
+            if last_stagnant is None:
+                self._set_last_event_time("last_stagnant", now)
+                last_stagnant = now
+            hours_stagnant = (now - last_stagnant).total_seconds() / 3600
+            if hours_stagnant > max_time_stagnant:
+                return f"{humidity:.0f}% ⚠", "mdi:alert-circle"
+            return f"{humidity:.0f}% ~", "mdi:equal"
+
         self._set_last_event_time("last_above_max", None)
         self._set_last_event_time("last_below_min", None)
+        self._set_last_event_time("last_stagnant", None)
 
         temperature = self._get_temperature()
         return f"{humidity:.0f}% · {temperature:.0f}°C", "mdi:flower"
@@ -276,6 +298,18 @@ class PlantColorSensor(SensorEntity):
             hours_below = (now - last_below).total_seconds() / 3600
             return "red" if hours_below > max_time_below else "orange"
 
+        # Within range - check stagnation
+        stagnation_threshold = self._hass.data[DOMAIN].get("stagnation_threshold", 80)
+        max_time_stagnant = self._hass.data[DOMAIN].get("max_time_stagnant", 24)
+        stagnation_level = max_h * stagnation_threshold / 100
+
+        if humidity >= stagnation_level:
+            last_stagnant = self._get_last_event_time("last_stagnant")
+            if last_stagnant is None:
+                return "orange"
+            hours_stagnant = (now - last_stagnant).total_seconds() / 3600
+            return "red" if hours_stagnant > max_time_stagnant else "orange"
+
         return "green"
 
     async def async_update(self):
@@ -336,6 +370,8 @@ async def async_setup_platform(
 
     entities = []
     for plant_id, plant_config in hass.data[DOMAIN].items():
+        if not isinstance(plant_config, dict):
+            continue
         entities.append(PlantStatusSensor(hass, plant_id, plant_config))
         entities.append(PlantColorSensor(hass, plant_id, plant_config))
 
