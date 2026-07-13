@@ -44,7 +44,7 @@ in {
 
       import XMonad.Layout.Spacing
       import XMonad.Layout.NoBorders
-      import XMonad.Layout.BinarySpacePartition (emptyBSP, ResizeDirectional(ExpandTowards))
+      import XMonad.Layout.BinarySpacePartition (emptyBSP, ResizeDirectional(ExpandTowards), Rotate(Rotate))
       import XMonad.Actions.Navigation2D
 
       import XMonad.Util.Loggers
@@ -125,6 +125,9 @@ in {
           , ((mod4Mask .|. shiftMask, xK_l), windowSwap R False)
           , ((mod4Mask .|. controlMask, xK_l), sendMessage $ ExpandTowards R)
           , ((mod4Mask .|. controlMask, xK_h), sendMessage $ ExpandTowards L)
+          , ((mod4Mask .|. controlMask, xK_j), sendMessage $ ExpandTowards D)
+          , ((mod4Mask .|. controlMask, xK_k), sendMessage $ ExpandTowards U)
+          , ((mod4Mask, xK_space), sendMessage Rotate)
           ]
 
       xmobarProp' config =
