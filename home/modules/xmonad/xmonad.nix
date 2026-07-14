@@ -53,15 +53,26 @@ in {
       import XMonad.Hooks.StatusBar.PP
 
       import XMonad.Actions.CycleWS
+      import qualified XMonad.StackSet as W
 
       import XMonad.Util.NamedScratchpad
 
       import Data.List (isInfixOf)
+      import Data.Maybe (isJust)
 
       spacing' gap =
           spacingRaw False
           (Border 0 gap 0 gap) True
           (Border gap 0 gap 0) True
+
+      toggleNonEmpty :: X ()
+      toggleNonEmpty = do
+          ws <- gets windowset
+          let hidden = W.hidden ws
+              nonEmptyNonNSP = filter (\w -> W.tag w /= "NSP" && isJust (W.stack w)) hidden
+          case nonEmptyNonNSP of
+              []    -> return ()
+              (x:_) -> windows $ W.view (W.tag x)
 
       scratchpads =
           [ NS "slack" "slack" (c ~? "app.slack.com__client") nonFloating
@@ -82,7 +93,7 @@ in {
                    }
                   `additionalKeys`
                   [ ((mod4Mask .|. controlMask, xK_c), spawn "${monitor-force-connect}")
-                  , ((mod4Mask, xK_Tab), toggleWS)
+                  , ((mod4Mask, xK_Tab), toggleNonEmpty)
                   , ((mod4Mask, xK_p), spawn "${pkgs.rofi}/bin/rofi -show run")
                   , ((mod4Mask .|. shiftMask, xK_y), spawn "${pkgs.copyq}/bin/copyq toggle")
 
