@@ -15,15 +15,43 @@ require("lazy").setup({
     { "github/copilot.vim" },
 
     {
-        "danielefongo/microscope",
-        dependencies = {
-            { "danielefongo/microscope-files", dev = false },
-            "danielefongo/microscope-buffers",
-            "danielefongo/microscope-code",
-        },
-        dev = false,
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
         config = function()
-            require("config.microscope")
+            local snacks = require("snacks")
+
+            snacks.setup({
+                bigfile = { enabled = true },
+                notifier = { enabled = true },
+                quickfile = { enabled = true },
+                statuscolumn = { enabled = false },
+                words = { enabled = true },
+                picker = {
+                    enabled = true,
+                    win = {
+                        input = {
+                            keys = {
+                                ["<c-j>"] = { "list_down", mode = { "i", "n" } },
+                                ["<c-k>"] = { "list_up", mode = { "i", "n" } },
+                            },
+                        },
+                    },
+                },
+            })
+
+            -- Keymaps
+            keymap("<leader>fw", function() snacks.picker.grep() end)
+            keymap("<leader>fW", function() snacks.picker.grep_word() end)
+            keymap("<leader>of", function() snacks.picker.files() end)
+            keymap("<leader>ob", function() snacks.picker.buffers() end)
+            keymap("<c-h>", function() snacks.picker.resume() end)
+
+            -- LSP keymaps
+            keymap("gi", function() snacks.picker.lsp_implementations() end)
+            keymap("gd", function() snacks.picker.lsp_definitions() end)
+            keymap("gr", function() snacks.picker.lsp_references() end)
+            keymap("gt", function() snacks.picker.lsp_type_definitions() end)
         end,
     },
 

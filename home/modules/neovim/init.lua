@@ -35,7 +35,10 @@ opt.mouse = ""
 local lsp_path = vim.fs.joinpath(vim.fn.stdpath("config"), "lsp")
 local lsps = {}
 for fname, _ in vim.fs.dir(lsp_path) do
-    lsps[#lsps + 1] = fname:match("^([^/]+).lua$")
+    local lsp_name = fname:match("^([^/]+)%.lua$")
+    if lsp_name then
+        lsps[#lsps + 1] = lsp_name
+    end
 end
 vim.lsp.enable(lsps)
 
