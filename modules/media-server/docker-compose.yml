@@ -164,19 +164,6 @@ services:
       - ./config/cleanuparr:/config
     restart: unless-stopped
 
-  caddy:
-    image: caddy:latest
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ./config/caddy/data:/data
-      - ./config/caddy/config:/config
-    network_mode: "host"
 
 networks:
   proxied:
