@@ -19,7 +19,7 @@
 
     script = ''
       cd /etc/arr
-      ${pkgs.docker-compose}/bin/docker-compose --env-file .env up -d --remove-orphans
+      ${pkgs.docker-compose}/bin/docker-compose --env-file .env up -d --pull always --remove-orphans
     '';
 
     preStop = ''
