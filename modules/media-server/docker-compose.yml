@@ -174,7 +174,7 @@ services:
     image: ghcr.io/ghomashudson/jellyfin-auto-collections:latest
     container_name: jellyfin-auto-collections
     environment:
-      - CRONTAB=0 0 * * *
+      - CRONTAB=*/15 * * * *
       - TZ=Europe/Rome
       - JELLYFIN_SERVER_URL=http://jellyfin:8096
       - JELLYFIN_API_KEY=${JELLYFIN_API_KEY}
