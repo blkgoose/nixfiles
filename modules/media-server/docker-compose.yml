@@ -105,8 +105,6 @@ services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    # networks:
-    #   - proxied
     ports:
       - "8096:8096"
     environment:
