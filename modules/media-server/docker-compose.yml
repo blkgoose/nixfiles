@@ -39,6 +39,12 @@ services:
       - "6881:6881/udp" # torrent UDP
     volumes:
       - ./config/gluetun:/gluetun
+    healthcheck:
+      test: /gluetun-entrypoint healthcheck
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     restart: unless-stopped
 
   qbittorrent:
@@ -46,7 +52,8 @@ services:
     container_name: qbittorrent
     network_mode: "service:gluetun"
     depends_on:
-      - gluetun
+      gluetun:
+        condition: service_healthy
     environment:
       - PUID=1000
       - PGID=1000
@@ -55,6 +62,12 @@ services:
     volumes:
       - ./config/qbittorrent:/config
       - /mnt/data/media:/data
+    healthcheck:
+      test: curl -sf http://localhost:8080 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     restart: unless-stopped
 
   prowlarr:
