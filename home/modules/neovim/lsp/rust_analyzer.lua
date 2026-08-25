@@ -1,5 +1,5 @@
 return {
-    cmd = { "rust-analyzer" },
+    cmd = { "nice", "-n", "19", "rust-analyzer" },
     filetypes = {
         "rust",
     },
