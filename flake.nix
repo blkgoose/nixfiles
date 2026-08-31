@@ -24,7 +24,10 @@
     chaotic.url = "github:chaotic-cx/nyx";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
-    osd.url = "github:blkgoose/osd-rs/feat/restart-on-failure";
+    osd = {
+      url = "github:blkgoose/osd-rs/feat/restart-on-failure";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, system-manager, ... }@inputs:
