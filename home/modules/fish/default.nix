@@ -21,6 +21,18 @@
     };
 
     functions = {
+      cargo = {
+        body = ''
+          CARGO_TARGET_DIR=/media/data/cargo-target \
+          RUSTC_WRAPPER=sccache \
+          SCCACHE_DIR=/media/data/sccache \
+          SCCACHE_CACHE_SIZE=20G \
+          CARGO_INCREMENTAL=0 \
+          command cargo $argv
+        '';
+        description = "cargo wrapper forcing shared target dir + sccache";
+      };
+
       foreach = {
         body = "xargs -I'{}' fish -c $fun";
         description = "run function on every argument ({})";
