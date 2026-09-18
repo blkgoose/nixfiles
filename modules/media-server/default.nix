@@ -15,7 +15,7 @@ in {
     enable = true;
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/duckdns@v0.5.0" ];
-      hash = "sha256-BI72FyEpCKTyQ9lRlVcRsPLSyXlfwdOae57KhVTH/M8=";
+      hash = "sha256-pRbG4jlONeUTv3kStZHOCuXntNfwDlL7x7UzCquS9qc=";
     };
     globalConfig = ''
       email admin@aletflix.duckdns.org
