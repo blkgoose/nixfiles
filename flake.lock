@@ -495,15 +495,16 @@
         "userborn": "userborn"
       },
       "locked": {
-        "lastModified": 1786747314,
-        "narHash": "sha256-L8GneKBeYOStPrLUAypI8bDGNjntcH2AngxSig/ul8c=",
+        "lastModified": 1788848123,
+        "narHash": "sha256-VZvpVoNyuTFG1wAUo4t3wq6aBRB7kFXzipRhbE1cG64=",
         "owner": "numtide",
         "repo": "system-manager",
-        "rev": "64748b62d6ae74c069234103ce368626bcad8c70",
+        "rev": "f76411e183f95ebf6d92d564c3150ac94d0aac2d",
         "type": "github"
       },
       "original": {
         "owner": "numtide",
+        "ref": "release-26.05",
         "repo": "system-manager",
         "type": "github"
       }
