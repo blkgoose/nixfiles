@@ -82,6 +82,23 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
+  systemd.services.nix-gc = {
+    description = "Nix garbage collection";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.nix}/bin/nix-collect-garbage -d";
+    };
+  };
+
+  systemd.timers.nix-gc = {
+    description = "timer for nix garbage collection";
+    timerConfig = {
+      OnCalendar = "02:00";
+      Persistent = true;
+    };
+    wantedBy = [ "timers.target" ];
+  };
+
   # requires to run this code before it works:
   # sudo mkdir -p /root/.config/luks/
   # sudo dd if=/dev/urandom of=/root/.config/luks/luks.key bs=64 count=1
