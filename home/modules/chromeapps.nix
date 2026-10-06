@@ -39,6 +39,10 @@ let
       url = "https://www.chess.com";
       wrapper = chromeWrapper personal;
     };
+    "claude-ai" = {
+      url = "https://claude.ai/code";
+      wrapper = chromeWrapper personal;
+    };
     "codescene" = {
       url =
         "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
