@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calorie</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#14161a">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Calorie">
+<style>
+  :root {
+    --bg: #14161a; --card: #1e2127; --line: #2c3038; --text: #e8eaed; --dim: #8a909a;
+    --carb: #f5a623; --prot: #4a9eff; --fat: #e86f9b; --accent: #5ec27a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.4 system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 12px; }
+  header { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+  header .spacer { flex: 1; }
+  select, input, button { font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: #0d1f13; border-color: var(--accent); font-weight: 600; }
+  button.icon { padding: 8px 12px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+  .summary { display: flex; justify-content: space-between; align-items: baseline; }
+  .summary .big { font-size: 28px; font-weight: 700; }
+  .dim { color: var(--dim); font-size: 13px; }
+  .bar { margin-top: 12px; }
+  .bar .label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+  .track { height: 12px; background: var(--line); border-radius: 6px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 6px; transition: width .2s; }
+  .fill.over { background: #e5484d !important; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .row > input { flex: 1; min-width: 0; }
+  .food { display: flex; align-items: center; gap: 10px; padding: 10px; margin-top: 6px; border-radius: 8px; border-left: 6px solid var(--c, var(--line)); background: color-mix(in srgb, var(--c, transparent) 14%, var(--card)); cursor: pointer; }
+  .food .meta { flex: 1; min-width: 0; }
+  .food .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .food button { padding: 4px 10px; }
+  .log { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .log:first-of-type { border-top: 0; }
+  .err { color: #ff8a8a; margin: 8px 0; }
+  dialog { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 12px; padding: 16px; width: min(92vw, 420px); }
+  dialog::backdrop { background: #000a; }
+  dialog label { display: block; margin-top: 10px; font-size: 13px; color: var(--dim); }
+  dialog input, dialog select { width: 100%; margin-top: 4px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+  .chartTip { position: fixed; transform: translate(-50%, -100%) translateY(-6px); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font-size: 12px; white-space: nowrap; pointer-events: none; z-index: 10; }
+  .chartTip[hidden] { display: none; }
+  .chartDot { cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <select id="userSel"></select>
+    <button class="icon" id="settingsBtn" title="Impostazioni">⚙</button>
+    <span class="spacer"></span>
+    <button class="icon" id="prevDay">‹</button>
+    <input type="date" id="dayInput">
+    <button class="icon" id="nextDay">›</button>
+  </header>
+
+  <div id="error" class="err"></div>
+  <div id="content"></div>
+</main>
+<div id="weightTip" class="chartTip" hidden></div>
+
+<dialog id="foodDlg">
+  <form method="dialog" id="foodForm">
+    <h3 id="foodTitle" style="margin:0">Nuovo alimento</h3>
+    <label>Nome <input name="name" required></label>
+    <div class="dim" style="margin-top:10px">Valori per 100 g</div>
+    <div class="grid3">
+      <label>Carb (g) <input name="carb" type="number" step="0.1" min="0" required></label>
+      <label>Prot (g) <input name="prot" type="number" step="0.1" min="0" required></label>
+      <label>Grassi (g) <input name="fat" type="number" step="0.1" min="0" required></label>
+    </div>
+    <label>Quantità porzione (g) <input name="grams" type="number" step="1" min="1" value="100" required></label>
+    <div class="dim" id="foodKcal" style="margin-top:8px"></div>
+    <div class="actions">
+      <button type="button" id="foodCreateNew" style="margin-right:auto;display:none">Crea nuovo</button>
+      <button type="button" data-close>Annulla</button>
+      <button class="primary" type="submit">Salva</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="userDlg">
+  <form method="dialog" id="userForm">
+    <h3 id="userTitle" style="margin:0">Utente</h3>
+    <label>Nome <input name="name" required></label>
+    <label>Sensore peso (Home Assistant) <select name="weight_entity"></select></label>
+    <label>Sensore metabolismo basale (opzionale, altrimenti Mifflin-St Jeor) <select name="bmr_entity"></select></label>
+    <div class="grid3">
+      <label>Sesso <select name="sex"><option value="m">M</option><option value="f">F</option></select></label>
+      <label>Nascita <input name="birthdate" type="date"></label>
+      <label>Altezza (cm) <input name="height_cm" type="number" min="0" step="0.5"></label>
+    </div>
+    <div class="grid3">
+      <label>Carb % <input name="carb_pct" type="number" min="0" max="100" step="1" required></label>
+      <label>Prot % <input name="prot_pct" type="number" min="0" max="100" step="1" required></label>
+      <label>Grassi % <input name="fat_pct" type="number" min="0" max="100" step="1" required></label>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <label style="flex:1">Peso obiettivo (kg) <input name="target_weight_kg" type="number" min="0" step="0.1"></label>
+      <label style="flex:1">Raggiungi entro <input name="target_date" type="date"></label>
+    </div>
+    <div class="err" id="userErr"></div>
+    <div class="actions">
+      <button type="button" id="userDelete" style="margin-right:auto">Elimina</button>
+      <button type="button" data-close>Annulla</button>
+      <button class="primary" type="submit">Salva</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const ACTIVITY_LABELS = {
+  1.2: "Sedentario", 1.375: "Leggero", 1.55: "Moderato", 1.725: "Intenso", 1.9: "Molto intenso",
+};
+const MACROS = [
+  ["carb", "Carboidrati", "var(--carb)", 4],
+  ["prot", "Proteine", "var(--prot)", 4],
+  ["fat", "Grassi", "var(--fat)", 9],
+];
+
+const $ = (id) => document.getElementById(id);
+const store = {
+  get user() { return Number(localStorage.getItem("user")) || null; },
+  set user(v) { localStorage.setItem("user", v); },
+};
+let users = [];
+let foods = [];
+let state = null;
+let weightHistory = [];
+let day = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+let query = "";
+let servings = 1;
+let haEntities = null;
+
+function h(tag, props = {}, ...children) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === "class") el.className = v;
+    else if (k === "style") el.style.cssText = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el[k] = v;
+  }
+  for (const c of children.flat()) el.append(c instanceof Node ? c : document.createTextNode(c ?? ""));
+  return el;
+}
+
+function svgEl(tag, attrs = {}, ...children) {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v);
+  }
+  for (const c of children.flat()) if (c != null) el.append(c);
+  return el;
+}
+
+async function api(path, method = "GET", body) {
+  const res = await fetch(path, {
+    method,
+    headers: body ? { "Content-Type": "application/json" } : {},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+
+function showError(msg) { $("error").textContent = msg || ""; }
+const fmt = (n, d = 0) => Number(n).toFixed(d);
+const kcalOf = (f) => f.carb * 4 + f.prot * 4 + f.fat * 9;
+
+// Green when the item fits what is left of every macro; red when it is entirely over budget.
+// Score = share of the item's kcal that exceeds the remaining budget of its macro.
+function fitColor(food) {
+  if (!state?.macro_goals) return null;
+  let over = 0, total = 0;
+  for (const [key, , , kcalPerG] of MACROS) {
+    const item = food[key] * servings;
+    if (item <= 0) continue;
+    const remaining = Math.max(0, state.macro_goals[key] - state.totals[key]);
+    const excess = Math.max(0, item - remaining);
+    over += excess * kcalPerG;
+    total += item * kcalPerG;
+  }
+  if (total === 0) return "hsl(120 55% 45%)";
+  return `hsl(${Math.round(120 * (1 - over / total))} 65% 48%)`;
+}
+
+async function load() {
+  showError("");
+  users = await api("/api/users");
+  if (!users.length) { render(); openUser(null); return; }
+  if (!users.some((u) => u.id === store.user)) store.user = users[0].id;
+  [state, foods, weightHistory] = await Promise.all([
+    api(`/api/state?user=${store.user}&day=${day}`),
+    api("/api/foods"),
+    api(`/api/weight_history?user=${store.user}`),
+  ]);
+  render();
+}
+
+function render() {
+  const sel = $("userSel");
+  sel.replaceChildren(
+    ...users.map((u) => h("option", { value: u.id, selected: u.id === store.user }, u.name)),
+    h("option", { value: "new" }, "+ Nuovo utente"),
+  );
+  $("dayInput").value = day;
+
+  const root = $("content");
+  root.replaceChildren();
+  if (!state) { root.append(h("div", { class: "card dim" }, "Crea il primo utente per iniziare.")); return; }
+
+  root.append(weightChartCard(), summaryCard(), foodCard());
+}
+
+const DOW = ["dom", "lun", "mar", "mer", "gio", "ven", "sab"];
+const fmtDayLabel = (d) => {
+  const dt = new Date(d + "T00:00:00");
+  return `${DOW[dt.getDay()]} ${String(dt.getDate()).padStart(2, "0")}/${String(dt.getMonth() + 1).padStart(2, "0")}`;
+};
+
+function weightChartCard() {
+  const card = h("div", { class: "card" });
+  card.append(h("div", { class: "dim", style: "margin-bottom:8px" }, "Peso · ultimi 7 giorni"));
+  if (!weightHistory.length) {
+    card.append(h("div", { class: "dim" }, "Nessun dato dal sensore di peso."));
+    return card;
+  }
+  card.append(weightChart(weightHistory));
+  return card;
+}
+
+function weightChart(points) {
+  const W = 320, H = 130, padL = 30, padR = 10, padT = 18, padB = 16;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const start = new Date(today); start.setDate(start.getDate() - 6);
+  const dayIndex = (d) => Math.round((new Date(d + "T00:00:00") - start) / 86400000);
+
+  const values = points.map((p) => p.weight);
+  const dataMin = Math.min(...values), dataMax = Math.max(...values);
+  const span = Math.max(dataMax - dataMin, 0.5);
+  const pad = span * 0.2;
+  const min = dataMin - pad, max = dataMax + pad;
+
+  const x = (i) => padL + (i / 6) * plotW;
+  const y = (v) => padT + (1 - (v - min) / (max - min)) * plotH;
+
+  const plotted = points
+    .map((p) => ({ ...p, i: dayIndex(p.day), px: x(dayIndex(p.day)), py: y(p.weight) }))
+    .filter((p) => p.i >= 0 && p.i <= 6);
+  if (!plotted.length) return h("div", { class: "dim" }, "Nessun dato nei giorni recenti.");
+
+  const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", height: H, style: "display:block" });
+
+  for (const v of [dataMin, dataMax]) {
+    const ty = y(v);
+    svg.append(
+      svgEl("line", { x1: padL, x2: W - padR, y1: ty, y2: ty, stroke: "var(--line)", "stroke-width": 1 }),
+      svgEl("text", { x: 2, y: ty + 3, "font-size": 9, fill: "var(--dim)" }, v.toFixed(1)),
+    );
+  }
+
+  for (let i = 0; i <= 6; i++) {
+    const d = new Date(start); d.setDate(d.getDate() + i);
+    svg.append(svgEl("text", { x: x(i), y: H - 4, "font-size": 9, fill: "var(--dim)", "text-anchor": "middle" },
+      DOW[d.getDay()]));
+  }
+
+  const linePath = plotted.map((p, idx) => `${idx ? "L" : "M"}${p.px},${p.py}`).join(" ");
+  svg.append(svgEl("path", { d: linePath, fill: "none", stroke: "var(--accent)", "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+
+  const baseline = padT + plotH;
+  const areaPath = `${linePath} L${plotted[plotted.length - 1].px},${baseline} L${plotted[0].px},${baseline} Z`;
+  svg.append(svgEl("path", { d: areaPath, fill: "var(--accent)", opacity: 0.1, stroke: "none" }));
+
+  plotted.forEach((p, idx) => {
+    const isLast = idx === plotted.length - 1;
+    const r = isLast ? 4 : 3;
+    if (isLast) svg.append(svgEl("circle", { cx: p.px, cy: p.py, r: r + 2, fill: "var(--card)" }));
+    svg.append(svgEl("circle", { cx: p.px, cy: p.py, r, fill: "var(--accent)" }));
+    const hit = svgEl("circle", {
+      class: "chartDot", cx: p.px, cy: p.py, r: 12, fill: "transparent",
+      tabindex: "0", role: "img", "aria-label": `${fmtDayLabel(p.day)}: ${fmt(p.weight, 1)} kg`,
+      onpointerenter: (e) => showWeightTip(e.target, p),
+      onpointermove: (e) => showWeightTip(e.target, p),
+      onpointerleave: hideWeightTip,
+      onfocus: (e) => showWeightTip(e.target, p),
+      onblur: hideWeightTip,
+    });
+    svg.append(hit);
+  });
+
+  const last = plotted[plotted.length - 1];
+  const nearRightEdge = last.px > W - padR - 40;
+  svg.append(svgEl("text", {
+    x: nearRightEdge ? last.px - 6 : last.px + 6,
+    y: Math.max(last.py - 10, 10),
+    "font-size": 12, fill: "var(--text)", "font-weight": 600,
+    "text-anchor": nearRightEdge ? "end" : "start",
+  }, `${fmt(last.weight, 1)} kg`));
+
+  return svg;
+}
+
+function showWeightTip(target, p) {
+  const tip = $("weightTip");
+  const r = target.getBoundingClientRect();
+  tip.textContent = `${fmtDayLabel(p.day)} · ${fmt(p.weight, 1)} kg`;
+  tip.style.left = `${r.left + r.width / 2}px`;
+  tip.style.top = `${r.top}px`;
+  tip.hidden = false;
+}
+function hideWeightTip() { $("weightTip").hidden = true; }
+
+function summaryCard() {
+  const s = state;
+  const card = h("div", { class: "card" });
+  const eaten = s.totals.kcal;
+
+  if (!s.goal_kcal) {
+    card.append(
+      h("div", { class: "dim" }, "Obiettivo non calcolabile: servono peso (sensore HA) e metabolismo basale (sensore, oppure data di nascita e altezza)."),
+      h("button", { style: "margin-top:8px", onclick: () => openUser(s.user) }, "Apri impostazioni"),
+    );
+  } else {
+    const left = s.goal_kcal - eaten;
+    card.append(h("div", { class: "summary" },
+      h("div", {}, h("div", { class: "big" }, fmt(eaten)), h("div", { class: "dim" }, `/ ${s.goal_kcal} kcal`)),
+      h("div", { style: "text-align:right" },
+        h("div", { class: "big", style: `color:${left < 0 ? "#e5484d" : "var(--accent)"}` }, fmt(Math.abs(left))),
+        h("div", { class: "dim" }, left < 0 ? "kcal in eccesso" : "kcal rimaste")),
+    ));
+    const src = s.bmr_source === "sensor" ? "sensore" : "Mifflin-St Jeor";
+    card.append(h("div", { class: "dim", style: "margin-top:6px" },
+      `Peso ${s.weight != null ? fmt(s.weight, 1) + " kg" : "n/d"} · BMR ${fmt(s.bmr)} (${src}) × ${s.activity}`));
+    if (s.user.target_weight_kg && s.user.target_date) {
+      const d = s.target_deficit_kcal;
+      card.append(h("div", { class: "dim", style: "margin-top:2px" },
+        `Obiettivo ${s.user.target_weight_kg} kg entro ${s.user.target_date}` +
+        (d != null ? ` · mantenimento ${fmt(s.maintenance_kcal)} ${d >= 0 ? "−" : "+"} ${fmt(Math.abs(d))} kcal/giorno` : " · data obiettivo non valida")));
+    }
+  }
+
+  const act = h("select", { onchange: async (e) => {
+    try {
+      await api("/api/day", "PUT", { user: store.user, day, activity: Number(e.target.value) });
+      await load();
+    } catch (err) { showError(err.message); }
+  } }, ...s.activity_levels.map((v) => h("option", { value: v, selected: v === s.activity }, `${ACTIVITY_LABELS[v]} (×${v})`)));
+  card.append(h("div", { class: "row", style: "margin-top:10px" }, h("span", { class: "dim" }, "Attività"), act));
+
+  for (const [key, label, color] of MACROS) {
+    const goal = s.macro_goals?.[key];
+    const val = s.totals[key];
+    const pct = goal ? (val / goal) * 100 : 0;
+    card.append(h("div", { class: "bar" },
+      h("div", { class: "label" }, h("span", {}, `${label} · ${s.user[key + "_pct"]}%`), h("span", {}, goal ? `${fmt(val)} / ${fmt(goal)} g` : `${fmt(val)} g`)),
+      h("div", { class: "track" }, h("div", { class: "fill" + (pct > 100 ? " over" : ""), style: `width:${Math.min(pct, 100)}%;background:${color}` })),
+    ));
+  }
+  return card;
+}
+
+function foodCard() {
+  const card = h("div", { class: "card" });
+
+  if (state.logs.length) {
+    card.append(h("div", { class: "dim", style: "margin-bottom:4px" }, "Mangiato"));
+    for (const l of state.logs) {
+      const kcal = kcalOf(l) * l.qty;
+      card.append(h("div", { class: "log" },
+        h("span", {}, `${l.name}${l.qty !== 1 ? ` ×${l.qty}` : ""}`),
+        h("span", { class: "dim" }, `${fmt(kcal)} kcal `,
+          h("button", {
+            style: `padding:0 6px;margin-left:6px;${l.recurring_id ? "color:var(--accent);border-color:var(--accent)" : ""}`,
+            title: l.food_id == null ? "Alimento non più disponibile" : l.recurring_id ? "Non ripetere più ogni giorno" : "Ripeti ogni giorno",
+            disabled: l.food_id == null,
+            onclick: async () => {
+              try {
+                if (l.recurring_id) await api(`/api/recurring/${l.recurring_id}`, "DELETE");
+                else await api("/api/recurring", "POST", { user: store.user, food_id: l.food_id, qty: l.qty });
+                await load();
+              } catch (err) { showError(err.message); }
+            },
+          }, "🔁"),
+          h("button", { style: "padding:0 8px;margin-left:6px", title: "Rimuovi", onclick: async () => {
+            await api(`/api/logs/${l.id}`, "DELETE"); await load();
+          } }, "×")),
+      ));
+    }
+    card.append(h("hr", { style: "border:0;border-top:1px solid var(--line);margin:12px 0" }));
+  }
+
+  const search = h("input", { type: "search", placeholder: "Cerca tra gli alimenti…", value: query, oninput: (e) => { query = e.target.value; renderList(); } });
+  const qty = h("input", { type: "number", min: "0.1", step: "0.1", value: servings, style: "flex:0 0 70px", title: "Porzioni", oninput: (e) => { servings = Number(e.target.value) || 1; renderList(); } });
+  card.append(h("div", { class: "row" }, search, qty, h("button", { class: "primary icon", title: "Nuovo alimento", onclick: () => openFood() }, "+")));
+
+  const list = h("div", { id: "foodList" });
+  card.append(list);
+  queueMicrotask(renderList);
+  return card;
+}
+
+function renderList() {
+  const list = $("foodList");
+  if (!list) return;
+  const q = query.trim().toLowerCase();
+  const items = foods.filter((f) => f.name.toLowerCase().includes(q));
+  if (!items.length) {
+    list.replaceChildren(h("div", { class: "dim", style: "margin-top:10px" }, foods.length ? "Nessun risultato." : "Nessun alimento: aggiungine uno con +."));
+    return;
+  }
+  list.replaceChildren(...items.map((f) => {
+    const color = fitColor(f);
+    return h("div", { class: "food", style: color ? `--c:${color}` : "", onclick: async () => {
+      try {
+        await api("/api/logs", "POST", { user: store.user, day, food_id: f.id, qty: servings });
+        await load();
+      } catch (err) { showError(err.message); }
+    } },
+      h("div", { class: "meta" },
+        h("div", { class: "name" }, f.name),
+        h("div", { class: "dim" }, `${fmt(kcalOf(f) * servings)} kcal · C ${fmt(f.carb * servings)} · P ${fmt(f.prot * servings)} · G ${fmt(f.fat * servings)}`)),
+      h("button", { title: "Modifica", onclick: (e) => { e.stopPropagation(); openFood(f); } }, "✎"),
+      h("button", { title: "Elimina", onclick: async (e) => {
+        e.stopPropagation();
+        if (!confirm(`Eliminare "${f.name}" dalla lista? Lo storico resta.`)) return;
+        try { await api(`/api/foods/${f.id}`, "DELETE"); await load(); } catch (err) { showError(err.message); }
+      } }, "🗑"),
+    );
+  }));
+}
+
+function openFood(base) {
+  const form = $("foodForm");
+  form.reset();
+  $("foodTitle").textContent = base ? "Modifica alimento" : "Nuovo alimento";
+  form.dataset.id = base ? base.id : "";
+  $("foodCreateNew").style.display = base ? "" : "none";
+  if (base) {
+    form.elements.name.value = base.name;
+    for (const k of ["carb", "prot", "fat"]) form.elements[k].value = base[k + "100"];
+    form.elements.grams.value = base.grams;
+  }
+  updateFoodKcal();
+  $("foodDlg").showModal();
+}
+
+function foodPortion() {
+  const f = $("foodForm").elements;
+  const k = Number(f.grams.value || 0) / 100;
+  return {
+    carb: Number(f.carb.value || 0) * k,
+    prot: Number(f.prot.value || 0) * k,
+    fat: Number(f.fat.value || 0) * k,
+  };
+}
+
+function foodPayload() {
+  const f = $("foodForm").elements;
+  return { name: f.name.value, carb100: f.carb.value, prot100: f.prot.value, fat100: f.fat.value, grams: f.grams.value };
+}
+
+function updateFoodKcal() {
+  const p = foodPortion();
+  $("foodKcal").textContent = `Porzione: ${fmt(kcalOf(p))} kcal · C ${fmt(p.carb, 1)} · P ${fmt(p.prot, 1)} · G ${fmt(p.fat, 1)}`;
+}
+
+async function loadEntities() {
+  if (haEntities) return haEntities;
+  haEntities = await api("/api/ha/entities");
+  return haEntities;
+}
+
+async function openUser(user) {
+  const form = $("userForm");
+  form.reset();
+  $("userErr").textContent = "";
+  $("userTitle").textContent = user ? "Impostazioni" : "Nuovo utente";
+  $("userDelete").style.display = user ? "" : "none";
+  form.dataset.id = user ? user.id : "";
+
+  const ents = await loadEntities();
+  const fill = (sel, list, current) => {
+    const options = [h("option", { value: "" }, "— nessuno —"), ...list.map((e) => h("option", { value: e.id }, `${e.name} (${e.state})`))];
+    if (current && !list.some((e) => e.id === current)) options.push(h("option", { value: current }, current));
+    sel.replaceChildren(...options);
+    sel.value = current || "";
+  };
+  fill(form.elements.weight_entity, ents.weight, user?.weight_entity);
+  fill(form.elements.bmr_entity, ents.numeric, user?.bmr_entity);
+
+  const defaults = { sex: "m", carb_pct: 45, prot_pct: 30, fat_pct: 25 };
+  for (const k of ["name", "sex", "birthdate", "height_cm", "carb_pct", "prot_pct", "fat_pct", "target_weight_kg", "target_date"]) {
+    form.elements[k].value = user?.[k] ?? defaults[k] ?? "";
+  }
+  $("userDlg").showModal();
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches("[data-close]")) e.target.closest("dialog").close();
+});
+$("foodForm").addEventListener("input", updateFoodKcal);
+$("foodForm").addEventListener("submit", async (e) => {
+  try {
+    const id = $("foodForm").dataset.id;
+    if (id) await api(`/api/foods/${id}`, "PUT", foodPayload());
+    else await api("/api/foods", "POST", foodPayload());
+    await load();
+  } catch (err) { showError(err.message); }
+});
+$("foodCreateNew").addEventListener("click", async () => {
+  try {
+    await api("/api/foods", "POST", foodPayload());
+    $("foodDlg").close();
+    await load();
+  } catch (err) { showError(err.message); }
+});
+$("userForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const body = Object.fromEntries(new FormData(form));
+  try {
+    const id = form.dataset.id;
+    if (id) await api(`/api/users/${id}`, "PUT", body);
+    else store.user = (await api("/api/users", "POST", body)).id;
+    $("userDlg").close();
+    await load();
+  } catch (err) { $("userErr").textContent = err.message; }
+});
+$("userDelete").addEventListener("click", async () => {
+  const id = $("userForm").dataset.id;
+  if (!id || !confirm("Eliminare l'utente e tutto il suo storico?")) return;
+  await api(`/api/users/${id}`, "DELETE");
+  $("userDlg").close();
+  store.user = null;
+  state = null;
+  await load();
+});
+
+$("userSel").addEventListener("change", (e) => {
+  if (e.target.value === "new") { e.target.value = store.user; openUser(null); return; }
+  store.user = Number(e.target.value);
+  load();
+});
+$("settingsBtn").addEventListener("click", () => state && openUser(state.user));
+$("dayInput").addEventListener("change", (e) => { if (e.target.value) { day = e.target.value; load(); } });
+const shiftDay = (n) => {
+  const d = new Date(day + "T12:00:00");
+  d.setDate(d.getDate() + n);
+  day = d.toISOString().slice(0, 10);
+  load();
+};
+$("prevDay").addEventListener("click", () => shiftDay(-1));
+$("nextDay").addEventListener("click", () => shiftDay(1));
+
+load().catch((err) => showError(err.message));
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+}
+</script>
+</body>
+</html>

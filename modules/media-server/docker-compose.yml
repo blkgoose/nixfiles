@@ -1,7 +1,12 @@
+x-dns: &dns
+  - 1.1.1.1
+  - 8.8.8.8
+
 services:
   seerr:
     image: ghcr.io/seerr-team/seerr:latest
     container_name: seerr
+    dns: *dns
     init: true
     ports:
       - "5055:5055"
@@ -73,9 +78,7 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
+    dns: *dns
     ports:
       - "9696:9696"
     environment:
@@ -90,6 +93,7 @@ services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
+    dns: *dns
     ports:
       - "8989:8989"
     environment:
@@ -104,6 +108,7 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    dns: *dns
     ports:
       - "7878:7878"
     environment:
@@ -118,6 +123,7 @@ services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
+    dns: *dns
     ports:
       - "8096:8096"
     environment:
@@ -144,6 +150,7 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
+    dns: *dns
     ports:
       - "6767:6767"
     environment:
@@ -158,6 +165,7 @@ services:
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
+    dns: *dns
     ports:
       - "8191:8191"
     environment:
@@ -171,6 +179,7 @@ services:
   cleanuparr:
     image: ghcr.io/cleanuparr/cleanuparr:latest
     container_name: cleanuparr
+    dns: *dns
     ports:
       - 11011:11011
     environment:
@@ -184,6 +193,7 @@ services:
   jellyfin-auto-collections:
     image: ghcr.io/ghomashudson/jellyfin-auto-collections:latest
     container_name: jellyfin-auto-collections
+    dns: *dns
     environment:
       - CRONTAB=*/15 * * * *
       - TZ=Europe/Rome

@@ -7,6 +7,7 @@
     ../../modules/systemd-boot.nix
     ../../modules/dashboard-common.nix
     ../../modules/home-assistant
+    ../../modules/calorie-tracker
     ../../modules/media-server
   ];
 
