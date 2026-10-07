@@ -38,6 +38,7 @@ in {
       import XMonad.Util.EZConfig (additionalKeys)
       import Data.Ratio
       import XMonad.Hooks.EwmhDesktops
+      import XMonad.Layout.Fullscreen (fullscreenSupport, fullscreenFull)
       import XMonad.Actions.UpdatePointer (updatePointer)
       import XMonad.Util.Run
       import Graphics.X11.ExtraTypes.XF86
@@ -59,11 +60,18 @@ in {
 
       import Data.List (isInfixOf)
       import Data.Maybe (isJust)
+      import qualified Data.Map as M
 
       spacing' gap =
           spacingRaw False
           (Border 0 gap 0 gap) True
           (Border gap 0 gap 0) True
+
+      data FullOrFloat = FullOrFloat deriving (Read, Show)
+
+      instance SetsAmbiguous FullOrFloat where
+          hiddens _ wset screenRect _ wrs =
+              [ w | (w, r) <- wrs, M.member w (W.floating wset) || r == screenRect ]
 
       toggleNonEmpty :: X ()
       toggleNonEmpty = do
@@ -84,7 +92,7 @@ in {
               q ~? x = fmap (x `isInfixOf`) q
 
       myConf = def { terminal = "alacritty"
-                   , layoutHook = lessBorders OnlyFloat $ spacing' 10 $ emptyBSP
+                   , layoutHook = lessBorders FullOrFloat $ fullscreenFull $ spacing' 10 $ emptyBSP
                    , borderWidth = 4
                    , focusedBorderColor = "#B388FF"
                    , normalBorderColor = "#F5F5F5"
@@ -161,7 +169,7 @@ in {
       offwhiteColor = "#F5F5F5"
 
       main :: IO ()
-      main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp' $ myConf
+      main = xmonad $ fullscreenSupport $ ewmh $ xmobarProp' $ myConf
     '';
   };
 }
