@@ -2,7 +2,7 @@
   programs.git = {
     enable = true;
 
-    ignores = [ ".direnv/" "mutagen.yaml.lock" ];
+    ignores = [ ".direnv/" "mutagen.yaml.lock" ".claude/" ];
 
     settings = {
       alias = {
