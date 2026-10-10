@@ -1,4 +1,4 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ lutris stremio ];
+  environment.systemPackages = with pkgs; [ lutris ];
   programs.steam.enable = true;
 }
