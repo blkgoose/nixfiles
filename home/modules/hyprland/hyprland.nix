@@ -11,7 +11,7 @@
       ecosystem.no_update_news = true;
 
       exec-once = [
-        "hyprpaper &"
+        "hyprpaper"
         "swayidle -w"
         "systemctl --user start waybar"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
@@ -27,7 +27,7 @@
 
         follow_mouse = 1;
 
-        touchpad = { natural_scroll = "no"; };
+        touchpad = { natural_scroll = false; };
 
         sensitivity = 0;
       };
@@ -58,7 +58,7 @@
       };
 
       animations = {
-        enabled = "yes";
+        enabled = true;
 
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
 
@@ -73,8 +73,8 @@
       };
 
       dwindle = {
-        pseudotile = "yes";
-        preserve_split = "yes";
+        pseudotile = true;
+        preserve_split = true;
         special_scale_factor = 0.85;
       };
 
@@ -161,7 +161,7 @@
         " , switch:on:Lid Switch, exec, hyprctl keyword monitor 'eDP-1, disable'"
       ];
 
-      binds = { allow_workspace_cycles = "yes"; };
+      binds = { allow_workspace_cycles = true; };
     };
   };
 }
