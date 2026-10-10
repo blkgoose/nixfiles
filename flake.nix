@@ -102,9 +102,6 @@
         };
       };
 
-      # Exposed so other flakes (e.g. the shittop-only flake) can build their
-      # own homeConfigurations/systemConfigs against this flake's pkgs,
-      # overlays, secrets and shared modules without duplicating any of it.
       extLib = {
         inherit pkgs secrets system inputs;
 
