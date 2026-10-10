@@ -16,8 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixgl.url = "github:nix-community/nixGL";
-
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     osd = {
@@ -48,9 +46,10 @@
             };
           })
 
-          inputs.nixgl.overlay
           (self: super: {
-            nixGL = import ./home/lib/nixgl.nix { inherit pkgs; };
+            # real GL wrapping is only needed on non-NixOS machines (the
+            # work laptop flake overrides this with the real nixGL wrapper)
+            nixGL = package: package;
           })
 
           (self: super: {
