@@ -18,9 +18,6 @@
 
     nixgl.url = "github:nix-community/nixGL";
 
-    suite_py.url = "git+ssh://git@github.com/primait/suite_py";
-    prima-nix.url = "git+ssh://git@github.com/primait/prima.nix";
-
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     osd = {
@@ -43,7 +40,6 @@
         ];
 
         overlays = [
-          inputs.suite_py.overlays.default
           (self: super: {
             unstable = import inputs.nixpkgs-unstable {
               inherit system;
@@ -105,7 +101,8 @@
       extLib = {
         inherit pkgs secrets system inputs;
 
-        mkHomeConfiguration = { modules, extraSpecialArgs ? { } }:
+        mkHomeConfiguration =
+          { modules, extraSpecialArgs ? { }, pkgs ? pkgs }:
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs modules;
             extraSpecialArgs = inputs // { inherit system secrets; }
