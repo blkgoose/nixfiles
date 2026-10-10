@@ -11,12 +11,16 @@
     ../../modules/sound.nix
     ../../modules/virtualization.nix
     ../../modules/entertainment.nix
+    ../../modules/ion-dev.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix
   ];
 
   networking.hostName = "toaster";
+
+  # temporary: used by toaster
+  home-manager.users.alessio.imports = [ ../../home/modules/ion-dev.nix ];
 
   # temporary
   systemd.targets.sleep.enable = false;
