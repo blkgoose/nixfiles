@@ -101,19 +101,20 @@
       extLib = {
         inherit pkgs secrets system inputs;
 
-        mkHomeConfiguration =
-          { modules, extraSpecialArgs ? { }, pkgs ? pkgs }:
+        mkHomeConfiguration = { modules, extraSpecialArgs ? { }, pkgs ? pkgs }:
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs modules;
-            extraSpecialArgs = inputs // { inherit system secrets; }
-              // extraSpecialArgs;
+            extraSpecialArgs = inputs // {
+              inherit system secrets;
+            } // extraSpecialArgs;
           };
 
         mkSystemConfig = { modules, extraSpecialArgs ? { } }:
           system-manager.lib.makeSystemConfig {
             inherit modules;
-            extraSpecialArgs = inputs // { inherit system pkgs secrets; }
-              // extraSpecialArgs;
+            extraSpecialArgs = inputs // {
+              inherit system pkgs secrets;
+            } // extraSpecialArgs;
           };
       };
 
