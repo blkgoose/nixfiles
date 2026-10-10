@@ -13,7 +13,6 @@
     (alias "nh" ''sudo "$(which "${pkgs.nh}/bin/nh")"'')
     gh
     github-copilot-cli
-    claude-code
   ];
 
   systemd.user.sessionVariables = {
