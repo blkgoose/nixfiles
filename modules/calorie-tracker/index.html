@@ -40,13 +40,15 @@
   .food .meta { flex: 1; min-width: 0; }
   .food .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .food button { padding: 4px 10px; }
-  .log { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .log { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; cursor: pointer; border-top: 1px solid var(--line); font-size: 14px; }
   .log:first-of-type { border-top: 0; }
   .err { color: #ff8a8a; margin: 8px 0; }
   dialog { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 12px; padding: 16px; width: min(92vw, 420px); }
   dialog::backdrop { background: #000a; }
   dialog label { display: block; margin-top: 10px; font-size: 13px; color: var(--dim); }
   dialog input, dialog select { width: 100%; margin-top: 4px; }
+  dialog label.check { display: flex; align-items: center; gap: 8px; margin-top: 14px; color: var(--text); font-size: 15px; }
+  dialog label.check input { width: auto; margin: 0; }
   .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
   .chartTip { position: fixed; transform: translate(-50%, -100%) translateY(-6px); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font-size: 12px; white-space: nowrap; pointer-events: none; z-index: 10; }
@@ -60,9 +62,7 @@
     <select id="userSel"></select>
     <button class="icon" id="settingsBtn" title="Impostazioni">⚙</button>
     <span class="spacer"></span>
-    <button class="icon" id="prevDay">‹</button>
     <input type="date" id="dayInput">
-    <button class="icon" id="nextDay">›</button>
   </header>
 
   <div id="error" class="err"></div>
@@ -84,6 +84,20 @@
     <div class="dim" id="foodKcal" style="margin-top:8px"></div>
     <div class="actions">
       <button type="button" id="foodCreateNew" style="margin-right:auto;display:none">Crea nuovo</button>
+      <button type="button" data-close>Annulla</button>
+      <button class="primary" type="submit">Salva</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="logDlg">
+  <form method="dialog" id="logForm">
+    <h3 id="logTitle" style="margin:0"></h3>
+    <label>Porzioni <input name="qty" type="number" step="any" min="0.01" required></label>
+    <div class="dim" id="logKcal" style="margin-top:8px"></div>
+    <label class="check"><input name="recurring" type="checkbox"> Ripeti tutti i giorni</label>
+    <div class="err" id="logErr"></div>
+    <div class="actions">
       <button type="button" data-close>Annulla</button>
       <button class="primary" type="submit">Salva</button>
     </div>
@@ -382,23 +396,12 @@ function foodCard() {
     card.append(h("div", { class: "dim", style: "margin-bottom:4px" }, "Mangiato"));
     for (const l of state.logs) {
       const kcal = kcalOf(l) * l.qty;
-      card.append(h("div", { class: "log" },
-        h("span", {}, `${l.name}${l.qty !== 1 ? ` ×${l.qty}` : ""}`),
+      card.append(h("div", { class: "log", onclick: () => openLog(l) },
+        h("span", {}, `${l.name}${l.qty !== 1 ? ` ×${l.qty}` : ""}${l.recurring_id ? " 🔁" : ""}`),
         h("span", { class: "dim" }, `${fmt(kcal)} kcal `,
-          h("button", {
-            style: `padding:0 6px;margin-left:6px;${l.recurring_id ? "color:var(--accent);border-color:var(--accent)" : ""}`,
-            title: l.food_id == null ? "Alimento non più disponibile" : l.recurring_id ? "Non ripetere più ogni giorno" : "Ripeti ogni giorno",
-            disabled: l.food_id == null,
-            onclick: async () => {
-              try {
-                if (l.recurring_id) await api(`/api/recurring/${l.recurring_id}`, "DELETE");
-                else await api("/api/recurring", "POST", { user: store.user, food_id: l.food_id, qty: l.qty });
-                await load();
-              } catch (err) { showError(err.message); }
-            },
-          }, "🔁"),
-          h("button", { style: "padding:0 8px;margin-left:6px", title: "Rimuovi", onclick: async () => {
-            await api(`/api/logs/${l.id}`, "DELETE"); await load();
+          h("button", { style: "padding:0 8px;margin-left:6px", title: "Rimuovi", onclick: async (e) => {
+            e.stopPropagation();
+            try { await api(`/api/logs/${l.id}`, "DELETE"); await load(); } catch (err) { showError(err.message); }
           } }, "×")),
       ));
     }
@@ -443,6 +446,26 @@ function renderList() {
       } }, "🗑"),
     );
   }));
+}
+
+let editingLog = null;
+
+function openLog(l) {
+  editingLog = l;
+  const f = $("logForm").elements;
+  $("logTitle").textContent = l.name;
+  $("logErr").textContent = "";
+  f.qty.value = l.qty;
+  f.recurring.checked = !!l.recurring_id;
+  f.recurring.disabled = l.food_id == null;
+  updateLogKcal();
+  $("logDlg").showModal();
+}
+
+function updateLogKcal() {
+  const l = editingLog;
+  const q = Number($("logForm").elements.qty.value) || 0;
+  $("logKcal").textContent = `${fmt(kcalOf(l) * q)} kcal · C ${fmt(l.carb * q, 1)} · P ${fmt(l.prot * q, 1)} · G ${fmt(l.fat * q, 1)}`;
 }
 
 function openFood(base) {
@@ -523,6 +546,20 @@ $("foodForm").addEventListener("submit", async (e) => {
     await load();
   } catch (err) { showError(err.message); }
 });
+$("logForm").addEventListener("input", updateLogKcal);
+$("logForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const l = editingLog;
+  const f = e.target.elements;
+  const qty = Number(f.qty.value);
+  try {
+    await api(`/api/logs/${l.id}`, "PUT", { qty });
+    if (f.recurring.checked) await api("/api/recurring", "POST", { user: store.user, food_id: l.food_id, qty });
+    else if (l.recurring_id) await api(`/api/recurring/${l.recurring_id}`, "DELETE");
+    $("logDlg").close();
+    await load();
+  } catch (err) { $("logErr").textContent = err.message; }
+});
 $("foodCreateNew").addEventListener("click", async () => {
   try {
     await api("/api/foods", "POST", foodPayload());
@@ -559,14 +596,6 @@ $("userSel").addEventListener("change", (e) => {
 });
 $("settingsBtn").addEventListener("click", () => state && openUser(state.user));
 $("dayInput").addEventListener("change", (e) => { if (e.target.value) { day = e.target.value; load(); } });
-const shiftDay = (n) => {
-  const d = new Date(day + "T12:00:00");
-  d.setDate(d.getDate() + n);
-  day = d.toISOString().slice(0, 10);
-  load();
-};
-$("prevDay").addEventListener("click", () => shiftDay(-1));
-$("nextDay").addEventListener("click", () => shiftDay(1));
 
 load().catch((err) => showError(err.message));
 

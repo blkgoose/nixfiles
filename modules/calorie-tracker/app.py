@@ -600,12 +600,23 @@ class Handler(BaseHTTPRequestHandler):
             )
             if cur.rowcount == 0:
                 raise ApiError(404, "food not found")
+            # Past days keep the values they were logged with; today and later follow the edit.
+            conn.execute(
+                "UPDATE logs SET name=?, carb=?, prot=?, fat=? WHERE food_id=? AND day>=?",
+                (name, carb100 * k, prot100 * k, fat100 * k, fid, date.today().isoformat()),
+            )
             return self.send_json({"ok": True})
         if m and method == "DELETE":
             conn.execute("DELETE FROM foods WHERE id=?", (int(m.group(1)),))
             return self.send_json({"ok": True})
 
         m = re.fullmatch(r"/api/logs/(\d+)", path)
+        if m and method == "PUT":
+            qty = num(self.body(), "qty", minimum=0.01)
+            cur = conn.execute("UPDATE logs SET qty=? WHERE id=?", (qty, int(m.group(1))))
+            if cur.rowcount == 0:
+                raise ApiError(404, "log not found")
+            return self.send_json({"ok": True})
         if m and method == "DELETE":
             conn.execute("DELETE FROM logs WHERE id=?", (int(m.group(1)),))
             return self.send_json({"ok": True})
