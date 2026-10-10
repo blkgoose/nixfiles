@@ -15,14 +15,6 @@
     github-copilot-cli
   ];
 
-  systemd.user.sessionVariables = {
-    CARGO_TARGET_DIR = "/media/data/cargo-target";
-    RUSTC_WRAPPER = "sccache";
-    SCCACHE_DIR = "/media/data/sccache";
-    SCCACHE_CACHE_SIZE = "20G";
-    CARGO_INCREMENTAL = "0";
-  };
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
