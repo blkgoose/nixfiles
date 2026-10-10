@@ -102,25 +102,25 @@
         };
       };
 
-      homeConfigurations = {
-        "alessio-biancone" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+      # Exposed so other flakes (e.g. the shittop-only flake) can build their
+      # own homeConfigurations/systemConfigs against this flake's pkgs,
+      # overlays, secrets and shared modules without duplicating any of it.
+      extLib = {
+        inherit pkgs secrets system inputs;
 
-          extraSpecialArgs = inputs // { inherit system secrets; };
-
-          modules = [ ./home/systems/shittop.nix ];
-        };
-      };
-
-      systemConfigs = {
-        "shittop" = system-manager.lib.makeSystemConfig {
-          extraSpecialArgs = inputs // {
-            inherit system;
-            inherit pkgs;
-            inherit secrets;
+        mkHomeConfiguration = { modules, extraSpecialArgs ? { } }:
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs modules;
+            extraSpecialArgs = inputs // { inherit system secrets; }
+              // extraSpecialArgs;
           };
-          modules = [ ./systems/shittop ];
-        };
+
+        mkSystemConfig = { modules, extraSpecialArgs ? { } }:
+          system-manager.lib.makeSystemConfig {
+            inherit modules;
+            extraSpecialArgs = inputs // { inherit system pkgs secrets; }
+              // extraSpecialArgs;
+          };
       };
 
       formatter.${system} = fmt;
