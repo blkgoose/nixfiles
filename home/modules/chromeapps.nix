@@ -3,7 +3,6 @@ let
   house_ip = pkgs.secret "house_local_ip";
 
   personal = [ "--profile-directory='Default'" ];
-  work = [ "--profile-directory='Profile 1'" ];
   unsafe = [
     "--disable-web-security --user-data-dir=${config.xdg.configHome}/unsafe-chrome"
   ];
@@ -31,10 +30,6 @@ let
       wrapper = chromeWrapper personal;
     };
     "calendar".url = "https://calendar.google.com/calendar";
-    "chatGPT" = {
-      url = "https://chatgpt.com/";
-      wrapper = chromeWrapper work;
-    };
     "chess" = {
       url = "https://www.chess.com";
       wrapper = chromeWrapper personal;
@@ -42,11 +37,6 @@ let
     "claude-ai" = {
       url = "https://claude.ai/code";
       wrapper = chromeWrapper personal;
-    };
-    "codescene" = {
-      url =
-        "https://codescene.io/projects/35921/jobs/978159/results/code/hotspots/system-map";
-      wrapper = chromeWrapper work;
     };
     "coggle".url = "https://coggle.it";
     "coronavisual".url = "https://blkgoose.github.io/coronavisual";
@@ -58,18 +48,9 @@ let
       url = "https://www.crunchyroll.com/it";
       wrapper = chromeWrapper (personal ++ no_plugins);
     };
-    "dashboard-sec" = {
-      url =
-        "https://security-metrics.helloprima.com/vm/projects/INT%20-%20Intermediaries%20Experience%20&%20Network%20Management.html";
-      wrapper = chromeWrapper work;
-    };
     "disney" = {
       url = "https://disneyplus.com";
       wrapper = chromeWrapper personal;
-    };
-    "drone_ci" = {
-      url = "https://drone-1.prima.it";
-      wrapper = chromeWrapper work;
     };
     "elm-search" = {
       url = "https://klaftertief.github.io/elm-search/";
@@ -110,21 +91,9 @@ let
       url = "https://www.google.it/maps/preview";
       wrapper = chromeWrapper (personal ++ no_plugins);
     };
-    "meet" = {
-      url = "https://meet.google.com";
-      wrapper = chromeWrapper work;
-    };
     "messages" = {
       url = "https://messages.google.com/web/conversations";
       wrapper = chromeWrapper (personal ++ no_plugins);
-    };
-    "miro" = {
-      url = "https://miro.com/app/dashboard";
-      wrapper = chromeWrapper work;
-    };
-    "n2f" = {
-      url = "https://www.n2f.com/app/#";
-      wrapper = chromeWrapper work;
     };
     "netflix" = {
       url = "https://www.netflix.com";
@@ -133,10 +102,6 @@ let
     "news" = {
       url = "https://news.google.it";
       wrapper = chromeWrapper personal;
-    };
-    "nibol" = {
-      url = "https://app.nibol.co";
-      wrapper = chromeWrapper work;
     };
     "nix-search" = {
       url = "https://search.nixos.org/packages";
@@ -150,23 +115,11 @@ let
       url = "https://www.noogle.dev";
       wrapper = chromeWrapper personal;
     };
-    "notion" = {
-      url = "https://www.notion.so";
-      wrapper = chromeWrapper work;
-    };
-    "onepassword" = {
-      url = "https://prima.1password.eu/home";
-      wrapper = chromeWrapper work;
-    };
     "onshape" = {
       url = "https://cad.onshape.com";
       wrapper = chromeWrapper (personal ++ no_plugins);
     };
     "paint" = { url = "https://jspaint.app/"; };
-    "personio" = {
-      url = "https://prima-assicurazioni.personio.de";
-      wrapper = chromeWrapper work;
-    };
     "perplexity" = {
       url = "https://www.perplexity.ai/";
       wrapper = chromeWrapper personal;
@@ -187,10 +140,6 @@ let
       url = "https://www.prozis.com/it/it";
       wrapper = chromeWrapper personal;
     };
-    "pyxis-doc" = {
-      url = "http://elm.prima.design";
-      wrapper = chromeWrapper work;
-    };
     "reddit" = {
       url = "https://reddit.com";
       wrapper = chromeWrapper personal;
@@ -200,15 +149,6 @@ let
       wrapper = chromeWrapper personal;
     };
     "sheets".url = "https://docs.google.com/spreadsheets";
-    "slack" = {
-      url = "https://app.slack.com/client/T024WK3NT/C04KE5JMKFG";
-      wrapper = chromeWrapper work;
-    };
-    "swarmia" = {
-      url =
-        "https://app.swarmia.com/insights/code/overview?timeframe=last_7_days";
-      wrapper = chromeWrapper work;
-    };
     "telegram" = {
       url = "https://web.telegram.org/k/";
       wrapper = chromeWrapper (personal ++ no_plugins);
@@ -221,10 +161,6 @@ let
       url = "https://www.trello.com";
       wrapper = chromeWrapper personal;
     };
-    "udemy" = {
-      url = "https://prima.udemy.com/organization/home/";
-      wrapper = chromeWrapper work;
-    };
     "wallet" = {
       url = "https://web.budgetbakers.com/dashboard";
       wrapper = chromeWrapper (personal ++ no_plugins);
@@ -233,22 +169,9 @@ let
       url = "https://web.whatsapp.com/";
       wrapper = chromeWrapper (personal ++ no_plugins);
     };
-    "wellfare" = {
-      url = "https://prima.oneflex.aon.it/flexible-benefits";
-      wrapper = chromeWrapper work;
-    };
     "xbox" = {
       url = "https://xbox.com/play";
       wrapper = chromeWrapper (personal ++ no_plugins);
-    };
-    "backlog" = {
-      url =
-        "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/issues/INTEXN?q=State:%20{No%20State%7d";
-      wrapper = chromeWrapper work;
-    };
-    "youtrack" = {
-      url = "https://prima-assicurazioni-spa.myjetbrains.com/youtrack/agiles";
-      wrapper = chromeWrapper work;
     };
     "youtube" = {
       url = "https://youtube.com";
