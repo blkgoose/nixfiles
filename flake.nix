@@ -21,7 +21,6 @@
     suite_py.url = "git+ssh://git@github.com/primait/suite_py";
     prima-nix.url = "git+ssh://git@github.com/primait/prima.nix";
 
-    chaotic.url = "github:chaotic-cx/nyx";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     osd = {
