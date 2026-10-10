@@ -3,6 +3,7 @@
     ../modules/alacritty.nix
     ../modules/core.nix
     ../modules/desktop.nix
+    ../modules/gdrive.nix
     ../modules/dev.nix
     ../modules/git.nix
     ../modules/neovim
