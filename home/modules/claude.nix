@@ -1,4 +1,4 @@
-# temporary: used by toaster
+# Claude remote-control sessions as systemd user services
 { pkgs, ... }:
 let
   mkClaudeService = name: dir: {
@@ -8,8 +8,8 @@ let
       Type = "simple";
       WorkingDirectory = dir;
       ExecStart = "${pkgs.writeShellScript "claude-remote-control-${name}" ''
-        ${pkgs.claude-code}/bin/claude remote-control -c
-        exec ${pkgs.claude-code}/bin/claude remote-control
+        ${pkgs.claude-code}/bin/claude remote-control --name ${name} -c
+        exec ${pkgs.claude-code}/bin/claude remote-control --name ${name}
       ''}";
       Restart = "always";
       RestartSec = 5;
@@ -25,5 +25,7 @@ in {
       mkClaudeService "helion" "%h/proj/helion";
     claude-cdn-ion =
       mkClaudeService "cdn-ion" "%h/proj/cdn-ion";
+    claude-nix =
+      mkClaudeService "nix" "%h/.config/nix";
   };
 }

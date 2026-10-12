@@ -20,7 +20,7 @@
   networking.hostName = "toaster";
 
   # temporary: used by toaster
-  home-manager.users.alessio.imports = [ ../../home/modules/ion-dev.nix ];
+  home-manager.users.alessio.imports = [ ../../home/modules/claude.nix ];
 
   # temporary
   systemd.targets.sleep.enable = false;
