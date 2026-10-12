@@ -6,6 +6,7 @@
     openssl
     fh
     (alias "nh" ''sudo "$(which "${pkgs.nh}/bin/nh")"'')
+    claude-code
     gh
   ];
 

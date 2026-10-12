@@ -4,7 +4,11 @@
     package = pkgs.unstable.hyprland;
     xwayland.enable = true;
   };
-  environment.systemPackages = with pkgs; [ hyprpaper wl-clipboard ];
+  environment.systemPackages = with pkgs; [
+    hyprpaper
+    wl-clipboard
+    hyprland-guiutils
+  ];
 
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;

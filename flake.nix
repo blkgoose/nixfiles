@@ -22,6 +22,11 @@
       url = "github:blkgoose/osd-rs/feat/restart-on-failure";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland-guiutils = {
+      url = "github:hyprwm/hyprland-guiutils";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = { nixpkgs, home-manager, system-manager, ... }@inputs:
@@ -54,6 +59,11 @@
 
           (self: super: {
             system-manager = inputs.system-manager.packages.${system}.default;
+          })
+
+          (self: super: {
+            hyprland-guiutils =
+              inputs.hyprland-guiutils.packages.${system}.default;
           })
 
           (self: super: {

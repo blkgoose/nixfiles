@@ -1,167 +1,279 @@
-{ pkgs, config, ... }: {
+{ pkgs, lib, config, ... }:
+let
+  inline = lib.generators.mkLuaInline;
+
+  # a bind whose key combo includes $mainMod (lua var `mod`)
+  modBind = suffix: dispatcher: flags:
+    {
+      _args = [ (inline ''mod .. " + ${suffix}"'') dispatcher ]
+        ++ lib.optional (flags != { }) flags;
+    };
+
+  # a bind with no modifier (or a literal modifier combo not involving mod)
+  plainBind = key: dispatcher: flags:
+    { _args = [ key dispatcher ] ++ lib.optional (flags != { }) flags; };
+
+  dsp = expr: inline expr;
+in {
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = pkgs.unstable.hyprland;
+    configType = "lua";
     settings = {
-      "$terminal" = "alacritty";
+      mod._var = "SUPER";
+      terminal._var = "alacritty";
 
-      monitor = ",preferred,auto,1";
+      monitor = {
+        output = "";
+        mode = "preferred";
+        position = "auto";
+        scale = 1;
+      };
 
-      ecosystem.no_update_news = true;
+      config = {
+        ecosystem.no_update_news = true;
 
-      exec-once = [
+        input = {
+          kb_layout = "us";
+          kb_options = "compose:ralt,caps:none";
+
+          follow_mouse = 1;
+
+          touchpad = { natural_scroll = false; };
+
+          sensitivity = 0;
+        };
+
+        general = {
+          gaps_in = 5;
+          gaps_out = 10;
+          border_size = 2;
+          "col.active_border" = {
+            colors = [ "rgba(33ccffee)" "rgba(00ff99ee)" ];
+            angle = 45;
+          };
+          "col.inactive_border" = { colors = [ "rgba(595959aa)" ]; };
+
+          layout = "dwindle";
+
+          allow_tearing = false;
+        };
+
+        decoration = {
+          rounding = 10;
+
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 1;
+          };
+        };
+
+        dwindle = {
+          preserve_split = true;
+          special_scale_factor = 0.85;
+        };
+
+        master = { new_status = "master"; };
+
+        misc = {
+          force_default_wallpaper = 0;
+          disable_hyprland_logo = true;
+        };
+
+        binds = { allow_workspace_cycles = true; };
+      };
+
+      exec_cmd = [
         "hyprpaper"
         "swayidle -w"
-        "systemctl --user start waybar"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "${pkgs.wayland-pipewire-idle-inhibit}/bin/wayland-pipewire-idle-inhibit"
         "hyprctl setcursor Adwaita 24"
       ];
 
-      env = [ "PATH, ${config.home.homeDirectory}/.local/bin:$PATH" ];
+      on._args =
+        [ "hyprland.start" (inline ''function()
+          hl.exec_cmd("systemctl --user start waybar")
+        end'') ];
 
-      input = {
-        kb_layout = "us";
-        kb_options = "compose:ralt,caps:none";
-
-        follow_mouse = 1;
-
-        touchpad = { natural_scroll = false; };
-
-        sensitivity = 0;
-      };
-
-      general = {
-        gaps_in = 5;
-        gaps_out = 10;
-        border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
-
-        layout = "dwindle";
-
-        allow_tearing = false;
-      };
-
-      decoration = {
-        rounding = 10;
-
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
-        };
-
-        layerrule =
-          [ "blur, waybar|swaync|wofi" "ignorezero, waybar|swaync|wofi" ];
-      };
-
-      animations = {
-        enabled = true;
-
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-
-        animation = [
-          "windows, 1, 7, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
-          "border, 1, 10, default"
-          "borderangle, 1, 8, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
+      env = [{
+        _args = [
+          "PATH"
+          (inline
+            ''"${config.home.homeDirectory}/.local/bin:" .. os.getenv("PATH")'')
         ];
+      }];
+
+      curve._args = [
+        "myBezier"
+        {
+          type = "bezier";
+          points = [
+            [ 0.05 0.9 ]
+            [ 0.1 1.05 ]
+          ];
+        }
+      ];
+
+      animation = [
+        {
+          leaf = "windows";
+          enabled = true;
+          speed = 7;
+          bezier = "myBezier";
+        }
+        {
+          leaf = "windowsOut";
+          enabled = true;
+          speed = 7;
+          bezier = "default";
+          style = "popin 80%";
+        }
+        {
+          leaf = "border";
+          enabled = true;
+          speed = 10;
+          bezier = "default";
+        }
+        {
+          leaf = "borderangle";
+          enabled = true;
+          speed = 8;
+          bezier = "default";
+        }
+        {
+          leaf = "fade";
+          enabled = true;
+          speed = 7;
+          bezier = "default";
+        }
+        {
+          leaf = "workspaces";
+          enabled = true;
+          speed = 6;
+          bezier = "default";
+        }
+      ];
+
+      layer_rule = {
+        match.namespace = "waybar|swaync|wofi";
+        blur = true;
+        ignore_alpha = 0;
       };
-
-      dwindle = {
-        pseudotile = true;
-        preserve_split = true;
-        special_scale_factor = 0.85;
-      };
-
-      master = { new_status = "master"; };
-
-      misc = {
-        force_default_wallpaper = 0;
-        disable_hyprland_logo = true;
-      };
-
-      "$mainMod" = "SUPER";
 
       bind = [
-        "$mainMod SHIFT, RETURN, exec, $terminal"
-        "$mainMod SHIFT, C, killactive, "
-        "$mainMod, V, togglefloating, "
-        "$mainMod, P, exec, wofi --show run"
-        "$mainMod, S, togglespecialworkspace,"
-        "$mainMod SHIFT, S, movetoworkspace, special"
-        "$mainMod, SPACE, pseudo, # dwindle"
-        "$mainMod, RETURN, togglesplit, # dwindle"
+        (modBind "SHIFT + RETURN" (dsp "hl.dsp.exec_cmd(terminal)") { })
+        (modBind "SHIFT + C" (dsp "hl.dsp.window.close()") { })
+        (modBind "V" (dsp "hl.dsp.window.float({})") { })
+        (modBind "P" (dsp ''hl.dsp.exec_cmd("wofi --show run")'') { })
+        (modBind "S" (dsp "hl.dsp.workspace.toggle_special()") { })
+        (modBind "SHIFT + S"
+          (dsp ''hl.dsp.window.move({ workspace = "special" })'') { })
+        (modBind "SPACE" (dsp "hl.dsp.window.pseudo({})") { })
+        (modBind "RETURN" (dsp ''hl.dsp.layout("togglesplit")'') { })
 
-        "$mainMod, h, movefocus, l"
-        "$mainMod, l, movefocus, r"
-        "$mainMod, k, movefocus, u"
-        "$mainMod, j, movefocus, d"
+        (modBind "h" (dsp ''hl.dsp.focus({ direction = "left" })'') { })
+        (modBind "l" (dsp ''hl.dsp.focus({ direction = "right" })'') { })
+        (modBind "k" (dsp ''hl.dsp.focus({ direction = "up" })'') { })
+        (modBind "j" (dsp ''hl.dsp.focus({ direction = "down" })'') { })
 
-        "$mainMod SHIFT, h, movewindow, l"
-        "$mainMod SHIFT, l, movewindow, r"
-        "$mainMod SHIFT, k, movewindow, u"
-        "$mainMod SHIFT, j, movewindow, d"
+        (modBind "SHIFT + h"
+          (dsp ''hl.dsp.window.move({ direction = "left" })'') { })
+        (modBind "SHIFT + l"
+          (dsp ''hl.dsp.window.move({ direction = "right" })'') { })
+        (modBind "SHIFT + k" (dsp ''hl.dsp.window.move({ direction = "up" })'')
+          { })
+        (modBind "SHIFT + j"
+          (dsp ''hl.dsp.window.move({ direction = "down" })'') { })
 
-        "$mainMod CONTROL, h, resizeactive, -50 0"
-        "$mainMod CONTROL, l, resizeactive, 50 0"
-        "$mainMod CONTROL, k, resizeactive, 0 -50"
-        "$mainMod CONTROL, j, resizeactive, 0 50"
+        (modBind "CONTROL + h"
+          (dsp "hl.dsp.window.resize({ x = -50, y = 0, relative = true })") { })
+        (modBind "CONTROL + l"
+          (dsp "hl.dsp.window.resize({ x = 50, y = 0, relative = true })") { })
+        (modBind "CONTROL + k"
+          (dsp "hl.dsp.window.resize({ x = 0, y = -50, relative = true })") { })
+        (modBind "CONTROL + j"
+          (dsp "hl.dsp.window.resize({ x = 0, y = 50, relative = true })") { })
 
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
-        "$mainMod SHIFT, 1, movetoworkspace, 1"
-        "$mainMod SHIFT, 2, movetoworkspace, 2"
-        "$mainMod SHIFT, 3, movetoworkspace, 3"
-        "$mainMod SHIFT, 4, movetoworkspace, 4"
-        "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
-        "$mainMod, TAB, workspace, previous"
+        (modBind "1" (dsp ''hl.dsp.focus({ workspace = "1" })'') { })
+        (modBind "2" (dsp ''hl.dsp.focus({ workspace = "2" })'') { })
+        (modBind "3" (dsp ''hl.dsp.focus({ workspace = "3" })'') { })
+        (modBind "4" (dsp ''hl.dsp.focus({ workspace = "4" })'') { })
+        (modBind "5" (dsp ''hl.dsp.focus({ workspace = "5" })'') { })
+        (modBind "6" (dsp ''hl.dsp.focus({ workspace = "6" })'') { })
+        (modBind "7" (dsp ''hl.dsp.focus({ workspace = "7" })'') { })
+        (modBind "8" (dsp ''hl.dsp.focus({ workspace = "8" })'') { })
+        (modBind "9" (dsp ''hl.dsp.focus({ workspace = "9" })'') { })
+        (modBind "0" (dsp ''hl.dsp.focus({ workspace = "10" })'') { })
 
-        ", xf86AudioRaiseVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        ", xf86AudioLowerVolume, exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        ", xf86AudioMute,        exec, ${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"
-        ", xf86AudioNext,        exec, ${pkgs.playerctl}/bin/playerctl next"
-        ", xf86AudioPrev,        exec, ${pkgs.playerctl}/bin/playerctl previous"
-        ", xf86AudioPlay,        exec, ${pkgs.playerctl}/bin/playerctl play-pause"
+        (modBind "SHIFT + 1"
+          (dsp ''hl.dsp.window.move({ workspace = "1" })'') { })
+        (modBind "SHIFT + 2"
+          (dsp ''hl.dsp.window.move({ workspace = "2" })'') { })
+        (modBind "SHIFT + 3"
+          (dsp ''hl.dsp.window.move({ workspace = "3" })'') { })
+        (modBind "SHIFT + 4"
+          (dsp ''hl.dsp.window.move({ workspace = "4" })'') { })
+        (modBind "SHIFT + 5"
+          (dsp ''hl.dsp.window.move({ workspace = "5" })'') { })
+        (modBind "SHIFT + 6"
+          (dsp ''hl.dsp.window.move({ workspace = "6" })'') { })
+        (modBind "SHIFT + 7"
+          (dsp ''hl.dsp.window.move({ workspace = "7" })'') { })
+        (modBind "SHIFT + 8"
+          (dsp ''hl.dsp.window.move({ workspace = "8" })'') { })
+        (modBind "SHIFT + 9"
+          (dsp ''hl.dsp.window.move({ workspace = "9" })'') { })
+        (modBind "SHIFT + 0"
+          (dsp ''hl.dsp.window.move({ workspace = "10" })'') { })
 
-        "SHIFT, xf86AudioRaiseVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+"
-        "SHIFT, xf86AudioLowerVolume, exec, ${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-"
+        (modBind "TAB" (dsp ''hl.dsp.focus({ workspace = "previous" })'') { })
 
-        "$mainMod, m, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel"
-        "$mainMod SHIFT, m, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest"
+        (plainBind "XF86AudioRaiseVolume" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%")'')
+          { })
+        (plainBind "XF86AudioLowerVolume" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%")'')
+          { })
+        (plainBind "XF86AudioMute" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle")'')
+          { })
+        (plainBind "XF86AudioNext"
+          (dsp ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl next")'') { })
+        (plainBind "XF86AudioPrev"
+          (dsp ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl previous")'')
+          { })
+        (plainBind "XF86AudioPlay" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl play-pause")'')
+          { })
 
-        ", xf86MonBrightnessUp  , exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%+"
-        ", xf86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 10%-"
+        (plainBind "SHIFT + XF86AudioRaiseVolume" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+")'')
+          { })
+        (plainBind "SHIFT + XF86AudioLowerVolume" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-")'')
+          { })
+
+        (modBind "m" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel")'')
+          { })
+        (modBind "SHIFT + m" (dsp
+          ''hl.dsp.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest")'')
+          { })
+
+        (plainBind "XF86MonBrightnessUp"
+          (dsp ''hl.dsp.exec_cmd("${pkgs.brightnessctl}/bin/brightnessctl set 10%+")'')
+          { })
+        (plainBind "XF86MonBrightnessDown"
+          (dsp ''hl.dsp.exec_cmd("${pkgs.brightnessctl}/bin/brightnessctl set 10%-")'')
+          { })
+
+        (modBind "mouse:272" (dsp "hl.dsp.window.drag()") { })
+        (modBind "mouse:273" (dsp "hl.dsp.window.resize()") { })
       ];
-
-      bindm = [
-        "$mainMod, mouse:272, movewindow"
-        "$mainMod, mouse:273, resizewindow"
-      ];
-
-      bindl = [
-        ", switch:off:Lid Switch, exec, hyprctl reload"
-        " , switch:on:Lid Switch, exec, hyprctl keyword monitor 'eDP-1, disable'"
-      ];
-
-      binds = { allow_workspace_cycles = true; };
     };
   };
 }
