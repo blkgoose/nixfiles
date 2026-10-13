@@ -45,7 +45,8 @@ in {
     DUCKDNS_TOKEN=${pkgs.secret "duckdns/token"}
   '';
 
-  systemd.services.caddy.serviceConfig.EnvironmentFile = [ "/etc/caddy/duckdns.env" ];
+  systemd.services.caddy.serviceConfig.EnvironmentFile =
+    [ "/etc/caddy/duckdns.env" ];
 
   networking = {
     interfaces.enp1s0.ipv4.addresses = [{

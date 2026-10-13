@@ -3,15 +3,15 @@ let
   inline = lib.generators.mkLuaInline;
 
   # a bind whose key combo includes $mainMod (lua var `mod`)
-  modBind = suffix: dispatcher: flags:
-    {
-      _args = [ (inline ''mod .. " + ${suffix}"'') dispatcher ]
-        ++ lib.optional (flags != { }) flags;
-    };
+  modBind = suffix: dispatcher: flags: {
+    _args = [ (inline ''mod .. " + ${suffix}"'') dispatcher ]
+      ++ lib.optional (flags != { }) flags;
+  };
 
   # a bind with no modifier (or a literal modifier combo not involving mod)
-  plainBind = key: dispatcher: flags:
-    { _args = [ key dispatcher ] ++ lib.optional (flags != { }) flags; };
+  plainBind = key: dispatcher: flags: {
+    _args = [ key dispatcher ] ++ lib.optional (flags != { }) flags;
+  };
 
   dsp = expr: inline expr;
 in {
@@ -94,10 +94,13 @@ in {
         "hyprctl setcursor Adwaita 24"
       ];
 
-      on._args =
-        [ "hyprland.start" (inline ''function()
-          hl.exec_cmd("systemctl --user start waybar")
-        end'') ];
+      on._args = [
+        "hyprland.start"
+        (inline ''
+          function()
+                    hl.exec_cmd("systemctl --user start waybar")
+                  end'')
+      ];
 
       env = [{
         _args = [
@@ -111,10 +114,7 @@ in {
         "myBezier"
         {
           type = "bezier";
-          points = [
-            [ 0.05 0.9 ]
-            [ 0.1 1.05 ]
-          ];
+          points = [ [ 5.0e-2 0.9 ] [ 0.1 1.05 ] ];
         }
       ];
 
@@ -209,37 +209,37 @@ in {
         (modBind "9" (dsp ''hl.dsp.focus({ workspace = "9" })'') { })
         (modBind "0" (dsp ''hl.dsp.focus({ workspace = "10" })'') { })
 
-        (modBind "SHIFT + 1"
-          (dsp ''hl.dsp.window.move({ workspace = "1" })'') { })
-        (modBind "SHIFT + 2"
-          (dsp ''hl.dsp.window.move({ workspace = "2" })'') { })
-        (modBind "SHIFT + 3"
-          (dsp ''hl.dsp.window.move({ workspace = "3" })'') { })
-        (modBind "SHIFT + 4"
-          (dsp ''hl.dsp.window.move({ workspace = "4" })'') { })
-        (modBind "SHIFT + 5"
-          (dsp ''hl.dsp.window.move({ workspace = "5" })'') { })
-        (modBind "SHIFT + 6"
-          (dsp ''hl.dsp.window.move({ workspace = "6" })'') { })
-        (modBind "SHIFT + 7"
-          (dsp ''hl.dsp.window.move({ workspace = "7" })'') { })
-        (modBind "SHIFT + 8"
-          (dsp ''hl.dsp.window.move({ workspace = "8" })'') { })
-        (modBind "SHIFT + 9"
-          (dsp ''hl.dsp.window.move({ workspace = "9" })'') { })
-        (modBind "SHIFT + 0"
-          (dsp ''hl.dsp.window.move({ workspace = "10" })'') { })
+        (modBind "SHIFT + 1" (dsp ''hl.dsp.window.move({ workspace = "1" })'')
+          { })
+        (modBind "SHIFT + 2" (dsp ''hl.dsp.window.move({ workspace = "2" })'')
+          { })
+        (modBind "SHIFT + 3" (dsp ''hl.dsp.window.move({ workspace = "3" })'')
+          { })
+        (modBind "SHIFT + 4" (dsp ''hl.dsp.window.move({ workspace = "4" })'')
+          { })
+        (modBind "SHIFT + 5" (dsp ''hl.dsp.window.move({ workspace = "5" })'')
+          { })
+        (modBind "SHIFT + 6" (dsp ''hl.dsp.window.move({ workspace = "6" })'')
+          { })
+        (modBind "SHIFT + 7" (dsp ''hl.dsp.window.move({ workspace = "7" })'')
+          { })
+        (modBind "SHIFT + 8" (dsp ''hl.dsp.window.move({ workspace = "8" })'')
+          { })
+        (modBind "SHIFT + 9" (dsp ''hl.dsp.window.move({ workspace = "9" })'')
+          { })
+        (modBind "SHIFT + 0" (dsp ''hl.dsp.window.move({ workspace = "10" })'')
+          { })
 
         (modBind "TAB" (dsp ''hl.dsp.focus({ workspace = "previous" })'') { })
 
-        (plainBind "XF86AudioRaiseVolume" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%")'')
+        (plainBind "XF86AudioRaiseVolume" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%")'')
           { })
-        (plainBind "XF86AudioLowerVolume" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%")'')
+        (plainBind "XF86AudioLowerVolume" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%")'')
           { })
-        (plainBind "XF86AudioMute" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle")'')
+        (plainBind "XF86AudioMute" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.pulseaudioFull}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle")'')
           { })
         (plainBind "XF86AudioNext"
           (dsp ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl next")'') { })
@@ -250,25 +250,25 @@ in {
           ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl play-pause")'')
           { })
 
-        (plainBind "SHIFT + XF86AudioRaiseVolume" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+")'')
+        (plainBind "SHIFT + XF86AudioRaiseVolume" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl --all-players volume 0.05+")'')
           { })
-        (plainBind "SHIFT + XF86AudioLowerVolume" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-")'')
-          { })
-
-        (modBind "m" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel")'')
-          { })
-        (modBind "SHIFT + m" (dsp
-          ''hl.dsp.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest")'')
+        (plainBind "SHIFT + XF86AudioLowerVolume" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.playerctl}/bin/playerctl --all-players volume 0.05-")'')
           { })
 
-        (plainBind "XF86MonBrightnessUp"
-          (dsp ''hl.dsp.exec_cmd("${pkgs.brightnessctl}/bin/brightnessctl set 10%+")'')
+        (modBind "m" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync-client --toggle-panel")'')
           { })
-        (plainBind "XF86MonBrightnessDown"
-          (dsp ''hl.dsp.exec_cmd("${pkgs.brightnessctl}/bin/brightnessctl set 10%-")'')
+        (modBind "SHIFT + m" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync-client --hide-latest")'')
+          { })
+
+        (plainBind "XF86MonBrightnessUp" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.brightnessctl}/bin/brightnessctl set 10%+")'')
+          { })
+        (plainBind "XF86MonBrightnessDown" (dsp ''
+          hl.dsp.exec_cmd("${pkgs.brightnessctl}/bin/brightnessctl set 10%-")'')
           { })
 
         (modBind "mouse:272" (dsp "hl.dsp.window.drag()") { })

@@ -2,7 +2,10 @@
 { pkgs, ... }:
 let
   mkClaudeService = name: dir: {
-    Unit = { Description = "Claude (${name})"; After = [ "network.target" ]; };
+    Unit = {
+      Description = "Claude (${name})";
+      After = [ "network.target" ];
+    };
 
     Service = {
       Type = "simple";
@@ -19,13 +22,9 @@ let
   };
 in {
   systemd.user.services = {
-    claude-ion-og =
-      mkClaudeService "ion-og" "%h/proj/ion-og";
-    claude-helion =
-      mkClaudeService "helion" "%h/proj/helion";
-    claude-cdn-ion =
-      mkClaudeService "cdn-ion" "%h/proj/cdn-ion";
-    claude-nix =
-      mkClaudeService "nix" "%h/.config/nix";
+    claude-ion-og = mkClaudeService "ion-og" "%h/proj/ion-og";
+    claude-helion = mkClaudeService "helion" "%h/proj/helion";
+    claude-cdn-ion = mkClaudeService "cdn-ion" "%h/proj/cdn-ion";
+    claude-nix = mkClaudeService "nix" "%h/.config/nix";
   };
 }

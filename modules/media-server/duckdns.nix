@@ -1,7 +1,6 @@
-{ name, subdomains ? [], token }:
+{ name, subdomains ? [ ], token }:
 { pkgs, ... }:
-let
-  allDomains = pkgs.lib.concatStringsSep "," ([ name ] ++ subdomains);
+let allDomains = pkgs.lib.concatStringsSep "," ([ name ] ++ subdomains);
 in {
   systemd.services.dns-update = {
     description = "updates dns record";
