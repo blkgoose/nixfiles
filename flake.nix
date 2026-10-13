@@ -89,7 +89,7 @@
         home-manager.extraSpecialArgs = inputs // { inherit system secrets; };
       };
 
-      fmt = nixpkgs.legacyPackages.${system}.nixfmt-classic;
+      fmt = nixpkgs.legacyPackages.${system}.nixfmt;
     in {
       nixosConfigurations = {
         toaster = lib.nixosSystem {

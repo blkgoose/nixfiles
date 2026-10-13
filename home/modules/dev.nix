@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     rustup
-    nixfmt-classic
+    nixfmt
     pkg-config
     openssl
     fh
