@@ -30,6 +30,8 @@
 
   services.openssh.enable = true;
 
+  services.tailscale.enable = true;
+
   services.hardware.bolt.enable = true;
 
   system.stateVersion = "26.05";
