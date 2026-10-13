@@ -6,17 +6,20 @@ let
     JELLYFIN_API_KEY=${pkgs.secret "jellyfin/api_key"}
     JELLYFIN_USER_ID=${pkgs.secret "jellyfin/user_id"}
   '';
-in {
+in
+{
   environment.etc = {
     "arr/docker-compose.yml".source = ./docker-compose.yml;
-    "arr/config/jellyfin-auto-collections/config.yaml".source =
-      ./jellyfin-auto-collections.yaml;
+    "arr/config/jellyfin-auto-collections/config.yaml".source = ./jellyfin-auto-collections.yaml;
     "arr/.env".source = envFile;
   };
 
   systemd.services.arr-stack = {
     description = "arr-stack";
-    after = [ "network.target" "mnt-data.mount" ];
+    after = [
+      "network.target"
+      "mnt-data.mount"
+    ];
     wantedBy = [ "multi-user.target" ];
     restartTriggers = [
       (builtins.hashFile "sha256" ./docker-compose.yml)

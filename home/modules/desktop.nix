@@ -5,8 +5,7 @@
     (alias "orca-slicer" "${(nixGL unstable.orca-slicer)}/bin/orca-slicer")
     zoom
     (alias "chrome" "${(nixGL google-chrome)}/bin/google-chrome-stable")
-    (alias "jellyfin-desktop"
-      "${(nixGL jellyfin-desktop)}/bin/jellyfin-desktop")
+    (alias "jellyfin-desktop" "${(nixGL jellyfin-desktop)}/bin/jellyfin-desktop")
     pwvucontrol
     htop
     vial

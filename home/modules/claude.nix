@@ -17,9 +17,12 @@ let
       RestartSec = 5;
     };
 
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
-in {
+in
+{
   systemd.user.services = {
     claude-ion-og = mkClaudeService "ion-og" "%h/proj/ion-og";
     claude-helion = mkClaudeService "helion" "%h/proj/helion";

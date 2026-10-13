@@ -1,6 +1,6 @@
 { pkgs, config, ... }: {
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.xdg.configHome}/nix/home/modules/neovim";
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/nix/home/modules/neovim";
 
   programs.neovim = {
     package = pkgs.neovim-unwrapped;

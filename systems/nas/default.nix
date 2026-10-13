@@ -19,12 +19,17 @@
 
   networking.hostName = "nas";
 
-  networking.interfaces.enp2s0.ipv4.addresses = [{
-    address = "192.168.1.101";
-    prefixLength = 24;
-  }];
+  networking.interfaces.enp2s0.ipv4.addresses = [
+    {
+      address = "192.168.1.101";
+      prefixLength = 24;
+    }
+  ];
   networking.defaultGateway = "192.168.1.1";
-  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
+  networking.nameservers = [
+    "8.8.8.8"
+    "8.8.4.4"
+  ];
 
   hardware.bluetooth.enable = true;
 

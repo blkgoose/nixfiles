@@ -89,7 +89,8 @@ let
         border-radius: 20px;
     }
   '';
-in {
+in
+{
   home.packages = with pkgs; [ swaynotificationcenter ];
 
   xdg.configFile = {
@@ -102,7 +103,9 @@ in {
       Description = "Sway Notifications Center";
       PartOf = [ "graphical-session.target" ];
     };
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
     Service = {
       Type = "dbus";
       BusName = "org.freedesktop.Notifications";

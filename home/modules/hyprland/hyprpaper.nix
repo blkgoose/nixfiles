@@ -7,4 +7,7 @@ let
     wallpaper = , ${./wallpaper}
     splash = false
   '';
-in { home.file.".config/hypr/hyprpaper.conf".source = paper-conf; }
+in
+{
+  home.file.".config/hypr/hyprpaper.conf".source = paper-conf;
+}

@@ -1,9 +1,14 @@
 { pkgs, config, ... }: {
-  home.packages = with pkgs; [ fzf unstable.sesh zoxide tmuxinator ];
+  home.packages = with pkgs; [
+    fzf
+    unstable.sesh
+    zoxide
+    tmuxinator
+  ];
 
   # TODO: make this user scoped
-  xdg.configFile."tmuxinator".source = config.lib.file.mkOutOfStoreSymlink
-    "${config.xdg.configHome}/nix/home/modules/tmux/tmuxinator";
+  xdg.configFile."tmuxinator".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/nix/home/modules/tmux/tmuxinator";
 
   programs.tmux = {
     enable = true;
@@ -11,10 +16,12 @@
     shell = "${pkgs.fish}/bin/fish";
     keyMode = "vi";
 
-    plugins = with pkgs; [{
-      plugin = tmuxPlugins.sensible;
-      extraConfig = "set -s escape-time 0";
-    }];
+    plugins = with pkgs; [
+      {
+        plugin = tmuxPlugins.sensible;
+        extraConfig = "set -s escape-time 0";
+      }
+    ];
 
     mouse = true;
 

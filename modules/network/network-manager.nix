@@ -2,11 +2,13 @@
 let
   dropContext = builtins.unsafeDiscardStringContext;
 
-  toNetConf = confFile:
+  toNetConf =
+    confFile:
     let
       fileName = dropContext (builtins.baseNameOf confFile);
       fileName' = "NetworkManager/system-connections/" + fileName;
-    in {
+    in
+    {
       name = fileName';
       value = {
         source = "${secrets}/network-manager/${fileName}";
@@ -14,8 +16,8 @@ let
       };
     };
 
-  nmConfigs =
-    builtins.attrNames (builtins.readDir "${secrets}/network-manager/");
-in {
+  nmConfigs = builtins.attrNames (builtins.readDir "${secrets}/network-manager/");
+in
+{
   environment.etc = builtins.listToAttrs (builtins.map toNetConf nmConfigs);
 }

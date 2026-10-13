@@ -149,7 +149,8 @@ let
       margin-right: 20px;
     }
   '';
-in {
+in
+{
   programs.waybar = {
     enable = true;
     systemd.enable = true;

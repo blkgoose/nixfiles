@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   house_ip = pkgs.secret "house_local_ip";
 
@@ -6,13 +11,18 @@ let
   unsafe = [
     "--disable-web-security --user-data-dir=${config.xdg.configHome}/unsafe-chrome"
   ];
-  no_plugins = [ "--disable-extensions" "--disable-plugins" ];
+  no_plugins = [
+    "--disable-extensions"
+    "--disable-plugins"
+  ];
 
-  chromeWrapper = opts: url:
+  chromeWrapper =
+    opts: url:
     let
       chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
       spacedOpts = lib.strings.concatStringsSep " " opts;
-    in ''
+    in
+    ''
       ${chrome} --app='${url}' --new-window ${spacedOpts}
     '';
 
@@ -61,7 +71,9 @@ let
       wrapper = chromeWrapper personal;
     };
     "github".url = "https://github.com";
-    "gemini" = { url = "https://gemini.google.com"; };
+    "gemini" = {
+      url = "https://gemini.google.com";
+    };
     "gmail".url = "https://mail.google.com";
     "hackernews" = {
       url = "https://hckrnews.com/";
@@ -119,7 +131,9 @@ let
       url = "https://cad.onshape.com";
       wrapper = chromeWrapper (personal ++ no_plugins);
     };
-    "paint" = { url = "https://jspaint.app/"; };
+    "paint" = {
+      url = "https://jspaint.app/";
+    };
     "perplexity" = {
       url = "https://www.perplexity.ai/";
       wrapper = chromeWrapper personal;
@@ -179,8 +193,13 @@ let
     };
   };
 
-  mkWrappedApp = name:
-    { url, wrapper ? chromeWrapper [ ] }: {
+  mkWrappedApp =
+    name:
+    {
+      url,
+      wrapper ? chromeWrapper [ ],
+    }:
+    {
       name = ".local/bin/${name}";
       value = {
         text = ''
@@ -191,4 +210,7 @@ let
         executable = true;
       };
     };
-in { home.file = lib.attrsets.mapAttrs' mkWrappedApp apps; }
+in
+{
+  home.file = lib.attrsets.mapAttrs' mkWrappedApp apps;
+}

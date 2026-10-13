@@ -29,7 +29,13 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, system-manager, ... }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      system-manager,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
 
@@ -62,12 +68,12 @@
           })
 
           (self: super: {
-            hyprland-guiutils =
-              inputs.hyprland-guiutils.packages.${system}.default;
+            hyprland-guiutils = inputs.hyprland-guiutils.packages.${system}.default;
           })
 
           (self: super: {
-            alias = name: command:
+            alias =
+              name: command:
               pkgs.writeShellApplication {
                 inherit name;
                 text = ''
@@ -75,9 +81,7 @@
                 '';
               };
 
-            secret = path:
-              builtins.head
-              (builtins.split "\n" (builtins.readFile "${secrets}/${path}"));
+            secret = path: builtins.head (builtins.split "\n" (builtins.readFile "${secrets}/${path}"));
           })
         ];
       };
@@ -86,44 +90,74 @@
 
       lib = nixpkgs.lib;
       homeManager = {
-        home-manager.extraSpecialArgs = inputs // { inherit system secrets; };
+        home-manager.extraSpecialArgs = inputs // {
+          inherit system secrets;
+        };
       };
 
-      fmt = nixpkgs.legacyPackages.${system}.nixfmt;
-    in {
+      fmt = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+    in
+    {
       nixosConfigurations = {
         toaster = lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = inputs // { inherit secrets; };
-          modules = [ ./systems/toaster homeManager ];
+          specialArgs = inputs // {
+            inherit secrets;
+          };
+          modules = [
+            ./systems/toaster
+            homeManager
+          ];
         };
 
         nas = lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = inputs // { inherit secrets; };
+          specialArgs = inputs // {
+            inherit secrets;
+          };
           modules = [ ./systems/nas ];
         };
       };
 
       extLib = {
-        inherit pkgs secrets system inputs;
+        inherit
+          pkgs
+          secrets
+          system
+          inputs
+          ;
 
-        mkHomeConfiguration = { modules, extraSpecialArgs ? { }, pkgs ? pkgs }:
+        mkHomeConfiguration =
+          {
+            modules,
+            extraSpecialArgs ? { },
+            pkgs ? pkgs,
+          }:
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs modules;
-            extraSpecialArgs = inputs // {
-              inherit system secrets;
-            } // extraSpecialArgs;
+            extraSpecialArgs =
+              inputs
+              // {
+                inherit system secrets;
+              }
+              // extraSpecialArgs;
           };
 
-        mkSystemConfig = { modules, extraSpecialArgs ? { } }:
+        mkSystemConfig =
+          {
+            modules,
+            extraSpecialArgs ? { },
+          }:
           system-manager.lib.makeSystemConfig {
             inherit modules;
-            extraSpecialArgs = inputs // {
-              inherit system pkgs secrets;
-            } // extraSpecialArgs;
+            extraSpecialArgs =
+              inputs
+              // {
+                inherit system pkgs secrets;
+              }
+              // extraSpecialArgs;
           };
       };
 
@@ -131,7 +165,10 @@
       devShells.${system}.default = pkgs.mkShell {
         LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [ pkgs.openssl ];
 
-        buildInputs = [ fmt pkgs.nil ];
+        buildInputs = [
+          fmt
+          pkgs.nil
+        ];
       };
     };
 }

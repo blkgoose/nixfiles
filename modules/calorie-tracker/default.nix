@@ -12,12 +12,16 @@ let
     cp ${./icon-512-maskable.png} $out/icon-512-maskable.png
     cp ${./apple-touch-icon.png} $out/apple-touch-icon.png
   '';
-in {
+in
+{
   networking.firewall.allowedTCPPorts = [ port ];
 
   systemd.services.calorie-tracker = {
     description = "Calorie tracker";
-    after = [ "network.target" "docker-homeassistant.service" ];
+    after = [
+      "network.target"
+      "docker-homeassistant.service"
+    ];
     wantedBy = [ "multi-user.target" ];
     environment = {
       PORT = toString port;
@@ -32,12 +36,16 @@ in {
     };
   };
 
-  services.homepage-dashboard.services = [{
-    "Home" = [{
-      "Calorie" = {
-        icon = "mdi-food-apple";
-        href = "http://192.168.1.101:${toString port}";
-      };
-    }];
-  }];
+  services.homepage-dashboard.services = [
+    {
+      "Home" = [
+        {
+          "Calorie" = {
+            icon = "mdi-food-apple";
+            href = "http://192.168.1.101:${toString port}";
+          };
+        }
+      ];
+    }
+  ];
 }

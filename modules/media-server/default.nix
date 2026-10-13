@@ -1,11 +1,16 @@
 { pkgs, ... }:
-let ip = "192.168.1.101"; # use DNS for better names
-in {
+let
+  ip = "192.168.1.101"; # use DNS for better names
+in
+{
   imports = [
     ./arr-stack.nix
     (import ./duckdns.nix {
       name = "aletflix";
-      subdomains = [ "jellyfin" "seerr" ];
+      subdomains = [
+        "jellyfin"
+        "seerr"
+      ];
       token = pkgs.secret "duckdns/token";
     })
     (import ./homepage.nix { ip = "192.168.1.101"; })
@@ -45,16 +50,25 @@ in {
     DUCKDNS_TOKEN=${pkgs.secret "duckdns/token"}
   '';
 
-  systemd.services.caddy.serviceConfig.EnvironmentFile =
-    [ "/etc/caddy/duckdns.env" ];
+  systemd.services.caddy.serviceConfig.EnvironmentFile = [ "/etc/caddy/duckdns.env" ];
 
   networking = {
-    interfaces.enp1s0.ipv4.addresses = [{
-      address = ip;
-      prefixLength = 24;
-    }];
-    firewall.allowedTCPPorts = [ 22 80 443 8082 ];
+    interfaces.enp1s0.ipv4.addresses = [
+      {
+        address = ip;
+        prefixLength = 24;
+      }
+    ];
+    firewall.allowedTCPPorts = [
+      22
+      80
+      443
+      8082
+    ];
     defaultGateway = "192.168.1.1";
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
   };
 }

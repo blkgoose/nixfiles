@@ -23,6 +23,8 @@
       }
     ];
 
-    settings = { title = "NAS"; };
+    settings = {
+      title = "NAS";
+    };
   };
 }

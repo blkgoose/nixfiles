@@ -54,7 +54,10 @@ let
     }
   '';
 
-in {
-  programs.wofi = { enable = true; };
+in
+{
+  programs.wofi = {
+    enable = true;
+  };
   xdg.configFile."wofi/style.css".source = style;
 }

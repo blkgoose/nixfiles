@@ -1,6 +1,8 @@
 { pkgs, config, ... }: {
   systemd.user.services.rclone-gdrive = {
-    Unit = { Description = "Mount Google Drive"; };
+    Unit = {
+      Description = "Mount Google Drive";
+    };
 
     Service = {
       Type = "simple";
@@ -19,6 +21,8 @@
       RestartSec = 2;
     };
 
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 }
