@@ -10,8 +10,9 @@ let
       Type = "simple";
       WorkingDirectory = dir;
       ExecStart = "${pkgs.writeShellScript "claude-remote-control-${name}" ''
-        ${pkgs.unstable.claude-code}/bin/claude remote-control --name ${name} -c
-        exec ${pkgs.unstable.claude-code}/bin/claude remote-control --name ${name}
+        session_name="${name} $(date '+%Y-%m-%d %-H:%M')"
+        ${pkgs.unstable.claude-code}/bin/claude remote-control --name "$session_name" -c
+        exec ${pkgs.unstable.claude-code}/bin/claude remote-control --name "$session_name"
       ''}";
       Restart = "always";
       RestartSec = 5;
@@ -24,7 +25,7 @@ let
 in
 {
   systemd.user.services = {
-    claude-ion-og = mkClaudeService "ion-og" "%h/proj/ion-og";
+    claude-ion = mkClaudeService "ion" "%h/proj/ion-og";
     claude-helion = mkClaudeService "helion" "%h/proj/helion";
     claude-cdn-ion = mkClaudeService "cdn-ion" "%h/proj/cdn-ion";
     claude-nix = mkClaudeService "nix" "%h/.config/nix";
