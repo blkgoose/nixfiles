@@ -1,4 +1,3 @@
-# Claude remote-control sessions as systemd user services
 { pkgs, ... }:
 let
   mkClaudeService = name: dir: {
@@ -11,8 +10,8 @@ let
       Type = "simple";
       WorkingDirectory = dir;
       ExecStart = "${pkgs.writeShellScript "claude-remote-control-${name}" ''
-        ${pkgs.claude-code}/bin/claude remote-control --name ${name} -c
-        exec ${pkgs.claude-code}/bin/claude remote-control --name ${name}
+        ${pkgs.unstable.claude-code}/bin/claude remote-control --name ${name} -c
+        exec ${pkgs.unstable.claude-code}/bin/claude remote-control --name ${name}
       ''}";
       Restart = "always";
       RestartSec = 5;

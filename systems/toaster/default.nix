@@ -11,7 +11,6 @@
     ../../modules/sound.nix
     ../../modules/virtualization.nix
     ../../modules/entertainment.nix
-    ../../modules/ion-dev.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix
@@ -19,7 +18,7 @@
 
   networking.hostName = "toaster";
 
-  # temporary: used by toaster
+  # placed here or it would apply to the work laptop as well
   home-manager.users.alessio.imports = [ ../../home/modules/claude.nix ];
 
   # temporary
