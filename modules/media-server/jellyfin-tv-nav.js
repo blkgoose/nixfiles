@@ -2,6 +2,7 @@
 // force the TV layout, put a transparent overlay over the page that swallows all mouse input, turn every cursor
 // movement into an arrow key press, and turn OK (mouse button) into a click on the focused element.
 // The cursor stops at the screen edges (no events there) and nothing from JS can move it back.
+// On the video player page (#/video) all of this is switched off and the mouse works as usual.
 (function () {
   try {
     localStorage.setItem('layout', 'tv');
@@ -32,6 +33,17 @@
     var overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;background:transparent;cursor:none';
     document.body.appendChild(overlay);
+
+    // while the video player page is open the page behaves normally (visible cursor, real clicks) so the OSD works
+    function sync() {
+      var playing = /^#\/video/.test(location.hash);
+      style.disabled = playing;
+      overlay.style.display = playing ? 'none' : 'block';
+    }
+    window.addEventListener('hashchange', sync);
+    window.addEventListener('popstate', sync);
+    setInterval(sync, 500);
+    sync();
 
     overlay.addEventListener('mousemove', function (e) {
       e.stopPropagation();
