@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sbobina</title>
+<style>
+  :root { color-scheme: light dark; --bg:#f6f6f4; --card:#fff; --fg:#1c1c1a; --muted:#6b6b66; --line:#dcdcd6; --accent:#2f6fed; --ok:#2e8b57; --err:#c0392b; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161615; --card:#222221; --fg:#ececea; --muted:#9a9a94; --line:#383836; --accent:#6c9bff; --ok:#5fc08a; --err:#e5746a; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:22px; margin:0 0 16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:12px; }
+  #drop { border:2px dashed var(--line); border-radius:10px; padding:32px 16px; text-align:center; color:var(--muted); cursor:pointer; }
+  #drop.over { border-color:var(--accent); color:var(--accent); }
+  #drop strong { color:var(--fg); }
+  .opts { display:flex; flex-wrap:wrap; gap:12px 20px; margin-top:14px; align-items:center; }
+  label { display:flex; gap:6px; align-items:center; color:var(--muted); }
+  select, input[type=number], input[type=text], textarea { font:inherit; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:4px 8px; }
+  input[type=number] { width:64px; }
+  textarea { width:100%; margin-top:10px; resize:vertical; }
+  button, a.btn { font:inherit; border:1px solid var(--line); background:var(--card); color:var(--fg); border-radius:6px; padding:4px 12px; cursor:pointer; text-decoration:none; }
+  a.btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .row { display:flex; justify-content:space-between; gap:12px; align-items:center; }
+  .name { font-weight:600; overflow-wrap:anywhere; }
+  .meta { color:var(--muted); font-size:13px; }
+  .bar { height:6px; background:var(--line); border-radius:3px; margin-top:10px; overflow:hidden; }
+  .bar > div { height:100%; background:var(--accent); transition:width .4s; }
+  .done .bar > div { background:var(--ok); }
+  .error .bar > div { background:var(--err); }
+  .err { color:var(--err); font-size:13px; margin-top:6px; white-space:pre-wrap; }
+  .actions { display:flex; gap:8px; flex-shrink:0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sbobina</h1>
+
+  <div class="card">
+    <div id="drop"><strong>Trascina qui un file audio</strong> o clicca per sceglierlo<br><span id="picked"></span></div>
+    <input id="file" type="file" accept="audio/*,video/*" hidden>
+    <div class="opts">
+      <label>Modello <select id="model"></select></label>
+      <label>Lingua <select id="lang"><option value="it">Italiano</option><option value="">Auto</option><option value="en">Inglese</option></select></label>
+      <label><input id="diarize" type="checkbox" checked> Distingui i parlanti</label>
+      <label>Numero parlanti <input id="speakers" type="number" min="1" max="20" placeholder="auto"></label>
+    </div>
+    <textarea id="prompt" rows="2" placeholder="Opzionale: contesto o termini tecnici (es. nome del corso, materia, nomi propri) per migliorare la trascrizione"></textarea>
+    <div class="row" style="margin-top:12px">
+      <span class="meta" id="uploadState"></span>
+      <button id="start" disabled>Avvia trascrizione</button>
+    </div>
+    <div class="bar" id="upbar" hidden><div style="width:0"></div></div>
+  </div>
+
+  <div id="jobs"></div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+let file = null;
+
+fetch('api/config').then(r => r.json()).then(c => {
+  $('model').innerHTML = c.models.map(m => `<option>${m}</option>`).join('');
+});
+
+function pick(f) {
+  file = f;
+  $('picked').textContent = f ? `${f.name} (${(f.size / 1048576).toFixed(0)} MB)` : '';
+  $('start').disabled = !f;
+}
+$('drop').onclick = () => $('file').click();
+$('file').onchange = e => pick(e.target.files[0]);
+$('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('over'); };
+$('drop').ondragleave = () => $('drop').classList.remove('over');
+$('drop').ondrop = e => { e.preventDefault(); $('drop').classList.remove('over'); pick(e.dataTransfer.files[0]); };
+
+$('start').onclick = () => {
+  const q = new URLSearchParams({
+    filename: file.name,
+    model: $('model').value,
+    language: $('lang').value,
+    diarize: $('diarize').checked ? '1' : '0',
+    speakers: $('speakers').value,
+    prompt: $('prompt').value,
+  });
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'api/jobs?' + q);
+  $('start').disabled = true;
+  $('upbar').hidden = false;
+  xhr.upload.onprogress = e => {
+    $('upbar').firstElementChild.style.width = (100 * e.loaded / e.total) + '%';
+    $('uploadState').textContent = `Caricamento ${(100 * e.loaded / e.total).toFixed(0)}%`;
+  };
+  xhr.onload = () => {
+    $('uploadState').textContent = xhr.status === 201 ? 'Caricato, in coda' : 'Errore nel caricamento';
+    $('upbar').hidden = true;
+    pick(null);
+    $('file').value = '';
+    refresh();
+  };
+  xhr.onerror = () => { $('uploadState').textContent = 'Errore nel caricamento'; $('start').disabled = false; $('upbar').hidden = true; };
+  xhr.send(file);
+};
+
+const dur = s => { s = Math.round(s); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return h ? `${h}h ${m}m` : `${m}m ${s % 60}s`; };
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function render(jobs) {
+  $('jobs').innerHTML = jobs.map(j => {
+    const pct = (j.progress * 100).toFixed(0);
+    const active = ['converting', 'diarizing', 'transcribing'].includes(j.status);
+    let info = esc(j.stage) + (active ? ` ${pct}%` : '');
+    if (j.duration) info += ` · audio ${dur(j.duration)}`;
+    if (j.status === 'done') info += ` · elaborato in ${dur(j.finished - j.started)}`;
+    return `<div class="card ${j.status}">
+      <div class="row">
+        <div><div class="name">${esc(j.filename)}</div><div class="meta">${info}</div></div>
+        <div class="actions">
+          ${j.status === 'done' ? `<a class="btn primary" href="api/jobs/${j.id}/transcript.txt">Scarica .txt</a>` : ''}
+          <button onclick="del('${j.id}')">${j.status === 'done' || j.status === 'error' ? 'Elimina' : 'Annulla'}</button>
+        </div>
+      </div>
+      ${j.status === 'queued' || j.status === 'error' || j.status === 'done' || active ? `<div class="bar"><div style="width:${j.status === 'done' || j.status === 'error' ? 100 : pct}%"></div></div>` : ''}
+      ${j.error ? `<div class="err">${esc(j.error)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function del(id) {
+  await fetch('api/jobs/' + id, { method: 'DELETE' });
+  refresh();
+}
+async function refresh() {
+  try { render(await (await fetch('api/jobs')).json()); } catch (e) {}
+}
+refresh();
+setInterval(refresh, 2000);
+</script>
+</body>
+</html>
