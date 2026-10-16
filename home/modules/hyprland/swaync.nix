@@ -101,10 +101,10 @@ in
   systemd.user.services.swaync = {
     Unit = {
       Description = "Sway Notifications Center";
-      PartOf = [ "graphical-session.target" ];
+      PartOf = [ "hyprland-session.target" ];
     };
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ "hyprland-session.target" ];
     };
     Service = {
       Type = "dbus";

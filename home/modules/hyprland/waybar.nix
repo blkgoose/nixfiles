@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   conf = pkgs.writeText "waybar" ''
     {
@@ -153,8 +153,13 @@ in
 {
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      targets = [ "hyprland-session.target" ];
+    };
   };
+
+  systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
 
   home.file.".config/waybar/config".source = conf;
   home.file.".config/waybar/style.css".source = style;

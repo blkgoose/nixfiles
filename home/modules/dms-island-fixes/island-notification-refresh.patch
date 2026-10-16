@@ -1,0 +1,34 @@
+--- a/quickshell/Modules/DankIsland/IslandNotificationSource.qml
++++ b/quickshell/Modules/DankIsland/IslandNotificationSource.qml
+@@ -105,6 +105,31 @@
+         applyWrapperTimeoutHold();
+     }
+ 
++    property Connections wrapperUpdates: Connections {
++        target: root.currentWrapper
++
++        function onSummaryChanged() {
++            root.summary = HtmlElide.plainText(root.currentWrapper.summary) || root.appName;
++        }
++
++        function onBodyChanged() {
++            root.body = HtmlElide.plainText(root.currentWrapper.body);
++        }
++
++        function onAppNameChanged() {
++            root.appName = root.currentWrapper.appName || I18n.tr("Notification", "island notification face: fallback app name");
++            root.fallbackText = root.appName.charAt(0).toUpperCase();
++        }
++
++        function onDisplayImageChanged() {
++            root.imageSource = root.currentWrapper.displayImage;
++        }
++
++        function onFallbackIconNameChanged() {
++            root.fallbackIcon = root.currentWrapper.fallbackIconName || "material:notifications";
++        }
++    }
++
+     onWrapperTimeoutHeldChanged: applyWrapperTimeoutHold()
+ 
+     function syncVisibleNotifications() {

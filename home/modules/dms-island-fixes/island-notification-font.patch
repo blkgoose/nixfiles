@@ -1,0 +1,31 @@
+--- a/quickshell/Modules/DankIsland/Activities/NotificationExpanded.qml
++++ b/quickshell/Modules/DankIsland/Activities/NotificationExpanded.qml
+@@ -85,7 +85,7 @@
+                 width: parent.width
+                 text: root.notificationModel.summary
+                 color: Theme.surfaceText
+-                font.pixelSize: Theme.fontSizeLarge
++                font.pixelSize: Theme.fontSizeLarge + 5
+                 font.weight: Font.DemiBold
+                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                 maximumLineCount: 2
+@@ -96,7 +96,7 @@
+                 width: parent.width
+                 text: root.notificationModel.body
+                 color: Theme.surfaceTextMedium
+-                font.pixelSize: Theme.fontSizeSmall
++                font.pixelSize: Theme.fontSizeMedium + 3
+                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                 maximumLineCount: 3
+                 elide: Text.ElideRight
+--- a/quickshell/Modules/DankIsland/IslandController.qml
++++ b/quickshell/Modules/DankIsland/IslandController.qml
+@@ -340,7 +340,7 @@
+     readonly property var systemCompactTarget: pillTarget(root.isVertical ? 240 : (SettingsData.osdAlwaysShowValue ? 330 : 282), compactFaceThickness)
+     readonly property var systemExpandedTarget: sheetTarget(460, 176)
+     readonly property var notificationCompactTarget: pillTarget(Math.ceil(Math.max(notificationCompactMinLength, Math.min(notificationCompactMaxLength, notificationContentLength))), compactFaceThickness)
+-    readonly property var notificationExpandedTarget: sheetTarget(520, 220)
++    readonly property var notificationExpandedTarget: sheetTarget(580, 270)
+     readonly property var notificationCenterExpandedTarget: sheetTarget(480, notificationCenterHeight)
+ 
+     readonly property bool systemActivityActive: activeActivity === "volume" || activeActivity === "brightness"

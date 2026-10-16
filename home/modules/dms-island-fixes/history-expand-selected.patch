@@ -1,0 +1,13 @@
+--- a/quickshell/Modules/Notifications/Center/HistoryNotificationList.qml
++++ b/quickshell/Modules/Notifications/Center/HistoryNotificationList.qml
+@@ -379,6 +379,10 @@
+             keyboardActive = false;
+             selectedIndex = -1;
+             event.accepted = true;
++        } else if (keyboardActive && (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) && selectedIndex >= 0 && selectedIndex < historyModel.values.length) {
++            NotificationService.toggleMessageExpansion(historyModel.values[selectedIndex].id + "_hist");
++            Qt.callLater(() => historyListView.positionViewAtIndex(selectedIndex, ListView.Contain));
++            event.accepted = true;
+         } else if (event.key === Qt.Key_F10) {
+             showKeyboardHints = !showKeyboardHints;
+             event.accepted = true;

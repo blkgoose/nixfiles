@@ -23,6 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dms.url = "github:AvengeMedia/DankMaterialShell/stable";
+
     hyprland-guiutils = {
       url = "github:hyprwm/hyprland-guiutils";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -122,6 +124,10 @@
       };
 
       extLib = {
+        homeModules = lib.mapAttrs' (
+          name: _: lib.nameValuePair (lib.removeSuffix ".nix" name) (./home/modules + "/${name}")
+        ) (builtins.readDir ./home/modules);
+
         inherit
           pkgs
           secrets

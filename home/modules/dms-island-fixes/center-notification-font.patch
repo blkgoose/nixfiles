@@ -1,0 +1,58 @@
+--- a/quickshell/Modules/Notifications/Center/HistoryNotificationCard.qml
++++ b/quickshell/Modules/Notifications/Center/HistoryNotificationCard.qml
+@@ -206,7 +206,7 @@
+                                 return title;
+                             }
+                             color: Theme.surfaceText
+-                            font.pixelSize: Theme.fontSizeMedium
++                            font.pixelSize: Theme.fontSizeMedium + 3
+                             font.weight: Font.Medium
+                             elide: Text.ElideRight
+                             maximumLineCount: 1
+@@ -236,7 +236,7 @@
+                     text: historyItem.htmlBody || historyItem.body || ""
+                     textFormat: Text.StyledText
+                     color: Theme.surfaceVariantText
+-                    font.pixelSize: Theme.fontSizeSmall
++                    font.pixelSize: Theme.fontSizeMedium + 2
+                     width: parent.width
+                     elide: descriptionExpanded ? Text.ElideNone : Text.ElideRight
+                     maximumLineCount: descriptionExpanded ? -1 : (compactMode ? 1 : 2)
+--- a/quickshell/Modules/Notifications/Center/NotificationCard.qml
++++ b/quickshell/Modules/Notifications/Center/NotificationCard.qml
+@@ -373,7 +373,7 @@
+                     width: parent.width
+                     text: notificationGroup?.latestNotification?.summary || ""
+                     color: Theme.surfaceText
+-                    font.pixelSize: Theme.fontSizeMedium
++                    font.pixelSize: Theme.fontSizeMedium + 3
+                     font.weight: Font.Medium
+                     elide: Text.ElideRight
+                     maximumLineCount: 1
+@@ -388,7 +388,7 @@
+                     text: fullText
+                     textFormat: Text.StyledText
+                     color: Theme.surfaceVariantText
+-                    font.pixelSize: Theme.fontSizeSmall
++                    font.pixelSize: Theme.fontSizeMedium + 2
+                     width: parent.width
+                     elide: Text.ElideRight
+                     maximumLineCount: descriptionExpanded ? -1 : (compactMode ? 1 : 2)
+@@ -658,7 +658,7 @@
+                                         width: parent.width
+                                         text: modelData?.summary || ""
+                                         color: Theme.surfaceText
+-                                        font.pixelSize: Theme.fontSizeMedium
++                                        font.pixelSize: Theme.fontSizeMedium + 3
+                                         font.weight: Font.Medium
+                                         elide: Text.ElideRight
+                                         maximumLineCount: 1
+@@ -674,7 +674,7 @@
+                                         text: modelData?.htmlBody || ""
+                                         textFormat: Text.StyledText
+                                         color: Theme.surfaceVariantText
+-                                        font.pixelSize: Theme.fontSizeSmall
++                                        font.pixelSize: Theme.fontSizeMedium + 2
+                                         width: parent.width
+                                         elide: messageExpanded ? Text.ElideNone : Text.ElideRight
+                                         maximumLineCount: messageExpanded ? -1 : collapsedLineCount

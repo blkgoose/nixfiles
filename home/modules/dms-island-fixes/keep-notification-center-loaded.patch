@@ -1,0 +1,11 @@
+--- a/quickshell/Modules/DankIsland/IslandController.qml
++++ b/quickshell/Modules/DankIsland/IslandController.qml
+@@ -237,7 +237,7 @@
+         for (const id of destinations) {
+             if (expanded && activeActivity === id)
+                 continue;
+-            if (destinationState[id].pending)
++            if (destinationState[id].pending || id === "notificationcenter")
+                 continue;
+             dropVisuals(id);
+         }

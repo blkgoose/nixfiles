@@ -1,0 +1,46 @@
+--- a/quickshell/Services/NotificationService.qml
++++ b/quickshell/Services/NotificationService.qml
+@@ -167,6 +167,30 @@
+         saveHistory();
+     }
+ 
++    function updateHistoryEntry(wrapper) {
++        const sourceId = wrapper?.notification?.id?.toString() || "";
++        if (!sourceId)
++            return;
++        const timestamp = wrapper.time.getTime();
++        const index = historyList.findIndex(item => item.sourceNotificationId === sourceId && item.timestamp === timestamp);
++        if (index < 0)
++            return;
++        const image = wrapper.image || "";
++        const updated = Object.assign({}, historyList[index], {
++            summary: wrapper.summary || "",
++            body: wrapper.body || "",
++            htmlBody: wrapper.htmlBody || wrapper.body || "",
++            appName: wrapper.appName || "",
++            appIcon: wrapper.appIcon || ""
++        });
++        if (image && !image.startsWith("image://qsimage/"))
++            updated.image = image;
++        const newList = historyList.slice();
++        newList[index] = updated;
++        historyList = newList;
++        saveHistory();
++    }
++
+     function saveHistory() {
+         historySaveTimer.restart();
+     }
+@@ -841,6 +865,12 @@
+         property int seq: 0
+         property string persistedImagePath: ""
+ 
++        onSummaryChanged: root.updateHistoryEntry(wrapper)
++        onBodyChanged: root.updateHistoryEntry(wrapper)
++        onAppNameChanged: root.updateHistoryEntry(wrapper)
++        onAppIconChanged: root.updateHistoryEntry(wrapper)
++        onImageChanged: root.updateHistoryEntry(wrapper)
++
+         onPopupChanged: {
+             if (!popup) {
+                 removeFromVisibleNotifications(wrapper);

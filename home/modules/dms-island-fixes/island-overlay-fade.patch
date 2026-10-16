@@ -1,0 +1,109 @@
+--- a/quickshell/Modules/DankIsland/DankIslandHostWindow.qml
++++ b/quickshell/Modules/DankIsland/DankIslandHostWindow.qml
+@@ -59,7 +59,44 @@
+     readonly property int compactThickness: Math.max(24, Math.min(72, root.setting("islandCompactThickness")))
+     readonly property bool floating: root.setting("islandFloating")
+     readonly property bool usesOverlayLayer: LayerShell.envUsesOverlay("DMS_DANKISLAND_LAYER", root.setting("islandUseOverlayLayer"))
+-    readonly property var islandLayer: LayerShell.fromEnv("DMS_DANKISLAND_LAYER", usesOverlayLayer ? WlrLayer.Overlay : WlrLayer.Top)
++    readonly property bool overrideActive: root.setting("islandOverlayWhenActive") === true && (controller.expanded || controller.transientActive)
++property bool layerHold: false
++readonly property bool overrideLayer: overrideActive || layerHold
++readonly property bool fullscreenOnScreen: root.setting("islandOverlayWhenActive") === true && CompositorService.fullscreenToplevelOnScreen(root.screen)
++readonly property bool fullscreenHidden: fullscreenOnScreen && !usesOverlayLayer && !overrideLayer
++readonly property var wantedLayer: LayerShell.fromEnv("DMS_DANKISLAND_LAYER", (usesOverlayLayer || overrideLayer || fullscreenOnScreen) ? WlrLayer.Overlay : WlrLayer.Top)
++property var islandLayer: WlrLayer.Top
++property real layerFade: 1
++readonly property bool inputBlocked: controller.inputSuspended || layerFade < 0.05
++function releaseLayerHold() {
++    if (!overrideActive && !surface.motionRunning && !layerHoldTimer.running)
++        layerHold = false;
++}
++function syncLayer() {
++    layerFadeAnim.stop();
++    const hide = fullscreenHidden;
++    if (islandLayer !== wantedLayer) {
++        if (hide)
++            layerFade = 0;
++        islandLayer = wantedLayer;
++    }
++    layerFadeAnim.to = hide ? 0 : 1;
++    layerFadeAnim.duration = hide ? 140 : 160;
++    if (layerFade !== layerFadeAnim.to)
++        layerFadeAnim.start();
++}
++onOverrideActiveChanged: {
++    if (overrideActive)
++        layerHold = true;
++    else
++        layerHoldTimer.restart();
++}
++onWantedLayerChanged: Qt.callLater(syncLayer)
++onFullscreenHiddenChanged: Qt.callLater(syncLayer)
++Timer { id: layerHoldTimer; interval: 80; onTriggered: root.releaseLayerHold() }
++Connections { target: surface; function onMotionRunningChanged() { root.releaseLayerHold(); } }
++Binding { target: root.contentItem; property: "opacity"; value: root.layerFade }
++NumberAnimation { id: layerFadeAnim; target: root; property: "layerFade"; easing.type: Easing.OutCubic }
+     readonly property string edge: SettingsData.islandEdge(root.barConfig)
+     readonly property bool isVertical: SettingsData.islandVertical(root.barConfig)
+     readonly property bool farEdge: root.edge === "bottom" || root.edge === "right"
+@@ -114,7 +151,7 @@
+         wanted: KeyboardFocus.wantsGrab(controller.keyboardDismissRequested && !controller.keyboardYielded, null)
+     }
+ 
+-    Component.onCompleted: KeyboardFocus.registerBarWindow(root)
++    Component.onCompleted: { KeyboardFocus.registerBarWindow(root); islandLayer = wantedLayer; syncLayer(); }
+     Component.onDestruction: KeyboardFocus.unregisterBarWindow(root)
+ 
+     Connections {
+@@ -140,27 +177,27 @@
+ 
+     mask: Region {
+         Region {
+-            item: controller.inputSuspended ? null : surface.inputMaskItem
++            item: root.inputBlocked ? null : surface.inputMaskItem
+         }
+ 
+         Region {
+-            item: controller.inputSuspended ? null : surface.fittsStripItem
++            item: root.inputBlocked ? null : surface.fittsStripItem
+         }
+ 
+         Region {
+-            item: controller.inputSuspended ? null : satelliteHost.leadingInputItem
++            item: root.inputBlocked ? null : satelliteHost.leadingInputItem
+         }
+ 
+         Region {
+-            item: controller.inputSuspended ? null : satelliteHost.trailingInputItem
++            item: root.inputBlocked ? null : satelliteHost.trailingInputItem
+         }
+ 
+         Region {
+-            item: controller.inputSuspended || !satelliteHost.scrollEnabled || root.floating ? null : scrollStrip
++            item: root.inputBlocked || !satelliteHost.scrollEnabled || root.floating ? null : scrollStrip
+         }
+ 
+         Region {
+-            item: controller.inputSuspended || !root.satelliteSurfacesOpen ? null : satelliteDismissStrip
++            item: root.inputBlocked || !root.satelliteSurfacesOpen ? null : satelliteDismissStrip
+         }
+     }
+ 
+@@ -254,7 +291,7 @@
+         height: root.isVertical ? parent.height : root.reservedStripThickness
+         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+         hoverEnabled: false
+-        enabled: root.satelliteSurfacesOpen && !controller.inputSuspended
++        enabled: root.satelliteSurfacesOpen && !root.inputBlocked
+         onClicked: PopoutManager.dismissAllForScreen(root.screen?.name)
+     }
+ 
+@@ -267,7 +304,7 @@
+         width: root.isVertical ? root.reservedStripThickness : parent.width
+         height: root.isVertical ? parent.height : root.reservedStripThickness
+         hoverEnabled: false
+-        enabled: satelliteHost.scrollEnabled && !controller.inputSuspended
++        enabled: satelliteHost.scrollEnabled && !root.inputBlocked
+         scrollEnabled: satelliteHost.scrollEnabled
+         xBehavior: satelliteHost.scrollXBehavior
+         yBehavior: satelliteHost.scrollYBehavior
