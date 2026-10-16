@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sbobina</title>
+<style>
+  :root { color-scheme: light dark; --bg:#f6f6f4; --card:#fff; --fg:#1c1c1a; --muted:#6b6b66; --line:#dcdcd6; --accent:#2f6fed; --err:#c0392b; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161615; --card:#222221; --fg:#ececea; --muted:#9a9a94; --line:#383836; --accent:#6c9bff; --err:#e5746a; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; }
+  main { max-width:360px; margin:0 auto; padding:80px 16px; }
+  h1 { font-size:22px; margin:0 0 16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  input { width:100%; font:inherit; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:6px 8px; margin-bottom:10px; }
+  button { width:100%; font:inherit; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:6px; padding:6px 12px; cursor:pointer; }
+  #error { color:var(--err); font-size:13px; min-height:20px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sbobina</h1>
+  <form class="card" id="form">
+    <input id="username" autocomplete="username" placeholder="Nome utente" autocapitalize="none" autofocus required>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Password" required>
+    <div id="error"></div>
+    <button>Accedi</button>
+  </form>
+</main>
+<script>
+document.getElementById('form').onsubmit = async e => {
+  e.preventDefault();
+  const r = await fetch('api/login', {
+    method: 'POST',
+    body: JSON.stringify({ username: document.getElementById('username').value, password: document.getElementById('password').value }),
+  });
+  if (r.ok) return location.reload();
+  document.getElementById('error').textContent = (await r.json()).error || 'Errore';
+};
+</script>
+</body>
+</html>

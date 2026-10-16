@@ -15,7 +15,6 @@
   #drop { border:2px dashed var(--line); border-radius:10px; padding:32px 16px; text-align:center; color:var(--muted); cursor:pointer; }
   #drop.over { border-color:var(--accent); color:var(--accent); }
   #drop strong { color:var(--fg); }
-  .opts { display:flex; flex-wrap:wrap; gap:12px 20px; margin-top:14px; align-items:center; }
   label { display:flex; gap:6px; align-items:center; color:var(--muted); }
   select, input[type=number], input[type=text], textarea { font:inherit; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:4px 8px; }
   input[type=number] { width:64px; }
@@ -35,17 +34,14 @@
 </head>
 <body>
 <main>
-  <h1>Sbobina</h1>
+  <div class="row">
+    <h1>Sbobina</h1>
+    <span class="meta"><span id="me"></span> · <a href="#" id="logout">Esci</a></span>
+  </div>
 
   <div class="card">
     <div id="drop"><strong>Trascina qui un file audio</strong> o clicca per sceglierlo<br><span id="picked"></span></div>
     <input id="file" type="file" accept="audio/*,video/*" hidden>
-    <div class="opts">
-      <label>Modello <select id="model"></select></label>
-      <label>Lingua <select id="lang"><option value="it">Italiano</option><option value="">Auto</option><option value="en">Inglese</option></select></label>
-      <label><input id="diarize" type="checkbox" checked> Distingui i parlanti</label>
-      <label>Numero parlanti <input id="speakers" type="number" min="1" max="20" placeholder="auto"></label>
-    </div>
     <textarea id="prompt" rows="2" placeholder="Opzionale: contesto o termini tecnici (es. nome del corso, materia, nomi propri) per migliorare la trascrizione"></textarea>
     <div class="row" style="margin-top:12px">
       <span class="meta" id="uploadState"></span>
@@ -55,21 +51,24 @@
   </div>
 
   <div id="jobs"></div>
+
 </main>
 
 <script>
 const $ = id => document.getElementById(id);
+const title = s => s.charAt(0).toUpperCase() + s.slice(1);
 let file = null;
-
-fetch('api/config').then(r => r.json()).then(c => {
-  $('model').innerHTML = c.models.map(m => `<option>${m}</option>`).join('');
-});
+let me = null;
+let admin = false;
 
 function pick(f) {
   file = f;
   $('picked').textContent = f ? `${f.name} (${(f.size / 1048576).toFixed(0)} MB)` : '';
   $('start').disabled = !f;
 }
+
+fetch('api/me').then(r => r.ok ? r.json() : location.reload()).then(m => { me = m.user; admin = m.admin; $('me').textContent = title(me); });
+$('logout').onclick = async () => { await fetch('api/logout', { method: 'POST' }); location.reload(); };
 $('drop').onclick = () => $('file').click();
 $('file').onchange = e => pick(e.target.files[0]);
 $('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('over'); };
@@ -79,10 +78,6 @@ $('drop').ondrop = e => { e.preventDefault(); $('drop').classList.remove('over')
 $('start').onclick = () => {
   const q = new URLSearchParams({
     filename: file.name,
-    model: $('model').value,
-    language: $('lang').value,
-    diarize: $('diarize').checked ? '1' : '0',
-    speakers: $('speakers').value,
     prompt: $('prompt').value,
   });
   const xhr = new XMLHttpRequest();
@@ -111,7 +106,7 @@ function render(jobs) {
   $('jobs').innerHTML = jobs.map(j => {
     const pct = (j.progress * 100).toFixed(0);
     const active = ['converting', 'diarizing', 'transcribing'].includes(j.status);
-    let info = esc(j.stage) + (active ? ` ${pct}%` : '');
+    let info = (j.requester ? `<strong>${esc(title(j.requester))}</strong> · ` : '') + esc(j.stage) + (active ? ` ${pct}%` : '');
     if (j.duration) info += ` · audio ${dur(j.duration)}`;
     if (j.status === 'done') info += ` · elaborato in ${dur(j.finished - j.started)}`;
     return `<div class="card ${j.status}">
@@ -119,7 +114,7 @@ function render(jobs) {
         <div><div class="name">${esc(j.filename)}</div><div class="meta">${info}</div></div>
         <div class="actions">
           ${j.status === 'done' ? `<a class="btn primary" href="api/jobs/${j.id}/transcript.txt">Scarica .txt</a>` : ''}
-          <button onclick="del('${j.id}')">${j.status === 'done' || j.status === 'error' ? 'Elimina' : 'Annulla'}</button>
+          ${j.requester === me || admin ? `<button onclick="del('${j.id}')">${j.status === 'done' || j.status === 'error' ? 'Elimina' : 'Annulla'}</button>` : ''}
         </div>
       </div>
       ${j.status === 'queued' || j.status === 'error' || j.status === 'done' || active ? `<div class="bar"><div style="width:${j.status === 'done' || j.status === 'error' ? 100 : pct}%"></div></div>` : ''}
@@ -133,7 +128,11 @@ async function del(id) {
   refresh();
 }
 async function refresh() {
-  try { render(await (await fetch('api/jobs')).json()); } catch (e) {}
+  try {
+    const r = await fetch('api/jobs');
+    if (r.status === 401) return location.reload();
+    render(await r.json());
+  } catch (e) {}
 }
 refresh();
 setInterval(refresh, 2000);

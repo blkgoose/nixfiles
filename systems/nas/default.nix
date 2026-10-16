@@ -9,6 +9,7 @@
     ../../modules/home-assistant
     ../../modules/calorie-tracker
     ../../modules/media-server
+    ../../modules/transcriber/server.nix
   ];
 
   environment.systemPackages = with pkgs; [ btrfs-progs ];
