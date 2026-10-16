@@ -11,7 +11,7 @@
     ../../modules/sound.nix
     ../../modules/virtualization.nix
     ../../modules/entertainment.nix
-    ../../modules/transcriber
+    ../../modules/transcriber/worker.nix
 
     ../../modules/users
     ../../modules/users/alessio.nix

@@ -1,11 +1,8 @@
 { pkgs, ... }:
 let
-  port = 8086;
-
   app = pkgs.runCommand "transcriber" { } ''
     mkdir -p $out
-    cp ${./app.py} $out/app.py
-    cp ${./index.html} $out/index.html
+    cp ${./worker.py} $out/worker.py
   '';
 
   python = pkgs.python3.withPackages (ps: [
@@ -36,17 +33,28 @@ let
   };
 in
 {
-  networking.firewall.interfaces.enp4s0.allowedTCPPorts = [ port ];
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.user == "transcriber" &&
+          (action.id == "org.freedesktop.login1.inhibit-block-sleep" ||
+           action.id == "org.freedesktop.login1.inhibit-block-idle")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
 
   systemd.services.transcriber = {
-    description = "Whisper transcription web UI";
+    description = "Whisper transcription worker";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.ffmpeg-headless ];
+    path = [
+      pkgs.ffmpeg-headless
+      pkgs.systemd
+      pkgs.coreutils
+    ];
     environment = {
-      HOST = "0.0.0.0";
-      PORT = toString port;
-      DATA_DIR = "/var/lib/transcriber";
+      SERVER_URL = "http://192.168.1.101:8086";
+      WORK_DIR = "/var/lib/transcriber/work";
       XDG_CACHE_HOME = "/var/lib/transcriber/cache";
       VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
       WHISPER_CLI = "${pkgs.whisper-cpp-vulkan}/bin/whisper-cli";
@@ -57,7 +65,7 @@ in
       EMBEDDING_MODEL = "${embeddingModel}";
     };
     serviceConfig = {
-      ExecStart = "${python}/bin/python3 ${app}/app.py";
+      ExecStart = "${python}/bin/python3 ${app}/worker.py";
       DynamicUser = true;
       StateDirectory = "transcriber";
       SupplementaryGroups = [
