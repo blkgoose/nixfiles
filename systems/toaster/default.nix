@@ -1,4 +1,4 @@
-{ nixos-hardware, ... }: {
+{ config, nixos-hardware, ... }: {
   imports = [
     ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-gpu-amd
@@ -18,6 +18,11 @@
   ];
 
   networking.hostName = "toaster";
+  networking.networkmanager.settings.connection."ethernet.wake-on-lan" = "magic";
+
+  boot.extraModulePackages = [ config.boot.kernelPackages.r8168 ];
+  boot.blacklistedKernelModules = [ "r8169" ];
+  boot.extraModprobeConfig = "options r8168 s5wol=1";
 
   # placed here or it would apply to the work laptop as well
   home-manager.users.alessio.imports = [ ../../home/modules/claude.nix ];
