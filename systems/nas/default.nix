@@ -25,6 +25,7 @@
       prefixLength = 24;
     }
   ];
+  networking.interfaces.enp2s0.wakeOnLan.enable = true;
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = [
     "8.8.8.8"
