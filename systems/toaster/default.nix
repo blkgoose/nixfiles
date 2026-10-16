@@ -27,12 +27,6 @@
   # placed here or it would apply to the work laptop as well
   home-manager.users.alessio.imports = [ ../../home/modules/claude.nix ];
 
-  # temporary
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
-
   services.openssh.enable = true;
 
   services.tailscale.enable = true;

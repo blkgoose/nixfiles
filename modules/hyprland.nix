@@ -13,6 +13,11 @@
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
 
+  services.logind.settings.Login = {
+    IdleAction = "suspend";
+    IdleActionSec = "1min";
+  };
+
   xdg.portal.enable = true;
 
   fonts.packages = with pkgs; [ fira-code ];
