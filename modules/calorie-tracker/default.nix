@@ -36,16 +36,12 @@ in
     };
   };
 
-  services.homepage-dashboard.services = [
+  dashboard.homeLinks = [
     {
-      "Home" = [
-        {
-          "Calorie" = {
-            icon = "mdi-food-apple";
-            href = "http://192.168.1.101:${toString port}";
-          };
-        }
-      ];
+      "Calorie" = {
+        icon = "mdi-food-apple";
+        href = "http://192.168.1.101:${toString port}";
+      };
     }
   ];
 }

@@ -44,6 +44,19 @@ in
           reverse_proxy localhost:5055
         '';
       };
+      "sbobina.aletflix.duckdns.org" = {
+        extraConfig = ''
+          tls {
+            dns duckdns {env.DUCKDNS_TOKEN}
+          }
+          @internal path /api/worker/* /api/wake
+          respond @internal 404
+          request_body {
+            max_size 4GB
+          }
+          reverse_proxy localhost:8086
+        '';
+      };
     };
   };
 
