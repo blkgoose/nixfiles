@@ -19,9 +19,9 @@ let
       awk '$1 < 0.5 { exit 1 }' /proc/loadavg && return 0
       [ -n "$(find /home/alessio/.claude/projects -name '*.jsonl' -mmin -5 -print -quit 2>/dev/null)" ] && return 0
       for s in $(loginctl list-sessions --no-legend | awk '{print $1}'); do
-        eval "$(loginctl show-session "$s" -p Type -p Class -p IdleHint)"
-        case "$Type:$Class:$IdleHint" in
-          wayland:user:no | x11:user:no) return 0 ;;
+        eval "$(loginctl show-session "$s" -p Type -p Class -p IdleHint -p State)"
+        case "$Type:$Class:$IdleHint:$State" in
+          wayland:user:no:active | x11:user:no:active) return 0 ;;
         esac
       done
       return 1
