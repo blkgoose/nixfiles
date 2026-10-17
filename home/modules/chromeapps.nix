@@ -210,7 +210,46 @@ let
         executable = true;
       };
     };
+  iconDir = "${config.xdg.dataHome}/chromeapps-icons";
 in
 {
   home.file = lib.attrsets.mapAttrs' mkWrappedApp apps;
+
+  home.packages = [
+    (pkgs.linkFarm "chromeapps-desktop-entries" (
+      map
+        (name: {
+          name = "share/applications/${name}.desktop";
+          path =
+            pkgs.makeDesktopItem {
+              inherit name;
+              desktopName = name;
+              icon = "${iconDir}/${name}.png";
+              exec = "${config.home.homeDirectory}/.local/bin/${name}";
+              categories = [ "Network" ];
+            }
+            + "/share/applications/${name}.desktop";
+        })
+        (lib.attrNames apps)
+    ))
+  ];
+
+  # favicons are fetched at switch time and cached; offline or missing ones are skipped
+  home.activation.chromeappIcons =
+    let
+      fetchIcon = name: app: ''
+        fetch_icon '${name}' '${app.url}'
+      '';
+    in
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p ${iconDir}
+      fetch_icon() {
+        local target="${iconDir}/$1.png"
+        [ -s "$target" ] && return 0
+        SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt ${pkgs.curl}/bin/curl -fsL --max-time 10 -o "$target.tmp" \
+          "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=$2" \
+          && mv "$target.tmp" "$target" || rm -f "$target.tmp"
+      }
+      ${lib.concatStrings (lib.mapAttrsToList fetchIcon apps)}
+    '';
 }
