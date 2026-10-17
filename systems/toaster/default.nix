@@ -8,6 +8,7 @@
     ../../modules/grub.nix
     ../../modules/hyprland.nix
     ../../modules/niri.nix
+    ../../modules/auto-suspend.nix
     ../../modules/network
     ../../modules/sound.nix
     ../../modules/virtualization.nix
