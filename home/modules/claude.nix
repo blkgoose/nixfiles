@@ -27,7 +27,7 @@ in
   systemd.user.services = {
     claude-ion = mkClaudeService "ion" "%h/proj/ion-og";
     claude-helion = mkClaudeService "helion" "%h/proj/helion";
-    claude-cdn-ion = mkClaudeService "cdn-ion" "%h/proj/cdn-ion";
+    claude-cation = mkClaudeService "cation" "%h/proj/cation";
     claude-nix = mkClaudeService "nix" "%h/.config/nix";
   };
 }

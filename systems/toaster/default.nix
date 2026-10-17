@@ -27,7 +27,19 @@
   boot.extraModprobeConfig = "options r8168 s5wol=1";
 
   # placed here or it would apply to the work laptop as well
-  home-manager.users.alessio.imports = [ ../../home/modules/claude.nix ];
+  home-manager.users.alessio.imports = [
+    ../../home/modules/claude.nix
+    {
+      niri.extraConfig = ''
+
+        output "HDMI-A-2" {
+            mode "3440x1440@49.953"
+            scale 1.5
+            position x=0 y=0
+        }
+      '';
+    }
+  ];
 
   services.openssh.enable = true;
 
