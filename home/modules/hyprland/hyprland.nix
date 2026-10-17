@@ -201,7 +201,10 @@ in
       bind = [
         (modBind "SHIFT + RETURN" (dsp "hl.dsp.exec_cmd(terminal)") { })
         (modBind "SHIFT + C" (dsp "hl.dsp.window.close()") { })
-        (modBind "SHIFT + E" (dsp "hl.dsp.exit()") { })
+        (modBind "SHIFT + E" (dsp ''function()
+          hl.exec_cmd("systemctl --user stop --job-mode=replace-irreversibly graphical-session.target")
+          hl.dsp.exit()()
+        end'') { })
         (modBind "V" (dsp "hl.dsp.window.float({})") { })
         (modBind "P" (dsp ''hl.dsp.exec_cmd("wofi --show run")'') { })
         (modBind "S" (dsp "hl.dsp.workspace.toggle_special()") { })
