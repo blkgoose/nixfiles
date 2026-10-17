@@ -44,6 +44,7 @@ workspace "scratch"
 prefer-no-csd
 
 spawn-at-startup "wayland-pipewire-idle-inhibit"
+spawn-at-startup "niri" "msg" "action" "focus-workspace" "2"
 
 hotkey-overlay {
     skip-at-startup
