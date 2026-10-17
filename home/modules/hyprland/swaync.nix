@@ -102,6 +102,7 @@ in
     Unit = {
       Description = "Sway Notifications Center";
       PartOf = [ "hyprland-session.target" ];
+      BindsTo = [ "hyprland-session.target" ];
     };
     Install = {
       WantedBy = [ "hyprland-session.target" ];
