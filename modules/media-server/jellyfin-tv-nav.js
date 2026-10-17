@@ -1,8 +1,8 @@
 // Make Jellyfin Web usable with the projector's d-pad, which only moves a mouse cursor:
 // force the TV layout, put a transparent overlay over the page that swallows all mouse input, turn every cursor
 // movement into an arrow key press, and turn OK (mouse button) into a click on the focused element.
-// The cursor stops at the screen edges (no events there) and nothing from JS can move it back.
-// On the video player page (#/video) all of this is switched off and the mouse works as usual.
+// At the screen edges the cursor can't move any further and the projector sends wheel events instead, so those
+// are turned into arrow key presses too, using the sign of the larger delta.
 (function () {
   try {
     localStorage.setItem('layout', 'tv');
@@ -14,6 +14,10 @@
     right: { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39 },
     down: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 }
   };
+
+  function keyFor(dx, dy) {
+    return Math.abs(dx) >= Math.abs(dy) ? (dx < 0 ? KEYS.left : KEYS.right) : (dy < 0 ? KEYS.up : KEYS.down);
+  }
 
   function press(k) {
     var target = document.activeElement || document.body;
@@ -34,24 +38,20 @@
     overlay.style.cssText = 'position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;background:transparent;cursor:none';
     document.body.appendChild(overlay);
 
-    // while the video player page is open the page behaves normally (visible cursor, real clicks) so the OSD works
-    function sync() {
-      var playing = /^#\/video/.test(location.hash);
-      style.disabled = playing;
-      overlay.style.display = playing ? 'none' : 'block';
-    }
-    window.addEventListener('hashchange', sync);
-    window.addEventListener('popstate', sync);
-    setInterval(sync, 500);
-    sync();
-
     overlay.addEventListener('mousemove', function (e) {
       e.stopPropagation();
       var dx = e.movementX || 0;
       var dy = e.movementY || 0;
       if (!dx && !dy) return;
-      press(Math.abs(dx) >= Math.abs(dy) ? (dx < 0 ? KEYS.left : KEYS.right) : (dy < 0 ? KEYS.up : KEYS.down));
+      press(keyFor(dx, dy));
     });
+
+    overlay.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!e.deltaX && !e.deltaY) return;
+      press(keyFor(e.deltaX, e.deltaY));
+    }, { passive: false });
 
     overlay.addEventListener('mousedown', function (e) {
       e.preventDefault();
@@ -60,7 +60,7 @@
       if (el && el !== document.body) el.click();
     });
 
-    ['mouseup', 'click', 'contextmenu', 'dblclick', 'wheel'].forEach(function (type) {
+    ['mouseup', 'click', 'contextmenu', 'dblclick'].forEach(function (type) {
       overlay.addEventListener(type, function (e) {
         e.preventDefault();
         e.stopPropagation();
