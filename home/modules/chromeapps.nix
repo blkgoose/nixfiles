@@ -19,7 +19,7 @@ let
   chromeWrapper =
     opts: url:
     let
-      chrome = with pkgs; "${(nixGL google-chrome)}/bin/google-chrome-stable";
+      chrome = with pkgs; "${google-chrome}/bin/google-chrome-stable";
       spacedOpts = lib.strings.concatStringsSep " " opts;
     in
     ''

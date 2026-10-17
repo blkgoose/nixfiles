@@ -2,8 +2,8 @@
   imports = [ nix-flatpak.homeManagerModules.nix-flatpak ];
 
   home.packages = with pkgs; [
-    (nixGL lutris)
-    (alias "steamlink" "${(nixGL pkgs.flatpak)}/bin/flatpak --user run com.valvesoftware.SteamLink")
+    lutris
+    (alias "steamlink" "${pkgs.flatpak}/bin/flatpak --user run com.valvesoftware.SteamLink")
   ];
 
   services.flatpak = {

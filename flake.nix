@@ -60,12 +60,6 @@
           })
 
           (self: super: {
-            # real GL wrapping is only needed on non-NixOS machines (the
-            # work laptop flake overrides this with the real nixGL wrapper)
-            nixGL = package: package;
-          })
-
-          (self: super: {
             system-manager = inputs.system-manager.packages.${system}.default;
           })
 

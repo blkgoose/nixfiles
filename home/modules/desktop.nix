@@ -2,10 +2,11 @@
   home.packages = with pkgs; [
     spotify
     gimp
-    (alias "orca-slicer" "${(nixGL unstable.orca-slicer)}/bin/orca-slicer")
+    (alias "orca-slicer" "${unstable.orca-slicer}/bin/orca-slicer")
     zoom
-    (alias "chrome" "${(nixGL google-chrome)}/bin/google-chrome-stable")
-    (alias "jellyfin-desktop" "${(nixGL jellyfin-desktop)}/bin/jellyfin-desktop")
+    google-chrome
+    (alias "chrome" "${google-chrome}/bin/google-chrome-stable")
+    (alias "jellyfin-desktop" "${jellyfin-desktop}/bin/jellyfin-desktop")
     pwvucontrol
     htop
     vial
