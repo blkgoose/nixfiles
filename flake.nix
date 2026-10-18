@@ -102,6 +102,22 @@
                 '';
               };
 
+            appAlias =
+              name: package:
+              self.symlinkJoin {
+                inherit name;
+                paths = [ (self.alias name "${package}/bin/${name}") ];
+                postBuild = ''
+                  test -d ${package}/share/applications
+                  mkdir -p $out/share
+                  for dir in applications icons pixmaps; do
+                    if [ -d ${package}/share/$dir ]; then
+                      ln -s ${package}/share/$dir $out/share/$dir
+                    fi
+                  done
+                '';
+              };
+
             secret = path: builtins.head (builtins.split "\n" (builtins.readFile "${secrets}/${path}"));
           })
         ];

@@ -5,7 +5,7 @@
     zoom
     google-chrome
     (alias "chrome" "${google-chrome}/bin/google-chrome-stable")
-    (alias "jellyfin-desktop" "${jellyfin-desktop}/bin/jellyfin-desktop")
+    (appAlias "jellyfin-desktop" jellyfin-desktop)
     pwvucontrol
     htop
     vial
