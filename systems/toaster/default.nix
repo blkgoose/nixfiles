@@ -41,6 +41,11 @@
     }
   ];
 
+  networking.firewall.interfaces.enp4s0.allowedUDPPorts = [
+    1990
+    2021
+  ];
+
   services.openssh.enable = true;
 
   services.tailscale.enable = true;

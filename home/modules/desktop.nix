@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     spotify
     gimp
-    (alias "orca-slicer" "${unstable.orca-slicer}/bin/orca-slicer")
     zoom
     google-chrome
     (alias "chrome" "${google-chrome}/bin/google-chrome-stable")

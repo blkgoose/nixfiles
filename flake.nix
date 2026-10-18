@@ -68,6 +68,31 @@
           })
 
           (self: super: {
+            orca-slicer =
+              let
+                pname = "orca-slicer";
+                version = "2.4.2";
+                src = self.fetchurl {
+                  url = "https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v2.4.2/OrcaSlicer_Linux_AppImage_Ubuntu2404_V2.4.2.AppImage";
+                  hash = "sha256-0S+4yOrBrs0t+2N3rNSPmU+PpDntUpL6Uy3YKIDwKf0=";
+                };
+                contents = self.appimageTools.extract { inherit pname version src; };
+              in
+              self.appimageTools.wrapType2 {
+                inherit pname version src;
+                extraInstallCommands = ''
+                  install -Dm444 ${contents}/com.orcaslicer.OrcaSlicer.desktop $out/share/applications/orca-slicer.desktop
+                  substituteInPlace $out/share/applications/orca-slicer.desktop --replace-fail "Exec=AppRun" "Exec=orca-slicer"
+                  install -Dm444 ${contents}/OrcaSlicer.png $out/share/pixmaps/OrcaSlicer.png
+                '';
+                extraPkgs = pkgs: [
+                  pkgs.webkitgtk_4_1
+                  pkgs.libsoup_3
+                ];
+              };
+          })
+
+          (self: super: {
             alias =
               name: command:
               pkgs.writeShellApplication {
@@ -160,6 +185,8 @@
               // extraSpecialArgs;
           };
       };
+
+      packages.${system}.orca-slicer = pkgs.orca-slicer;
 
       formatter.${system} = fmt;
       devShells.${system}.default = pkgs.mkShell {

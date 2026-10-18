@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ../modules/alacritty.nix
+    ../modules/3d-printing.nix
     ../modules/core.nix
     ../modules/desktop.nix
     ../modules/gdrive.nix
