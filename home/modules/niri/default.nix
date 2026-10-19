@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [ ./shell.nix ];
 
   config.home.packages = with pkgs; [

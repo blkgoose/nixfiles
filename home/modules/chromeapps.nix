@@ -217,20 +217,18 @@ in
 
   home.packages = [
     (pkgs.linkFarm "chromeapps-desktop-entries" (
-      map
-        (name: {
-          name = "share/applications/${name}.desktop";
-          path =
-            pkgs.makeDesktopItem {
-              inherit name;
-              desktopName = name;
-              icon = "${iconDir}/${name}.png";
-              exec = "${config.home.homeDirectory}/.local/bin/${name}";
-              categories = [ "Network" ];
-            }
-            + "/share/applications/${name}.desktop";
-        })
-        (lib.attrNames apps)
+      map (name: {
+        name = "share/applications/${name}.desktop";
+        path =
+          pkgs.makeDesktopItem {
+            inherit name;
+            desktopName = name;
+            icon = "${iconDir}/${name}.png";
+            exec = "${config.home.homeDirectory}/.local/bin/${name}";
+            categories = [ "Network" ];
+          }
+          + "/share/applications/${name}.desktop";
+      }) (lib.attrNames apps)
     ))
   ];
 
