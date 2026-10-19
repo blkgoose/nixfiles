@@ -25,6 +25,8 @@
 
     dms.url = "github:AvengeMedia/DankMaterialShell/stable";
 
+    nix-optional-modules.url = "github:danielefongo/nix-optional-modules";
+
     hyprland-guiutils = {
       url = "github:hyprwm/hyprland-guiutils";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
