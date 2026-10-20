@@ -13,6 +13,7 @@
     tree
     unp
     unzip
+    wakeonlan
     unstable.nix
     linuxKernel.packages.linux_zen.cpupower
     git-crypt

@@ -12,7 +12,10 @@
     ../../modules/transcriber/server.nix
   ];
 
-  environment.systemPackages = with pkgs; [ btrfs-progs ];
+  environment.systemPackages = with pkgs; [
+    btrfs-progs
+    wakeonlan
+  ];
 
   programs.fish.enable = true;
 
