@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./arr-stack.nix
+    ./jellyfin-encoding.nix
     ./jellyfin-proxy.nix
     (import ./duckdns.nix {
       name = "aletflix";
