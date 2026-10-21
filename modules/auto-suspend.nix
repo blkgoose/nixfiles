@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  idleMinutes = 15;
+  idleMinutes = 30;
 
   check = pkgs.writeShellScript "auto-suspend-check" ''
     export PATH=${
