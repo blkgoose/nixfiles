@@ -1,3 +1,4 @@
 result
 nix.conf
 __pycache__
+py.typed
