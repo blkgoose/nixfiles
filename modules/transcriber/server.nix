@@ -42,19 +42,6 @@ in
     };
   };
 
-  systemd.services.transcriber-wake = {
-    description = "Wake the toaster if transcriptions are waiting";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.curl}/bin/curl -fsS -X POST 'http://127.0.0.1:${toString port}/api/wake'";
-    };
-  };
-
-  systemd.timers.transcriber-wake = {
-    wantedBy = [ "timers.target" ];
-    timerConfig.OnCalendar = "*-*-* 01..06:00:00";
-  };
-
   dashboard.homeLinks = [
     {
       "Sbobina" = {
