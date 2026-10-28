@@ -260,6 +260,9 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({"sent": False})
             send_wol()
             return self.send_json({"sent": True})
+        if url.path == "/api/wake-now":
+            send_wol()
+            return self.send_json({})
         if url.path == "/api/worker/claim":
             job = claim()
             return self.send_json(job) if job else self.send(204)

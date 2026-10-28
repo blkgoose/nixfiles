@@ -36,7 +36,7 @@
 <main>
   <div class="row">
     <h1>Sbobina</h1>
-    <span class="meta"><span id="me"></span> · <a href="#" id="logout">Esci</a></span>
+    <span class="meta"><span id="me"></span> · <button id="wake">Accendi toaster</button> · <a href="#" id="logout">Esci</a></span>
   </div>
 
   <div class="card">
@@ -69,6 +69,12 @@ function pick(f) {
 
 fetch('api/me').then(r => r.ok ? r.json() : location.reload()).then(m => { me = m.user; admin = m.admin; $('me').textContent = title(me); });
 $('logout').onclick = async () => { await fetch('api/logout', { method: 'POST' }); location.reload(); };
+$('wake').onclick = async () => {
+  $('wake').disabled = true;
+  const r = await fetch('api/wake-now', { method: 'POST' });
+  $('wake').textContent = r.ok ? 'Segnale inviato' : 'Errore';
+  setTimeout(() => { $('wake').textContent = 'Accendi toaster'; $('wake').disabled = false; }, 5000);
+};
 $('drop').onclick = () => $('file').click();
 $('file').onchange = e => pick(e.target.files[0]);
 $('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('over'); };
