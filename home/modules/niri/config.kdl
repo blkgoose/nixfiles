@@ -12,7 +12,6 @@ input {
         repeat-rate 60
     }
 
-    warp-mouse-to-focus mode="center-xy"
     workspace-auto-back-and-forth
     mod-key "Super"
 }
