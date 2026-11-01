@@ -172,6 +172,8 @@
       wallpaperPath = "${config.home.homeDirectory}/.local/share/wallpapers/wallpaper";
       themeModeAutoMode = "location";
       configVersion = 5;
+      deviceMaxVolumes."alsa_output.usb-Logitech_G_series_G435_Wireless_Gaming_Headset_202105190004-00.analog-stereo" =
+        150;
     };
   };
 }
