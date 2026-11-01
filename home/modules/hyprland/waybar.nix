@@ -160,6 +160,10 @@ in
   };
 
   systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
+  systemd.user.services.waybar.Unit.ConditionEnvironment = lib.mkForce [
+    "WAYLAND_DISPLAY"
+    "XDG_CURRENT_DESKTOP=Hyprland"
+  ];
 
   home.file.".config/waybar/config".source = conf;
   home.file.".config/waybar/style.css".source = style;

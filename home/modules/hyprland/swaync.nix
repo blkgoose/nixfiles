@@ -103,6 +103,7 @@ in
       Description = "Sway Notifications Center";
       PartOf = [ "hyprland-session.target" ];
       BindsTo = [ "hyprland-session.target" ];
+      ConditionEnvironment = "XDG_CURRENT_DESKTOP=Hyprland";
     };
     Install = {
       WantedBy = [ "hyprland-session.target" ];
