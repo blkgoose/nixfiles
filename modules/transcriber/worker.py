@@ -176,12 +176,12 @@ def transcribe(job_id, d, wav, meta, on_progress):
     cmd = [
         WHISPER_CLI, "-m", MODELS[meta["model"]], "-f", str(wav),
         "-l", meta["language"] or "auto", "-t", "4",
-        "-ml", "1", "-sow", "-pp",
+        "-ml", "1", "-sow", "-pp", "-mc", "0", "-bs", "8", "-bo", "8",
         "--vad", "--vad-model", VAD_MODEL,
         "-ojf", "-of", str(d / "whisper"),
     ]
     if meta["prompt"]:
-        cmd += ["--prompt", meta["prompt"]]
+        cmd += ["--prompt", "Lezione su: " + meta["prompt"] + "."]
     proc = spawn(job_id, cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
     tail = []
     for line in proc.stderr:
