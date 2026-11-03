@@ -39,11 +39,6 @@
     <span class="meta"><span id="me"></span> · <a href="#" id="logout">Esci</a></span>
   </div>
 
-  <div class="card row">
-    <span class="meta">Se la trascrizione non parte, sveglia il toaster</span>
-    <button id="wake">Avvia ora</button>
-  </div>
-
   <div class="card">
     <div id="drop"><strong>Trascina qui un file audio</strong> o clicca per sceglierlo<br><span id="picked"></span></div>
     <input id="file" type="file" accept="audio/*,video/*" hidden>
@@ -74,12 +69,6 @@ function pick(f) {
 
 fetch('api/me').then(r => r.ok ? r.json() : location.reload()).then(m => { me = m.user; admin = m.admin; $('me').textContent = title(me); });
 $('logout').onclick = async () => { await fetch('api/logout', { method: 'POST' }); location.reload(); };
-$('wake').onclick = async () => {
-  $('wake').disabled = true;
-  const r = await fetch('api/wake-now', { method: 'POST' });
-  $('wake').textContent = r.ok ? 'Segnale inviato' : 'Errore';
-  setTimeout(() => { $('wake').textContent = 'Avvia ora'; $('wake').disabled = false; }, 5000);
-};
 $('drop').onclick = () => $('file').click();
 $('file').onchange = e => pick(e.target.files[0]);
 $('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('over'); };

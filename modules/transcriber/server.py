@@ -179,7 +179,7 @@ class Handler(BaseHTTPRequestHandler):
     def begin(self):
         url = urlparse(self.path)
         parts = url.path.strip("/").split("/")
-        if parts[:2] == ["api", "worker"] or url.path == "/api/wake":
+        if parts[:2] == ["api", "worker"]:
             if "X-Forwarded-For" in self.headers:
                 self.send(404)
                 return None
@@ -254,15 +254,6 @@ class Handler(BaseHTTPRequestHandler):
             if cookie:
                 sessions.pop(cookie.value, None)
             return self.send_json({}, headers=self.cookie_header("", 0))
-        if url.path == "/api/wake":
-            st = status()
-            if st["pending"] == 0 or st["worker_online"]:
-                return self.send_json({"sent": False})
-            send_wol()
-            return self.send_json({"sent": True})
-        if url.path == "/api/wake-now":
-            send_wol()
-            return self.send_json({})
         if url.path == "/api/worker/claim":
             job = claim()
             return self.send_json(job) if job else self.send(204)
@@ -310,6 +301,7 @@ class Handler(BaseHTTPRequestHandler):
         }
         with lock:
             write_meta(meta)
+        send_wol()
         print(f"{user} uploaded job {job_id} ({meta['filename']})", flush=True)
         self.send_json(meta, 201)
 
