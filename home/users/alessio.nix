@@ -11,7 +11,6 @@
     ../modules/fish
     ../modules/saint-peter.nix
     ../modules/chromeapps.nix
-    ../modules/hyprland
     ../modules/niri
     ../modules/tmux
   ];

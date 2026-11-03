@@ -26,11 +26,6 @@
     dms.url = "github:AvengeMedia/DankMaterialShell/stable";
 
     nix-optional-modules.url = "github:danielefongo/nix-optional-modules";
-
-    hyprland-guiutils = {
-      url = "github:hyprwm/hyprland-guiutils";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs =
@@ -63,10 +58,6 @@
 
           (self: super: {
             system-manager = inputs.system-manager.packages.${system}.default;
-          })
-
-          (self: super: {
-            hyprland-guiutils = inputs.hyprland-guiutils.packages.${system}.default;
           })
 
           (self: super: {

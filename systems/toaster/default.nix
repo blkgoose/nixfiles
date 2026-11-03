@@ -6,7 +6,7 @@
 
     ../../modules/base.nix
     ../../modules/grub.nix
-    ../../modules/hyprland.nix
+    ../../modules/desktop.nix
     ../../modules/niri.nix
     ../../modules/auto-suspend.nix
     ../../modules/network

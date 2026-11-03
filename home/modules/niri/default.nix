@@ -5,7 +5,16 @@
   ...
 }:
 {
-  imports = [ ./shell.nix ];
+  imports = [
+    ./shell.nix
+    ./swayidle.nix
+  ];
+
+  config.services.wlsunset = {
+    enable = true;
+    latitude = "42.50";
+    longitude = "12.50";
+  };
 
   config.home.packages = with pkgs; [
     niri

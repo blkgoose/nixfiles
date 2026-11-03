@@ -14,5 +14,5 @@
     islandFixes.enable = true;
   };
 
-  xdg.dataFile."wallpapers/wallpaper".source = lib.mkDefault ../hyprland/wallpaper;
+  xdg.dataFile."wallpapers/wallpaper".source = lib.mkDefault ./wallpaper;
 }
