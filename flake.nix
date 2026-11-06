@@ -198,13 +198,5 @@
       packages.${system}.orca-slicer = pkgs.orca-slicer;
 
       formatter.${system} = fmt;
-      devShells.${system}.default = pkgs.mkShell {
-        LD_LIBRARY_PATH = nixpkgs.lib.makeLibraryPath [ pkgs.openssl ];
-
-        buildInputs = [
-          fmt
-          pkgs.nil
-        ];
-      };
     };
 }
