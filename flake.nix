@@ -97,16 +97,30 @@
 
             appAlias =
               name: package:
+              {
+                params ? "",
+                copy ? package,
+              }:
               self.symlinkJoin {
                 inherit name;
-                paths = [ (self.alias name "${package}/bin/${name}") ];
+                paths = [ (self.alias name "${self.lib.getExe package} ${params}") ];
                 postBuild = ''
-                  test -d ${package}/share/applications
-                  mkdir -p $out/share
-                  for dir in applications icons pixmaps; do
-                    if [ -d ${package}/share/$dir ]; then
-                      ln -s ${package}/share/$dir $out/share/$dir
+                  test -d ${copy}/share/applications
+                  mkdir -p $out/share/applications
+                  for dir in icons pixmaps; do
+                    if [ -d ${copy}/share/$dir ]; then
+                      ln -s ${copy}/share/$dir $out/share/$dir
                     fi
+                  done
+                  for f in ${copy}/share/applications/*.desktop; do
+                    sed \
+                      -e '/^Name\[/d' \
+                      -e '/^DBusActivatable=/d' \
+                      -e 's|^Name=.*|Name=${
+                        self.lib.toUpper (builtins.substring 0 1 name)
+                      }${builtins.substring 1 (-1) name}|' \
+                      -e 's|^Exec=[^ ]*|Exec=${name}|' \
+                      "$f" > $out/share/applications/$(basename "$f")
                   done
                 '';
               };
