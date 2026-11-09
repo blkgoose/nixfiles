@@ -108,6 +108,10 @@ function render(jobs) {
     const active = ['converting', 'diarizing', 'transcribing'].includes(j.status);
     let info = (j.requester ? `<strong>${esc(title(j.requester))}</strong> · ` : '') + esc(j.stage) + (active ? ` ${pct}%` : '');
     if (j.duration) info += ` · audio ${dur(j.duration)}`;
+    if (j.status === 'converting' && j.progress > 0.02) {
+      const elapsed = Date.now() / 1000 - j.started;
+      info += ` · ~${dur(Math.max(elapsed / j.progress - elapsed, 0))} rimanenti`;
+    }
     if (j.status === 'done') info += ` · elaborato in ${dur(j.finished - j.started)}`;
     return `<div class="card ${j.status}">
       <div class="row">
