@@ -11,6 +11,7 @@
     ../../modules/media-server
     ../../modules/transcriber/server.nix
     (import ../../modules/netdata.nix { ip = "192.168.1.101"; })
+    (import ../../modules/disk-monitor.nix { ip = "192.168.1.101"; })
   ];
 
   environment.systemPackages = with pkgs; [
