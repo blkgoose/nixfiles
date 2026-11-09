@@ -31,7 +31,7 @@ in
       ExecStart = "${pkgs.python3}/bin/python3 ${app}/app.py";
       DynamicUser = true;
       StateDirectory = "calorie-tracker";
-      LoadCredential = "ha_token:/mnt/data/config/homeassistant/ha_token";
+      LoadCredential = "ha_token:/var/lib/ha/homeassistant/ha_token";
       Restart = "on-failure";
     };
   };
