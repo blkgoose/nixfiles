@@ -16,7 +16,10 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
     wakeonlan
+    iotop-c
   ];
+
+  boot.kernel.sysctl."kernel.task_delayacct" = 1;
 
   programs.fish.enable = true;
 
