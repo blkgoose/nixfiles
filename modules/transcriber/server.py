@@ -34,7 +34,7 @@ LOCK_SECONDS = 300
 MAX_PASSWORD_BYTES = 72
 ID_RE = re.compile(r"^[0-9a-f]{32}$")
 ACTIVE = ("converting", "transcribing", "diarizing")
-WORKER_FIELDS = {"status", "stage", "progress", "duration", "error"}
+WORKER_FIELDS = {"status", "stage", "progress", "duration", "error", "audio"}
 
 JOBS.mkdir(parents=True, exist_ok=True)
 lock = threading.Lock()
@@ -123,7 +123,7 @@ def claim():
         for m in sorted(list_metas(), key=lambda m: m["created"]):
             stale = m["status"] in ACTIVE and now - m.get("updated", m["created"]) > STALE_JOB
             if m["status"] == "queued" or stale:
-                m.update(status="converting", stage="Conversione audio", progress=0, started=now, updated=now)
+                m.update(status="converting", stage="Pulizia audio", progress=0, started=now, updated=now)
                 write_meta(m)
                 return m
     return None
@@ -228,6 +228,19 @@ class Handler(BaseHTTPRequestHandler):
                     200, f.read_bytes(), "text/plain; charset=utf-8",
                     {"Content-Disposition": f"attachment; filename*=UTF-8''{quote(name)}"},
                 )
+            if len(parts) == 4 and parts[3] == "audio.ogg":
+                f = job_dir(job_id) / "clean.ogg"
+                if not f.exists():
+                    return self.send(404)
+                name = Path(read_meta(job_id)["filename"]).stem + " (pulito).ogg"
+                self.send_response(200)
+                self.send_header("Content-Type", "audio/ogg")
+                self.send_header("Content-Length", str(f.stat().st_size))
+                self.send_header("Content-Disposition", f"inline; filename*=UTF-8''{quote(name)}")
+                self.end_headers()
+                with open(f, "rb") as src:
+                    shutil.copyfileobj(src, self.wfile)
+                return
         if parts[:3] == ["api", "worker", "jobs"] and len(parts) == 5 and parts[4] == "upload":
             job_id = self.job_id_from(parts, 3)
             if not job_id:
@@ -332,6 +345,23 @@ class Handler(BaseHTTPRequestHandler):
             tmp = d / "transcript.txt.tmp"
             tmp.write_bytes(self.read_body())
             tmp.replace(d / "transcript.txt")
+            return self.send_json({})
+        if parts[:3] == ["api", "worker", "jobs"] and len(parts) == 5 and parts[4] == "audio":
+            job_id = self.job_id_from(parts, 3)
+            if not job_id:
+                return self.send(404)
+            d = job_dir(job_id)
+            tmp = d / "clean.ogg.tmp"
+            remaining = int(self.headers.get("Content-Length", 0))
+            with open(tmp, "wb") as f:
+                while remaining:
+                    chunk = self.rfile.read(min(1 << 20, remaining))
+                    if not chunk:
+                        tmp.unlink(missing_ok=True)
+                        return
+                    f.write(chunk)
+                    remaining -= len(chunk)
+            tmp.replace(d / "clean.ogg")
             return self.send_json({})
         self.send(404)
 

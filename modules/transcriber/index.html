@@ -113,6 +113,7 @@ function render(jobs) {
       <div class="row">
         <div><div class="name">${esc(j.filename)}</div><div class="meta">${info}</div></div>
         <div class="actions">
+          ${j.audio ? `<a class="btn" href="api/jobs/${j.id}/audio.ogg" download>Audio pulito</a>` : ''}
           ${j.status === 'done' ? `<a class="btn primary" href="api/jobs/${j.id}/transcript.txt">Scarica .txt</a>` : ''}
           ${j.requester === me || admin ? `<button onclick="del('${j.id}')">${j.status === 'done' || j.status === 'error' ? 'Elimina' : 'Annulla'}</button>` : ''}
         </div>
