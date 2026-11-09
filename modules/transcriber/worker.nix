@@ -48,7 +48,7 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     path = [
-      pkgs.ffmpeg-headless
+      (pkgs.ffmpeg-headless.override { withLadspa = true; })
       pkgs.systemd
       pkgs.coreutils
     ];
@@ -60,6 +60,7 @@ in
       WHISPER_CLI = "${pkgs.whisper-cpp-vulkan}/bin/whisper-cli";
       WHISPER_MODELS = builtins.toJSON (builtins.mapAttrs (_: toString) whisperModels);
       VAD_MODEL = "${vadModel}";
+      DENOISE_PLUGIN = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
       DIARIZATION_THREADS = "16";
       SEGMENTATION_MODEL = "${segmentationModel}/model.onnx";
       EMBEDDING_MODEL = "${embeddingModel}";
