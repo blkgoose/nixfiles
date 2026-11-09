@@ -139,18 +139,34 @@ def convert(job_id, d):
         "dynaudnorm=f=500:g=15,asplit[asr][listen];"
         f"[asr]aresample={SAMPLE_RATE}[asr16]"
     )
-    proc = spawn(
-        job_id,
-        ["ffmpeg", "-nostdin", "-v", "error", "-y", "-i", str(d / "upload"),
-         "-vn", "-ac", "1", "-filter_complex", "[0:a]" + chain,
-         "-map", "[asr16]", "-c:a", "pcm_s16le", str(wav),
-         "-map", "[listen]", "-c:a", "libopus", "-b:a", "40k", "-application", "voip", str(clean)],
-        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(d / "upload")],
+        capture_output=True, text=True,
     )
-    _, err = proc.communicate()
+    try:
+        total = float(probe.stdout.strip())
+    except ValueError:
+        total = 0
+    err_file = d / "ffmpeg.err"
+    with open(err_file, "wb") as err:
+        proc = spawn(
+            job_id,
+            ["ffmpeg", "-nostdin", "-v", "error", "-y", "-progress", "pipe:1", "-i", str(d / "upload"),
+             "-vn", "-ac", "1", "-filter_complex", "[0:a]" + chain,
+             "-map", "[asr16]", "-c:a", "pcm_s16le", str(wav),
+             "-map", "[listen]", "-c:a", "libopus", "-b:a", "40k", "-application", "voip", str(clean)],
+            stdout=subprocess.PIPE, stderr=err, text=True,
+        )
+        for line in proc.stdout:
+            if total and line.startswith("out_time_us="):
+                try:
+                    update(job_id, progress=min(int(line.split("=")[1]) / 1e6 / total, 1))
+                except ValueError:
+                    pass
+        proc.wait()
     check_cancel(job_id)
     if proc.returncode != 0:
-        raise subprocess.CalledProcessError(proc.returncode, "ffmpeg", stderr=err)
+        raise subprocess.CalledProcessError(proc.returncode, "ffmpeg", stderr=err_file.read_bytes())
     with wave.open(str(wav)) as w:
         pcm = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16)
     return wav, clean, pcm.astype(np.float32) / 32768.0
