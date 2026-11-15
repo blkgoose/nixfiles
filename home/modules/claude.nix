@@ -29,5 +29,6 @@ in
     claude-helion = mkClaudeService "helion" "%h/proj/helion";
     claude-cation = mkClaudeService "cation" "%h/proj/cation";
     claude-nix = mkClaudeService "nix" "%h/.config/nix";
+    claude-cad = mkClaudeService "cad" "%h/proj/cad_projects";
   };
 }
