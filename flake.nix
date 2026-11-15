@@ -116,6 +116,8 @@
                     sed \
                       -e '/^Name\[/d' \
                       -e '/^DBusActivatable=/d' \
+                      -e '/^Actions=/d' \
+                      -e '/^\[Desktop Action/,$d' \
                       -e 's|^Name=.*|Name=${
                         self.lib.toUpper (builtins.substring 0 1 name)
                       }${builtins.substring 1 (-1) name}|' \
