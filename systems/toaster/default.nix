@@ -20,7 +20,7 @@
   ];
 
   networking.hostName = "toaster";
-  networking.networkmanager.settings.connection."ethernet.wake-on-lan" = "magic";
+  networking.networkmanager.settings.connection."ethernet.wake-on-lan" = 64;
 
   boot.extraModulePackages = [ config.boot.kernelPackages.r8168 ];
   boot.blacklistedKernelModules = [ "r8169" ];
