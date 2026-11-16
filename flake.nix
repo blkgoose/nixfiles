@@ -11,11 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    system-manager = {
-      url = "github:numtide/system-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     osd = {
@@ -32,7 +27,6 @@
     {
       nixpkgs,
       home-manager,
-      system-manager,
       ...
     }@inputs:
     let
@@ -54,10 +48,6 @@
 
               config.allowUnfree = true;
             };
-          })
-
-          (self: super: {
-            system-manager = inputs.system-manager.packages.${system}.default;
           })
 
           (self: super: {
@@ -191,21 +181,6 @@
               inputs
               // {
                 inherit system secrets;
-              }
-              // extraSpecialArgs;
-          };
-
-        mkSystemConfig =
-          {
-            modules,
-            extraSpecialArgs ? { },
-          }:
-          system-manager.lib.makeSystemConfig {
-            inherit modules;
-            extraSpecialArgs =
-              inputs
-              // {
-                inherit system pkgs secrets;
               }
               // extraSpecialArgs;
           };
