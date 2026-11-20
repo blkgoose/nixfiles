@@ -102,6 +102,7 @@ services:
       - TZ=Europe/Rome
     volumes:
       - ./config/sonarr:/config
+      - ./scripts/sonarr-import-subs.sh:/scripts/import-subs.sh:ro
       - /mnt/data/media:/data
     restart: unless-stopped
 

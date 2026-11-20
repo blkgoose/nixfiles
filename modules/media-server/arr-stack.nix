@@ -12,6 +12,10 @@ in
     "arr/docker-compose.yml".source = ./docker-compose.yml;
     "arr/config/jellyfin-auto-collections/config.yaml".source = ./jellyfin-auto-collections.yaml;
     "arr/.env".source = envFile;
+    "arr/scripts/sonarr-import-subs.sh" = {
+      source = ./sonarr-import-subs.sh;
+      mode = "0755";
+    };
   };
 
   systemd.services.arr-stack = {
@@ -24,6 +28,7 @@ in
     restartTriggers = [
       (builtins.hashFile "sha256" ./docker-compose.yml)
       (builtins.hashFile "sha256" ./jellyfin-auto-collections.yaml)
+      (builtins.hashFile "sha256" ./sonarr-import-subs.sh)
       envFile
     ];
 
