@@ -3,6 +3,7 @@
 #    and fades in/out over fullscreen windows (needs islandOverlayWhenActive = true
 #    in the bar config)
 #  - keeps the notification center loaded, avoiding a ~6s delay on the next open
+#  - does not open the fullscreen click-to-dismiss window for expanded notifications
 #  - refreshes the island text/icon and the history entry when a notification is replaced in place
 #
 # Usage, with the DMS flake input passed through extraSpecialArgs:
@@ -51,6 +52,11 @@ in
       default = true;
       description = "Apply the patch that enlarges the text of notification center and history cards.";
     };
+    noDismissForNotification = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Apply the patch that stops the fullscreen click-to-dismiss window from opening for expanded notifications.";
+    };
     refreshHistoryOnReplace = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -85,6 +91,9 @@ in
             ''
             + lib.optionalString cfg.biggerCenterNotificationText ''
               patch -p2 -d $out/share/quickshell/dms < ${./center-notification-font.patch}
+            ''
+            + lib.optionalString cfg.noDismissForNotification ''
+              patch -p2 -d $out/share/quickshell/dms < ${./no-dismiss-for-notification.patch}
             ''
             + lib.optionalString cfg.refreshHistoryOnReplace ''
               patch -p2 -d $out/share/quickshell/dms < ${./history-refresh.patch}

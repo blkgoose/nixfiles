@@ -1,0 +1,9 @@
+--- a/quickshell/Modules/DankIsland/DankIslandHostWindow.qml
++++ b/quickshell/Modules/DankIsland/DankIslandHostWindow.qml
+@@ -327,5 +327,5 @@
+ 
+         screen: root.screen
+-        visible: controller.expanded && !PopoutManager.screenshotActive
++        visible: controller.expanded && !controller.notificationActive && !PopoutManager.screenshotActive
+         color: "transparent"
+         exclusiveZone: -1
