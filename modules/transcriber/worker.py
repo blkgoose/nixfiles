@@ -25,7 +25,6 @@ CLUSTER_THRESHOLD = float(os.environ.get("CLUSTER_THRESHOLD", "0.8"))
 MODELS = json.loads(os.environ["WHISPER_MODELS"])
 WHISPER_CLI = os.environ["WHISPER_CLI"]
 VAD_MODEL = os.environ["VAD_MODEL"]
-DENOISE_PLUGIN = os.environ["DENOISE_PLUGIN"]
 SAMPLE_RATE = 16000
 GRID = 0.1  # seconds per diarization timeline cell
 PAUSE_PARAGRAPH = 2.5
@@ -84,25 +83,6 @@ def upload_transcript(job_id, text):
     raise RuntimeError("transcript upload failed")
 
 
-def upload_audio(job_id, path):
-    for _ in range(10):
-        try:
-            with open(path, "rb") as f:
-                req = urllib.request.Request(
-                    SERVER + f"/api/worker/jobs/{job_id}/audio", data=f, method="PUT",
-                    headers={"Content-Type": "audio/ogg", "Content-Length": str(path.stat().st_size)},
-                )
-                urllib.request.urlopen(req, timeout=600).close()
-            return
-        except urllib.error.HTTPError as e:
-            if e.code == 404:
-                raise Cancelled()
-            raise
-        except OSError:
-            time.sleep(30)
-    raise RuntimeError("audio upload failed")
-
-
 procs = {}
 
 
@@ -133,12 +113,6 @@ def fmt_ts(seconds):
 
 def convert(job_id, d):
     wav = d / "audio.wav"
-    clean = d / "clean.ogg"
-    chain = (
-        f"aresample=48000,highpass=f=80,ladspa=file={DENOISE_PLUGIN}:plugin=deep_filter_mono,"
-        "dynaudnorm=f=500:g=15,asplit[asr][listen];"
-        f"[asr]aresample={SAMPLE_RATE}[asr16]"
-    )
     probe = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(d / "upload")],
         capture_output=True, text=True,
@@ -152,9 +126,7 @@ def convert(job_id, d):
         proc = spawn(
             job_id,
             ["ffmpeg", "-nostdin", "-v", "error", "-y", "-progress", "pipe:1", "-i", str(d / "upload"),
-             "-vn", "-ac", "1", "-filter_complex", "[0:a]" + chain,
-             "-map", "[asr16]", "-c:a", "pcm_s16le", str(wav),
-             "-map", "[listen]", "-c:a", "libopus", "-b:a", "40k", "-application", "voip", str(clean)],
+             "-vn", "-ac", "1", "-ar", str(SAMPLE_RATE), "-c:a", "pcm_s16le", str(wav)],
             stdout=subprocess.PIPE, stderr=err, text=True,
         )
         for line in proc.stdout:
@@ -169,7 +141,7 @@ def convert(job_id, d):
         raise subprocess.CalledProcessError(proc.returncode, "ffmpeg", stderr=err_file.read_bytes())
     with wave.open(str(wav)) as w:
         pcm = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16)
-    return wav, clean, pcm.astype(np.float32) / 32768.0
+    return wav, pcm.astype(np.float32) / 32768.0
 
 
 def diarize(job_id, audio, num_speakers, state):
@@ -331,12 +303,10 @@ def render(meta, words, timeline, duration):
 
 def process(meta, d):
     job_id = meta["id"]
-    update(job_id, status="converting", stage="Pulizia audio", progress=0)
-    wav, clean, audio = convert(job_id, d)
+    update(job_id, status="converting", stage="Conversione audio", progress=0)
+    wav, audio = convert(job_id, d)
     duration = len(audio) / SAMPLE_RATE
     check_cancel(job_id)
-    upload_audio(job_id, clean)
-    update(job_id, audio=True)
     update(job_id, status="transcribing", stage="Trascrizione", progress=0, duration=duration)
 
     # speaker recognition runs on the CPU while whisper.cpp uses the GPU
