@@ -10,6 +10,7 @@
     ../../modules/calorie-tracker
     ../../modules/media-server
     ../../modules/transcriber/server.nix
+    ../../modules/trmnl-ha
     (import ../../modules/disk-monitor.nix { ip = "192.168.1.101"; })
   ];
 
